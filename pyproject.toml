@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=77.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metacellsgraphspy"
+version = "0.1.0"
+description = "Draw the figures worth looking at of a metacells repository"
+authors = [
+    { name = "Oren Ben-Kiki", email = "oren@ben-kiki.org" },
+]
+readme = "README.rst"
+license = "MIT"
+license-files = ["LICENSE.rst"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+requires-python = ">= 3.10"
+dependencies = [
+    "dafpy",
+    "juliacall",
+    "metacellspy",
+    "numpy",
+    "somegraphspy",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "bumpversion",
+    "flake8",
+    "isort",
+    "jedi",
+    "mypy",
+    "mypy_extensions",
+    "pylint",
+    "pytest",
+    "pytest-cov",
+    "sphinx",
+    "sphinx_rtd_theme",
+    "twine",
+]
+test = [
+    "jedi",
+    "pytest",
+    "pytest-cov",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/tanaylab/metacellsgraphspy"
+"Bug Tracker" = "https://github.com/tanaylab/metacellsgraphspy/issues"
+
+[tool.setuptools.packages.find]
+exclude = ["htmlcov"]
+
+# `juliapkg.json` says which Julia packages this needs. `juliapkg` looks for it inside an importable
+# package, so it lives beside the code rather than at the top of the repository, and is installed
+# along with it.
+[tool.setuptools.package-data]
+metacellsgraphspy = ["juliapkg.json", "py.typed"]

@@ -1,0 +1,5 @@
+{
+    "packages": {
+        "MetacellsGraphs": { "uuid": "b78c44d1-95b4-453a-bb1d-4e115706a256", "url": "https://github.com/tanaylab/MetacellsGraphs.jl.git" }
+    }
+}
