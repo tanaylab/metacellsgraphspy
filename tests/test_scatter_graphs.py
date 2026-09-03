@@ -20,7 +20,7 @@ def _test_daf() -> dp.DafWriter:
     daf.add_axis("gene", ["A", "B"])
     daf.add_axis("metacell", ["M1", "M2", "M3"])
     daf.add_axis("block", ["B1", "B2"])
-    # Column-major, which is what `Daf` stores: the layout is not a detail it papers over.
+    # Column-major, which is what ``Daf`` stores: the layout is not a detail it papers over.
     daf.set_matrix(
         "gene", "metacell", "linear_fraction", np.array([[0.1, 0.2, 0.3], [0.3, 0.2, 0.1]], dtype="float32", order="F")
     )
