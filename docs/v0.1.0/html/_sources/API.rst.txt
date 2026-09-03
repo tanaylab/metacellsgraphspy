@@ -7,3 +7,4 @@ API
 
   julia_import
   scatter_graphs
+  heatmap_graphs
