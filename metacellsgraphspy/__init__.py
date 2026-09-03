@@ -16,3 +16,4 @@ __version__ = "0.1.0"
 # pylint: disable=wildcard-import,unused-wildcard-import
 
 from .julia_import import *
+from .scatter_graphs import *

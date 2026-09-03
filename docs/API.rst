@@ -6,3 +6,4 @@ API
 .. toctree::
 
   julia_import
+  scatter_graphs
