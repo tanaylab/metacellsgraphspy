@@ -27,6 +27,10 @@ def _test_daf() -> dp.DafWriter:
     daf.set_matrix(
         "gene", "block", "linear_fraction", np.array([[0.15, 0.35], [0.35, 0.15]], dtype="float32", order="F")
     )
+    daf.set_vector("metacell", "umap_x", np.array([0.0, 1.0, 2.0], dtype="float32"))
+    daf.set_vector("metacell", "umap_y", np.array([2.0, 1.0, 0.0], dtype="float32"))
+    daf.set_vector("block", "umap_x", np.array([0.5, 1.5], dtype="float32"))
+    daf.set_vector("block", "umap_y", np.array([1.5, 0.5], dtype="float32"))
     return daf
 
 
@@ -47,6 +51,26 @@ def test_blocks_gene_gene_graph() -> None:
     graph = mg.blocks_gene_gene_graph(_test_daf(), x_gene="A", y_gene="B")
     assert isinstance(graph, PointsGraph)
     assert list(graph.data.points_xs) == [0.15, 0.35]
+
+
+def test_metacells_umap_graph() -> None:
+    """
+    The metacells UMAP graph is a points graph with a point per metacell.
+    """
+    graph = mg.metacells_umap_graph(_test_daf())
+    assert isinstance(graph, PointsGraph)
+    assert list(graph.data.points_xs) == [0.0, 1.0, 2.0]
+    assert list(graph.data.points_ys) == [2.0, 1.0, 0.0]
+    assert graph.figure is not None
+
+
+def test_blocks_umap_graph() -> None:
+    """
+    The blocks UMAP graph is a points graph with a point per block.
+    """
+    graph = mg.blocks_umap_graph(_test_daf())
+    assert isinstance(graph, PointsGraph)
+    assert list(graph.data.points_xs) == [0.5, 1.5]
 
 
 def test_gene_fraction_regularization() -> None:

@@ -13,7 +13,9 @@ from .julia_import import jl
 
 __all__ = [
     "blocks_gene_gene_graph",
+    "blocks_umap_graph",
     "metacells_gene_gene_graph",
+    "metacells_umap_graph",
 ]
 
 
@@ -59,3 +61,21 @@ def blocks_gene_gene_graph(
             **_given(gene_fraction_regularization=gene_fraction_regularization),
         )
     )
+
+
+def metacells_umap_graph(daf: DafReader) -> PointsGraph:
+    """
+    The 2D UMAP embedding of the metacells, a point per metacell. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.metacells_umap_graph>`__
+    for details.
+    """
+    return PointsGraph.wrap_jl_object(jl.MetacellsGraphs.metacells_umap_graph(daf))
+
+
+def blocks_umap_graph(daf: DafReader) -> PointsGraph:
+    """
+    The 2D UMAP embedding of the blocks, a point per block. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.blocks_umap_graph>`__
+    for details.
+    """
+    return PointsGraph.wrap_jl_object(jl.MetacellsGraphs.blocks_umap_graph(daf))
