@@ -14,6 +14,7 @@ from .julia_import import jl
 __all__ = [
     "blocks_gene_gene_graph",
     "blocks_umap_graph",
+    "gene_base_delta_correlations_graph",
     "metacells_gene_gene_graph",
     "metacells_umap_graph",
 ]
@@ -79,3 +80,26 @@ def blocks_umap_graph(daf: DafReader) -> PointsGraph:
     for details.
     """
     return PointsGraph.wrap_jl_object(jl.MetacellsGraphs.blocks_umap_graph(daf))
+
+
+def gene_base_delta_correlations_graph(
+    *,
+    daf: DafReader,
+    base_daf: DafReader,
+    gene: str,
+    gene_fraction_regularization: Optional[float] = None,
+) -> PointsGraph:
+    """
+    What the metacells did to one gene, a point per base block: how much its correlation with the cells changed,
+    against how much of the gene there is in the block. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_base_delta_correlations_graph>`__
+    for details.
+    """
+    return PointsGraph.wrap_jl_object(
+        jl.MetacellsGraphs.gene_base_delta_correlations_graph(
+            daf=daf,
+            base_daf=base_daf,
+            gene=gene,
+            **_given(gene_fraction_regularization=gene_fraction_regularization),
+        )
+    )

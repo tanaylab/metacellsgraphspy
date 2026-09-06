@@ -131,6 +131,15 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.scatter_graphs.gene_base_delta_correlations_graph">
+<code class="docutils literal notranslate">
+<span class="pre">gene_base_delta_correlations_graph()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.scatter_graphs.metacells_gene_gene_graph">
 <code class="docutils literal notranslate">
 <span class="pre">metacells_gene_gene_graph()
@@ -436,6 +445,147 @@ for details.
 <p>The 2D UMAP embedding of the blocks, a point per block. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.blocks_umap_graph">documentation
+</a>
+for details.
+</p>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.scatter_graphs.gene_base_delta_correlations_graph">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.scatter_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">gene_base_delta_correlations_graph
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="n">
+<span class="pre">DafReader
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">base_daf
+</span>
+</span>
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="n">
+<span class="pre">DafReader
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">gene
+</span>
+</span>
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="n">
+<span class="pre">str
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">gene_fraction_regularization
+</span>
+</span>
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="n">
+<span class="pre">float
+</span>
+<span class="w"> 
+</span>
+<span class="p">
+<span class="pre">|
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">None
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span> 
+<span class="sig-return">
+<span class="sig-return-icon">&#x2192;
+</span> 
+<span class="sig-return-typehint">
+<span class="pre">PointsGraph
+</span>
+</span>
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/scatter_graphs.html#gene_base_delta_correlations_graph">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.scatter_graphs.gene_base_delta_correlations_graph" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>What the metacells did to one gene, a point per base block: how much its correlation with the cells changed,
+against how much of the gene there is in the block. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_base_delta_correlations_graph">documentation
 </a>
 for details.
 </p>

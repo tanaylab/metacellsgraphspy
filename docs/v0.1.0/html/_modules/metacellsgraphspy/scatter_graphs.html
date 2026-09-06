@@ -87,6 +87,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;blocks_gene_gene_graph&quot;</span><span class="p">,</span>
     <span class="s2">&quot;blocks_umap_graph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gene_base_delta_correlations_graph&quot;</span><span class="p">,</span>
     <span class="s2">&quot;metacells_gene_gene_graph&quot;</span><span class="p">,</span>
     <span class="s2">&quot;metacells_umap_graph&quot;</span><span class="p">,</span>
 <span class="p">]</span>
@@ -163,6 +164,32 @@
 <span class="sd">    for details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">PointsGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">blocks_umap_graph</span><span class="p">(</span><span class="n">daf</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="gene_base_delta_correlations_graph">
+<a class="viewcode-back" href="../../scatter_graphs.html#metacellsgraphspy.scatter_graphs.gene_base_delta_correlations_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">gene_base_delta_correlations_graph</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="n">base_daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="n">gene</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointsGraph</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    What the metacells did to one gene, a point per base block: how much its correlation with the cells changed,</span>
+<span class="sd">    against how much of the gene there is in the block. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_base_delta_correlations_graph&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">PointsGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">gene_base_delta_correlations_graph</span><span class="p">(</span>
+            <span class="n">daf</span><span class="o">=</span><span class="n">daf</span><span class="p">,</span>
+            <span class="n">base_daf</span><span class="o">=</span><span class="n">base_daf</span><span class="p">,</span>
+            <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
 
 </pre></div>
 
