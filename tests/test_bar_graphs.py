@@ -70,7 +70,7 @@ def test_improved_genes_graph() -> None:
     daf, base_daf = _test_dafs()
     graph = mg.improved_genes_graph(daf=daf, base_daf=base_daf)
     assert isinstance(graph, SeriesBarsGraph)
-    bars_names = graph.data.bars_names
+    bars_names = graph.data.bars.names
     assert bars_names is not None
     assert list(bars_names) == ["B", "A"]
     assert graph.configuration.mirrored
@@ -84,7 +84,7 @@ def test_degraded_genes_graph() -> None:
     daf, base_daf = _test_dafs()
     graph = mg.degraded_genes_graph(daf=daf, base_daf=base_daf)
     assert isinstance(graph, SeriesBarsGraph)
-    bars_names = graph.data.bars_names
+    bars_names = graph.data.bars.names
     assert bars_names is not None
     assert list(bars_names) == ["A", "B"]
 
@@ -95,6 +95,6 @@ def test_genes_count() -> None:
     """
     daf, base_daf = _test_dafs()
     graph = mg.improved_genes_graph(daf=daf, base_daf=base_daf, genes_count=1)
-    bars_names = graph.data.bars_names
+    bars_names = graph.data.bars.names
     assert bars_names is not None
     assert list(bars_names) == ["A"]

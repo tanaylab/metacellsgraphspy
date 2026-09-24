@@ -9,11 +9,22 @@ something the notebook can display - which is a ``somegraphspy`` graph rather th
 # shape of base. The same disable is in that file, since the check needs both sides to report it.
 # pylint: disable=duplicate-code
 
+from typing import Any
+from typing import List
+
 import dafpy as dp
 import numpy as np
 from somegraphspy import PointsGraph
 
 import metacellsgraphspy as mg
+
+
+def _list(values: Any) -> List[Any]:
+    """
+    A graph field as a list, once it is known to be filled.
+    """
+    assert values is not None
+    return list(values)
 
 
 def _test_daf() -> dp.DafWriter:
@@ -38,43 +49,42 @@ def _test_daf() -> dp.DafWriter:
     return daf
 
 
-def test_metacells_gene_gene_graph() -> None:
+def test_gene_gene_graph() -> None:
     """
-    The metacells graph is a points graph with a point per metacell.
+    The gene-gene graph is a points graph with a point per metacell by default.
     """
-    graph = mg.metacells_gene_gene_graph(_test_daf(), x_gene="A", y_gene="B")
+    graph = mg.gene_gene_graph(_test_daf(), x_gene="A", y_gene="B")
     assert isinstance(graph, PointsGraph)
-    assert list(graph.data.points_xs) == [0.1, 0.2, 0.3]
+    assert _list(graph.data.x.vector) == [np.float32(0.1), np.float32(0.2), np.float32(0.3)]
+    assert _list(graph.data.points.entities.names) == ["M1", "M2", "M3"]
     assert graph.figure is not None
 
 
-def test_blocks_gene_gene_graph() -> None:
+def test_gene_gene_graph_of_blocks() -> None:
     """
-    The blocks graph is a points graph with a point per block.
+    The axis picks which entries the points are, and the entries pick which of them are shown.
     """
-    graph = mg.blocks_gene_gene_graph(_test_daf(), x_gene="A", y_gene="B")
+    graph = mg.gene_gene_graph(_test_daf(), axis="block", x_gene="A", y_gene="B")
     assert isinstance(graph, PointsGraph)
-    assert list(graph.data.points_xs) == [0.15, 0.35]
+    assert _list(graph.data.x.vector) == [np.float32(0.15), np.float32(0.35)]
+
+    graph = mg.gene_gene_graph(_test_daf(), axis="block", x_gene="A", y_gene="B", entries=["B2"])
+    assert _list(graph.data.x.vector) == [np.float32(0.35)]
+    assert _list(graph.data.points.entities.names) == ["B2"]
 
 
-def test_metacells_umap_graph() -> None:
+def test_umap_graph() -> None:
     """
-    The metacells UMAP graph is a points graph with a point per metacell.
+    The UMAP graph is a points graph with a point per metacell by default, and per block on request.
     """
-    graph = mg.metacells_umap_graph(_test_daf())
+    graph = mg.umap_graph(_test_daf())
     assert isinstance(graph, PointsGraph)
-    assert list(graph.data.points_xs) == [0.0, 1.0, 2.0]
-    assert list(graph.data.points_ys) == [2.0, 1.0, 0.0]
+    assert _list(graph.data.x.vector) == [0.0, 1.0, 2.0]
+    assert _list(graph.data.y.vector) == [2.0, 1.0, 0.0]
     assert graph.figure is not None
 
-
-def test_blocks_umap_graph() -> None:
-    """
-    The blocks UMAP graph is a points graph with a point per block.
-    """
-    graph = mg.blocks_umap_graph(_test_daf())
-    assert isinstance(graph, PointsGraph)
-    assert list(graph.data.points_xs) == [0.5, 1.5]
+    graph = mg.umap_graph(_test_daf(), axis="block", entries=[2])
+    assert _list(graph.data.x.vector) == [1.5]
 
 
 def test_gene_base_delta_correlations_graph() -> None:
@@ -102,8 +112,8 @@ def test_gene_base_delta_correlations_graph() -> None:
 
     graph = mg.gene_base_delta_correlations_graph(daf=daf, base_daf=base_daf, gene="A")
     assert isinstance(graph, PointsGraph)
-    assert [round(x, 3) for x in graph.data.points_xs] == [0.1, -0.1]
-    assert list(graph.data.points_ys) == [0.1, 0.2]
+    assert [round(float(x), 3) for x in _list(graph.data.x.vector)] == [0.1, -0.1]
+    assert [round(float(y), 3) for y in _list(graph.data.y.vector)] == [0.1, 0.2]
     assert graph.figure is not None
 
 
@@ -111,6 +121,6 @@ def test_gene_fraction_regularization() -> None:
     """
     The regularization reaches the axes it is applied on.
     """
-    graph = mg.metacells_gene_gene_graph(_test_daf(), x_gene="A", y_gene="B", gene_fraction_regularization=1e-3)
-    assert graph.configuration.x_axis.log_regularization == 1e-3
-    assert graph.configuration.y_axis.log_regularization == 1e-3
+    graph = mg.gene_gene_graph(_test_daf(), x_gene="A", y_gene="B", gene_fraction_regularization=1e-3)
+    assert graph.configuration.x_axis.scale.log_regularization == 1e-3
+    assert graph.configuration.y_axis.scale.log_regularization == 1e-3

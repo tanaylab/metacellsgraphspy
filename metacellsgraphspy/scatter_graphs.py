@@ -8,78 +8,57 @@ from typing import Optional
 from dafpy import DafReader
 from somegraphspy import PointsGraph
 
+from .data_sources import Entries
 from .julia_import import _given
+from .julia_import import _to_julia_array
 from .julia_import import jl
 
 __all__ = [
-    "blocks_gene_gene_graph",
-    "blocks_umap_graph",
     "gene_base_delta_correlations_graph",
-    "metacells_gene_gene_graph",
-    "metacells_umap_graph",
+    "gene_gene_graph",
+    "umap_graph",
 ]
 
 
-def metacells_gene_gene_graph(
+def gene_gene_graph(
     daf: DafReader,
     *,
+    axis: Optional[str] = None,
     x_gene: str,
     y_gene: str,
+    entries: Optional[Entries] = None,
     gene_fraction_regularization: Optional[float] = None,
 ) -> PointsGraph:
     """
-    The expression of one gene against another, a point per metacell, on log scale. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.metacells_gene_gene_graph>`__
+    The expression of ``x_gene`` against ``y_gene``, a point per each of the ``entries`` of the ``axis`` (by default,
+    the metacells), on log scale. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_gene_graph>`__
     for details.
     """
     return PointsGraph.wrap_jl_object(
-        jl.MetacellsGraphs.metacells_gene_gene_graph(
+        jl.MetacellsGraphs.gene_gene_graph(
             daf,
             x_gene=x_gene,
             y_gene=y_gene,
-            **_given(gene_fraction_regularization=gene_fraction_regularization),
+            **_given(
+                axis=axis,
+                entries=_to_julia_array(entries),
+                gene_fraction_regularization=gene_fraction_regularization,
+            ),
         )
     )
 
 
-def blocks_gene_gene_graph(
-    daf: DafReader,
-    *,
-    x_gene: str,
-    y_gene: str,
-    gene_fraction_regularization: Optional[float] = None,
-) -> PointsGraph:
+def umap_graph(daf: DafReader, *, axis: Optional[str] = None, entries: Optional[Entries] = None) -> PointsGraph:
     """
-    The expression of one gene against another, a point per block, on log scale. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.blocks_gene_gene_graph>`__
+    The 2D UMAP embedding, a point per each of the ``entries`` of the ``axis`` (by default, the metacells). See the
+    Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.umap_graph>`__
     for details.
     """
     return PointsGraph.wrap_jl_object(
-        jl.MetacellsGraphs.blocks_gene_gene_graph(
-            daf,
-            x_gene=x_gene,
-            y_gene=y_gene,
-            **_given(gene_fraction_regularization=gene_fraction_regularization),
-        )
+        jl.MetacellsGraphs.umap_graph(daf, **_given(axis=axis, entries=_to_julia_array(entries)))
     )
-
-
-def metacells_umap_graph(daf: DafReader) -> PointsGraph:
-    """
-    The 2D UMAP embedding of the metacells, a point per metacell. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.metacells_umap_graph>`__
-    for details.
-    """
-    return PointsGraph.wrap_jl_object(jl.MetacellsGraphs.metacells_umap_graph(daf))
-
-
-def blocks_umap_graph(daf: DafReader) -> PointsGraph:
-    """
-    The 2D UMAP embedding of the blocks, a point per block. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.blocks_umap_graph>`__
-    for details.
-    """
-    return PointsGraph.wrap_jl_object(jl.MetacellsGraphs.blocks_umap_graph(daf))
 
 
 def gene_base_delta_correlations_graph(
@@ -87,11 +66,15 @@ def gene_base_delta_correlations_graph(
     daf: DafReader,
     base_daf: DafReader,
     gene: str,
+    axis: Optional[str] = None,
+    base_axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
     gene_fraction_regularization: Optional[float] = None,
 ) -> PointsGraph:
     """
-    What the metacells did to one gene, a point per base block: how much its correlation with the cells changed,
-    against how much of the gene there is in the block. See the Julia
+    What the metacells did to one gene, a point per each of the ``entries`` of the ``axis`` (by default, the base
+    blocks): how much its correlation with the cells changed, against how much of the gene there is in the entry. See
+    the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_base_delta_correlations_graph>`__
     for details.
     """
@@ -100,6 +83,11 @@ def gene_base_delta_correlations_graph(
             daf=daf,
             base_daf=base_daf,
             gene=gene,
-            **_given(gene_fraction_regularization=gene_fraction_regularization),
+            **_given(
+                axis=axis,
+                base_axis=base_axis,
+                entries=_to_julia_array(entries),
+                gene_fraction_regularization=gene_fraction_regularization,
+            ),
         )
     )

@@ -5,11 +5,22 @@ The Julia side tests what the graphs contain; what is worth testing here is that
 something the notebook can display - which is a ``somegraphspy`` graph rather than a raw Julia object.
 """
 
+from typing import Any
+from typing import List
+
 import dafpy as dp
 import numpy as np
 from somegraphspy import HeatmapGraph
 
 import metacellsgraphspy as mg
+
+
+def _list(values: Any) -> List[Any]:
+    """
+    A graph field as a list, once it is known to be filled.
+    """
+    assert values is not None
+    return list(values)
 
 
 def _test_daf() -> dp.DafWriter:
@@ -39,68 +50,40 @@ def _test_daf() -> dp.DafWriter:
     return daf
 
 
-def test_markers_metacells_heatmap_graph() -> None:
+def test_genes_heatmap_graph() -> None:
     """
-    The metacells markers graph is a heatmap with a column per metacell, showing the fold from the median.
+    The genes heatmap is a heatmap with a row per gene and a column per metacell, showing the fold from the median.
     """
-    graph = mg.markers_metacells_heatmap_graph(_test_daf())
+    graph = mg.genes_heatmap_graph(_test_daf())
     assert isinstance(graph, HeatmapGraph)
-    rows_names = graph.data.rows_names
-    entries_values = graph.data.entries_values
-    assert rows_names is not None and entries_values is not None
-    assert list(rows_names) == ["A", "B"]
-    assert list(entries_values[0, :]) == [-1.0, 1.0]
+    assert _list(graph.data.rows.entities.names) == ["A", "B", "C"]
+    assert _list(graph.data.columns.entities.names) == ["M1", "M2"]
+    matrix = graph.data.entries.matrix
+    assert matrix is not None
+    assert list(matrix[0, :]) == [-1.0, 1.0]
     assert graph.figure is not None
 
 
-def test_markers_count() -> None:
+def test_genes_selection() -> None:
     """
-    The count reaches the choice of which markers are shown.
+    The gene selection sources pick which genes are shown.
     """
-    graph = mg.markers_metacells_heatmap_graph(_test_daf(), markers_count=1)
-    rows_names = graph.data.rows_names
-    assert rows_names is not None
-    assert list(rows_names) == ["A"]
+    daf = _test_daf()
+    graph = mg.genes_heatmap_graph(daf, genes=mg.get_top_marker_gene_indices(daf, markers_count=1))
+    assert _list(graph.data.rows.entities.names) == ["A"]
+
+    graph = mg.genes_heatmap_graph(daf, genes=mg.get_skeleton_gene_indices(daf))
+    assert _list(graph.data.rows.entities.names) == ["A"]
+
+    graph = mg.genes_heatmap_graph(daf, genes=["B", "C"])
+    assert _list(graph.data.rows.entities.names) == ["B", "C"]
 
 
-def test_skeletons_metacells_heatmap_graph() -> None:
+def test_genes_heatmap_graph_of_blocks() -> None:
     """
-    The metacells skeletons graph shows the skeleton genes.
+    The axis picks which entries the columns are.
     """
-    graph = mg.skeletons_metacells_heatmap_graph(_test_daf())
+    graph = mg.genes_heatmap_graph(_test_daf(), axis="block", columns_axis_title="Blocks!")
     assert isinstance(graph, HeatmapGraph)
-    rows_names = graph.data.rows_names
-    assert rows_names is not None
-    assert list(rows_names) == ["A"]
-
-
-def test_markers_blocks_heatmap_graph() -> None:
-    """
-    The blocks markers graph is a heatmap with a column per block.
-    """
-    graph = mg.markers_blocks_heatmap_graph(_test_daf())
-    assert isinstance(graph, HeatmapGraph)
-    columns_hovers = graph.data.columns_hovers
-    assert columns_hovers is not None
-    assert list(columns_hovers) == ["block: B1", "block: B2"]
-
-
-def test_skeletons_blocks_heatmap_graph() -> None:
-    """
-    The blocks skeletons graph shows the skeleton genes.
-    """
-    graph = mg.skeletons_blocks_heatmap_graph(_test_daf())
-    assert isinstance(graph, HeatmapGraph)
-    rows_names = graph.data.rows_names
-    assert rows_names is not None
-    assert list(rows_names) == ["A"]
-
-
-def test_group_by_block() -> None:
-    """
-    The grouping flags reach the groups of the columns.
-    """
-    graph = mg.markers_metacells_heatmap_graph(_test_daf(), group_by_block=True)
-    columns_groups = graph.data.columns_groups
-    assert columns_groups is not None
-    assert list(columns_groups) == ["B1", "B2"]
+    assert _list(graph.data.columns.entities.names) == ["B1", "B2"]
+    assert graph.configuration.columns.title == "Blocks!"

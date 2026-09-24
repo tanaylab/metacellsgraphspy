@@ -81,120 +81,44 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">HeatmapGraph</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">Entries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_given</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_to_julia_array</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;markers_blocks_heatmap_graph&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;markers_metacells_heatmap_graph&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;skeletons_blocks_heatmap_graph&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;skeletons_metacells_heatmap_graph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;genes_heatmap_graph&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
-<div class="viewcode-block" id="markers_metacells_heatmap_graph">
-<a class="viewcode-back" href="../../heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.markers_metacells_heatmap_graph">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">markers_metacells_heatmap_graph</span><span class="p">(</span>
+<div class="viewcode-block" id="genes_heatmap_graph">
+<a class="viewcode-back" href="../../heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.genes_heatmap_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">genes_heatmap_graph</span><span class="p">(</span>
     <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">markers_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">group_by_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">group_by_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">use_global_flow_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rows_axis_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">columns_axis_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_fold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HeatmapGraph</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The expression of the best marker genes in each metacell, as the fold factor of the gene from its median. See the</span>
-<span class="sd">    Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.markers_metacells_heatmap_graph&gt;`__</span>
+<span class="sd">    The expression of the ``genes`` (by default, all of them) in each of the ``entries`` of the ``axis`` (by default,</span>
+<span class="sd">    the metacells), as the fold factor of the gene from its median across the entries. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.genes_heatmap_graph&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">HeatmapGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">markers_metacells_heatmap_graph</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">genes_heatmap_graph</span><span class="p">(</span>
             <span class="n">daf</span><span class="p">,</span>
             <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-                <span class="n">markers_count</span><span class="o">=</span><span class="n">markers_count</span><span class="p">,</span>
-                <span class="n">group_by_type</span><span class="o">=</span><span class="n">group_by_type</span><span class="p">,</span>
-                <span class="n">group_by_block</span><span class="o">=</span><span class="n">group_by_block</span><span class="p">,</span>
-                <span class="n">use_global_flow_order</span><span class="o">=</span><span class="n">use_global_flow_order</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">)</span>
-    <span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="skeletons_metacells_heatmap_graph">
-<a class="viewcode-back" href="../../heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.skeletons_metacells_heatmap_graph">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">skeletons_metacells_heatmap_graph</span><span class="p">(</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">group_by_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">group_by_block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">use_global_flow_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HeatmapGraph</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The expression of the skeleton genes in each metacell, as the fold factor of the gene from its median. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.skeletons_metacells_heatmap_graph&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">HeatmapGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">skeletons_metacells_heatmap_graph</span><span class="p">(</span>
-            <span class="n">daf</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-                <span class="n">group_by_type</span><span class="o">=</span><span class="n">group_by_type</span><span class="p">,</span>
-                <span class="n">group_by_block</span><span class="o">=</span><span class="n">group_by_block</span><span class="p">,</span>
-                <span class="n">use_global_flow_order</span><span class="o">=</span><span class="n">use_global_flow_order</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">)</span>
-    <span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="markers_blocks_heatmap_graph">
-<a class="viewcode-back" href="../../heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.markers_blocks_heatmap_graph">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">markers_blocks_heatmap_graph</span><span class="p">(</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">markers_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">group_by_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">use_global_flow_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HeatmapGraph</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The expression of the best marker genes in each block, as the fold factor of the gene from its median. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.markers_blocks_heatmap_graph&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">HeatmapGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">markers_blocks_heatmap_graph</span><span class="p">(</span>
-            <span class="n">daf</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-                <span class="n">markers_count</span><span class="o">=</span><span class="n">markers_count</span><span class="p">,</span>
-                <span class="n">group_by_type</span><span class="o">=</span><span class="n">group_by_type</span><span class="p">,</span>
-                <span class="n">use_global_flow_order</span><span class="o">=</span><span class="n">use_global_flow_order</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">)</span>
-    <span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="skeletons_blocks_heatmap_graph">
-<a class="viewcode-back" href="../../heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.skeletons_blocks_heatmap_graph">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">skeletons_blocks_heatmap_graph</span><span class="p">(</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">group_by_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">use_global_flow_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HeatmapGraph</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The expression of the skeleton genes in each block, as the fold factor of the gene from its median. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.skeletons_blocks_heatmap_graph&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">HeatmapGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">skeletons_blocks_heatmap_graph</span><span class="p">(</span>
-            <span class="n">daf</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-                <span class="n">group_by_type</span><span class="o">=</span><span class="n">group_by_type</span><span class="p">,</span>
-                <span class="n">use_global_flow_order</span><span class="o">=</span><span class="n">use_global_flow_order</span><span class="p">,</span>
+                <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+                <span class="n">genes</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">genes</span><span class="p">),</span>
+                <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+                <span class="n">rows_axis_title</span><span class="o">=</span><span class="n">rows_axis_title</span><span class="p">,</span>
+                <span class="n">columns_axis_title</span><span class="o">=</span><span class="n">columns_axis_title</span><span class="p">,</span>
+                <span class="n">max_fold</span><span class="o">=</span><span class="n">max_fold</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>

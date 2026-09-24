@@ -42,6 +42,10 @@ nitpick_ignore = [
     ('py:class', 'numpy.ndarray'),
     ('py:class', 'plotly.graph_objs._figure.Figure'),
 ]
+# The types of the packages this one wraps are documented there, not here.
+nitpick_ignore_regex = [
+    (r'py:class', r'(dafpy|pandas|somegraphspy)\..*'),
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
