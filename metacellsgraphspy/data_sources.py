@@ -22,10 +22,8 @@ from typing import Union
 import numpy as np
 import pandas as pd
 from dafpy import DafReader
-from somegraphspy import BoolsVector
 from somegraphspy import IntegersVector
 from somegraphspy import MatrixDataSinks
-from somegraphspy import NumbersMatrix
 from somegraphspy import NumbersVector
 from somegraphspy import Sinks
 from somegraphspy import StringsVector
@@ -99,15 +97,9 @@ __all__ = [
     "put_gene_correlation_change_configuration",
     "put_genes_expression_configuration",
     "put_genes_fold_configuration",
-    "put_matrix_data",
-    "put_matrix_names_data",
     "put_type_configuration",
     "put_umap_configuration",
     "put_umap_data",
-    "put_vector_data",
-    "put_vector_mask_data",
-    "put_vector_names_data",
-    "put_vector_order_data",
 ]
 
 #: Which entries of an axis a data source uses: their names, or their (1-based) indices.
@@ -150,15 +142,6 @@ def fill_axis_names_data(
     )
 
 
-def put_vector_names_data(sinks: VectorDataSinks, name_per_entry: StringsVector) -> None:
-    """
-    Name the entities of the ``sinks`` after the ``name_per_entry``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_names_data!>`__
-    for details.
-    """
-    jl.MetacellsGraphs.put_vector_names_data_b(_to_julia(sinks), _to_julia_array(name_per_entry))
-
-
 def get_axis_entries_vector(daf: DafReader, *, axis: str, entries: Optional[Entries] = None) -> np.ndarray:
     """
     Get the name for each of the ``entries`` of the ``daf`` ``axis`` (by default, all of them). See the Julia
@@ -199,21 +182,6 @@ def fill_axis_vector_data(
     )
 
 
-def put_vector_data(
-    sinks: VectorDataSinks,
-    value_per_entry: Union[NumbersVector, StringsVector, BoolsVector],
-    *,
-    title: Optional[str] = None,
-) -> None:
-    """
-    Put a ``value_per_entry`` of an axis into the ``sinks``: as the values of a role, and as a hover line on the
-    entities. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_data!>`__
-    for details.
-    """
-    jl.MetacellsGraphs.put_vector_data_b(_to_julia(sinks), _to_julia_array(value_per_entry), **_given(title=title))
-
-
 def get_axis_vector(
     daf: DafReader,
     *,
@@ -237,27 +205,6 @@ def get_axis_vector(
             **_given(via=_to_julia_array(via), empty_value=empty_value, entries=_to_julia_array(entries)),
         )
     )
-
-
-# Masks.
-
-
-def put_vector_mask_data(sinks: VectorDataSinks, is_shown_per_entry: BoolsVector) -> None:
-    """
-    Hide the entities of the ``sinks`` which are not shown by the ``is_shown_per_entry`` mask. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_mask_data!>`__
-    for details.
-    """
-    jl.MetacellsGraphs.put_vector_mask_data_b(_to_julia(sinks), _to_julia_array(is_shown_per_entry))
-
-
-def put_vector_order_data(sinks: VectorDataSinks, order: IntegersVector) -> None:
-    """
-    Give the entities of the ``sinks`` the ``order`` (a permutation of their 1-based indices). See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_order_data!>`__
-    for details.
-    """
-    jl.MetacellsGraphs.put_vector_order_data_b(_to_julia(sinks), _to_julia_array(order))
 
 
 # Frame columns.
@@ -373,17 +320,6 @@ def fill_axes_names_data(
     )
 
 
-def put_matrix_names_data(sinks: MatrixDataSinks, name_per_row: StringsVector, name_per_column: StringsVector) -> None:
-    """
-    Name the rows and the columns of the ``sinks`` after the ``name_per_row`` and the ``name_per_column``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_matrix_names_data!>`__
-    for details.
-    """
-    jl.MetacellsGraphs.put_matrix_names_data_b(
-        _to_julia(sinks), _to_julia_array(name_per_row), _to_julia_array(name_per_column)
-    )
-
-
 def fill_axes_matrix_data(
     sinks: MatrixDataSinks,
     daf: DafReader,
@@ -408,20 +344,6 @@ def fill_axes_matrix_data(
         columns_axis=columns_axis,
         query_suffix=query_suffix,
         **_given(row_entries=_to_julia_array(row_entries), column_entries=_to_julia_array(column_entries), title=title),
-    )
-
-
-def put_matrix_data(
-    sinks: MatrixDataSinks, value_per_row_per_column: NumbersMatrix, *, title: Optional[str] = None
-) -> None:
-    """
-    Put a ``value_per_row_per_column`` of two axes into the ``sinks``: as the values of the entries, and as a hover line
-    on each entry. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_matrix_data!>`__
-    for details.
-    """
-    jl.MetacellsGraphs.put_matrix_data_b(
-        _to_julia(sinks), _to_julia_array(value_per_row_per_column), **_given(title=title)
     )
 
 

@@ -86,8 +86,8 @@ def test_fill_several_sinks() -> None:
     daf = _test_daf()
     graph = sg.points_graph()
     mg.fill_n_cells([graph.x_axis_vector_fields(), graph.points_colors_vector_fields()], daf)
-    mg.put_vector_mask_data(graph.points_entities(), [True, False, True])
-    mg.put_vector_order_data(graph.points_entities(), [3, 1, 2])
+    sg.put_vector_mask_data(graph.points_entities(), [True, False, True])
+    sg.put_vector_order_data(graph.points_entities(), [3, 1, 2])
     assert _list(graph.data.x.vector) == [10, 20, 30]
     assert _list(graph.data.points.colors.vector) == [10, 20, 30]
     assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
@@ -175,8 +175,8 @@ def test_put_data_and_configuration() -> None:
     Data and configuration already in hand are written by the ``put_`` functions.
     """
     graph = sg.points_graph()
-    mg.put_vector_data(graph.x_axis_vector_fields(), np.array([1.0, 2.0]), title="X")
-    mg.put_vector_names_data(graph.points_entities(), ["a", "b"])
+    sg.put_vector_data(graph.x_axis_vector_fields(), np.array([1.0, 2.0]), title="X")
+    sg.put_vector_names_data(graph.points_entities(), ["a", "b"])
     mg.put_umap_data(graph.y_axis_vector_fields(), np.array([3.0, 4.0]))
     mg.put_umap_configuration(graph.y_axis_vector_fields())
     mg.put_count_configuration(graph.x_axis_vector_fields())

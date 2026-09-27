@@ -95,10 +95,8 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoolsVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegersVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MatrixDataSinks</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumbersMatrix</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumbersVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sinks</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringsVector</span>
@@ -172,15 +170,9 @@
     <span class="s2">&quot;put_gene_correlation_change_configuration&quot;</span><span class="p">,</span>
     <span class="s2">&quot;put_genes_expression_configuration&quot;</span><span class="p">,</span>
     <span class="s2">&quot;put_genes_fold_configuration&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;put_matrix_data&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;put_matrix_names_data&quot;</span><span class="p">,</span>
     <span class="s2">&quot;put_type_configuration&quot;</span><span class="p">,</span>
     <span class="s2">&quot;put_umap_configuration&quot;</span><span class="p">,</span>
     <span class="s2">&quot;put_umap_data&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;put_vector_data&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;put_vector_mask_data&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;put_vector_names_data&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;put_vector_order_data&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1">#: Which entries of an axis a data source uses: their names, or their (1-based) indices.</span>
@@ -223,18 +215,6 @@
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_axis_names_data_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">))</span>
     <span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="put_vector_names_data">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_vector_names_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_vector_names_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">name_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Name the entities of the ``sinks`` after the ``name_per_entry``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_names_data!&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_vector_names_data_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">name_per_entry</span><span class="p">))</span></div>
 
 
 
@@ -284,24 +264,6 @@
 
 
 
-<div class="viewcode-block" id="put_vector_data">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_vector_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_vector_data</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
-    <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NumbersVector</span><span class="p">,</span> <span class="n">StringsVector</span><span class="p">,</span> <span class="n">BoolsVector</span><span class="p">],</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Put a ``value_per_entry`` of an axis into the ``sinks``: as the values of a role, and as a hover line on the</span>
-<span class="sd">    entities. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_data!&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_vector_data_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">))</span></div>
-
-
-
 <div class="viewcode-block" id="get_axis_vector">
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_axis_vector">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_axis_vector</span><span class="p">(</span>
@@ -327,33 +289,6 @@
             <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">)),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
-
-
-
-<span class="c1"># Masks.</span>
-
-
-<div class="viewcode-block" id="put_vector_mask_data">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_vector_mask_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_vector_mask_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">is_shown_per_entry</span><span class="p">:</span> <span class="n">BoolsVector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Hide the entities of the ``sinks`` which are not shown by the ``is_shown_per_entry`` mask. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_mask_data!&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_vector_mask_data_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">is_shown_per_entry</span><span class="p">))</span></div>
-
-
-
-<div class="viewcode-block" id="put_vector_order_data">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_vector_order_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_vector_order_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">IntegersVector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Give the entities of the ``sinks`` the ``order`` (a permutation of their 1-based indices). See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_order_data!&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_vector_order_data_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">order</span><span class="p">))</span></div>
 
 
 
@@ -491,20 +426,6 @@
 
 
 
-<div class="viewcode-block" id="put_matrix_names_data">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_matrix_names_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_matrix_names_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">MatrixDataSinks</span><span class="p">,</span> <span class="n">name_per_row</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span> <span class="n">name_per_column</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Name the rows and the columns of the ``sinks`` after the ``name_per_row`` and the ``name_per_column``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_matrix_names_data!&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_matrix_names_data_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">name_per_row</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">name_per_column</span><span class="p">)</span>
-    <span class="p">)</span></div>
-
-
-
 <div class="viewcode-block" id="fill_axes_matrix_data">
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_axes_matrix_data">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fill_axes_matrix_data</span><span class="p">(</span>
@@ -531,23 +452,6 @@
         <span class="n">columns_axis</span><span class="o">=</span><span class="n">columns_axis</span><span class="p">,</span>
         <span class="n">query_suffix</span><span class="o">=</span><span class="n">query_suffix</span><span class="p">,</span>
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">row_entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">row_entries</span><span class="p">),</span> <span class="n">column_entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">column_entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">),</span>
-    <span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="put_matrix_data">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_matrix_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_matrix_data</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">MatrixDataSinks</span><span class="p">,</span> <span class="n">value_per_row_per_column</span><span class="p">:</span> <span class="n">NumbersMatrix</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Put a ``value_per_row_per_column`` of two axes into the ``sinks``: as the values of the entries, and as a hover line</span>
-<span class="sd">    on each entry. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_matrix_data!&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_matrix_data_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">value_per_row_per_column</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
