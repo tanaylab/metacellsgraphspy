@@ -107,6 +107,7 @@ __all__ = [
     "put_vector_data",
     "put_vector_mask_data",
     "put_vector_names_data",
+    "put_vector_order_data",
 ]
 
 #: Which entries of an axis a data source uses: their names, or their (1-based) indices.
@@ -248,6 +249,15 @@ def put_vector_mask_data(sinks: VectorDataSinks, is_shown_per_entry: BoolsVector
     for details.
     """
     jl.MetacellsGraphs.put_vector_mask_data_b(_to_julia(sinks), _to_julia_array(is_shown_per_entry))
+
+
+def put_vector_order_data(sinks: VectorDataSinks, order: IntegersVector) -> None:
+    """
+    Give the entities of the ``sinks`` the ``order`` (a permutation of their 1-based indices). See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_order_data!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_vector_order_data_b(_to_julia(sinks), _to_julia_array(order))
 
 
 # Frame columns.

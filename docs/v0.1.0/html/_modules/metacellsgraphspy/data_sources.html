@@ -180,6 +180,7 @@
     <span class="s2">&quot;put_vector_data&quot;</span><span class="p">,</span>
     <span class="s2">&quot;put_vector_mask_data&quot;</span><span class="p">,</span>
     <span class="s2">&quot;put_vector_names_data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;put_vector_order_data&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="c1">#: Which entries of an axis a data source uses: their names, or their (1-based) indices.</span>
@@ -341,6 +342,18 @@
 <span class="sd">    for details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_vector_mask_data_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">is_shown_per_entry</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="put_vector_order_data">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_vector_order_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_vector_order_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">IntegersVector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Give the entities of the ``sinks`` the ``order`` (a permutation of their 1-based indices). See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_vector_order_data!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_vector_order_data_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_array</span><span class="p">(</span><span class="n">order</span><span class="p">))</span></div>
 
 
 

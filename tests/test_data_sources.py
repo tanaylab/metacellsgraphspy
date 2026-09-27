@@ -87,11 +87,13 @@ def test_fill_several_sinks() -> None:
     graph = sg.points_graph()
     mg.fill_n_cells([graph.x_axis_vector_fields(), graph.points_colors_vector_fields()], daf)
     mg.put_vector_mask_data(graph.points_entities(), [True, False, True])
+    mg.put_vector_order_data(graph.points_entities(), [3, 1, 2])
     assert _list(graph.data.x.vector) == [10, 20, 30]
     assert _list(graph.data.points.colors.vector) == [10, 20, 30]
     assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
     assert graph.configuration.points.colors.scale.log_base == sg.LogBase.Log2Base
     assert _list(graph.data.points.entities.mask) == [True, False, True]
+    assert _list(graph.data.points.entities.order) == [3, 1, 2]
 
 
 def test_get_vectors() -> None:
