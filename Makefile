@@ -151,7 +151,7 @@ $(TODO): .make.$(TODO)  ## check there are no leftover TODO-X
 black: .make.black  ## check format with black
 
 .make.black: $(PY_SOURCE_FILES)
-	black --line-length $(MAX_LINE_LENGTH) --check $(NAME) tests
+	black --line-length $(MAX_LINE_LENGTH) --target-version py311 --check $(NAME) tests
 	touch $@
 
 flake8: .make.flake8  ## check format with flake8
@@ -172,7 +172,7 @@ isortify:  ## sort imports with isort
 	isort --line-length $(MAX_LINE_LENGTH) --force-single-line-imports $(NAME) tests
 
 blackify:  ## reformat with black
-	black --line-length $(MAX_LINE_LENGTH) $(NAME) tests
+	black --line-length $(MAX_LINE_LENGTH) --target-version py311 $(NAME) tests
 
 smells: mypy pylint  ## check for code smells
 

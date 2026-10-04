@@ -265,30 +265,10 @@
 <span class="pre">daf
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">DafReader
-</span>
-</span>
 </em>, 
 <em class="sig-param">
 <span class="n">
 <span class="pre">base_daf
-</span>
-</span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">DafReader
 </span>
 </span>
 </em>, 
@@ -297,49 +277,15 @@
 <span class="pre">gene
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">str
-</span>
-</span>
 </em>, 
 <em class="sig-param">
 <span class="n">
 <span class="pre">axis
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">str
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -351,33 +297,9 @@
 <span class="pre">base_axis
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">str
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -389,73 +311,9 @@
 <span class="pre">entries
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">ndarray
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">Sequence
-</span>
-<span class="p">
-<span class="pre">[
-</span>
-</span>
-<span class="pre">str
-</span>
-<span class="p">
-<span class="pre">]
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">Sequence
-</span>
-<span class="p">
-<span class="pre">[
-</span>
-</span>
-<span class="pre">int
-</span>
-<span class="p">
-<span class="pre">]
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -467,33 +325,9 @@
 <span class="pre">gene_fraction_regularization
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">float
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -501,14 +335,6 @@
 </span>
 </em>
 <span class="sig-paren">)
-</span> 
-<span class="sig-return">
-<span class="sig-return-icon">&#x2192;
-</span> 
-<span class="sig-return-typehint">
-<span class="pre">PointsGraph
-</span>
-</span>
 </span>
 <a class="reference internal" href="_modules/metacellsgraphspy/scatter_graphs.html#gene_base_delta_correlations_graph">
 <span class="viewcode-link">
@@ -538,6 +364,134 @@ the Julia
 for details.
 </p>
 
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>base_daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>gene
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>base_axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>gene_fraction_regularization
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>PointsGraph
+</em>
+</p>
+
+</dd>
+
+</dl>
+
 </dd>
 </dl>
 
@@ -561,16 +515,6 @@ for details.
 <span class="pre">daf
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">DafReader
-</span>
-</span>
 </em>, 
 <em class="sig-param">
 <span class="keyword-only-separator o">
@@ -585,33 +529,9 @@ for details.
 <span class="pre">axis
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">str
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -623,30 +543,10 @@ for details.
 <span class="pre">x_gene
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">str
-</span>
-</span>
 </em>, 
 <em class="sig-param">
 <span class="n">
 <span class="pre">y_gene
-</span>
-</span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">str
 </span>
 </span>
 </em>, 
@@ -655,73 +555,9 @@ for details.
 <span class="pre">entries
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">ndarray
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">Sequence
-</span>
-<span class="p">
-<span class="pre">[
-</span>
-</span>
-<span class="pre">str
-</span>
-<span class="p">
-<span class="pre">]
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">Sequence
-</span>
-<span class="p">
-<span class="pre">[
-</span>
-</span>
-<span class="pre">int
-</span>
-<span class="p">
-<span class="pre">]
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -733,33 +569,9 @@ for details.
 <span class="pre">gene_fraction_regularization
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">float
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -767,14 +579,6 @@ for details.
 </span>
 </em>
 <span class="sig-paren">)
-</span> 
-<span class="sig-return">
-<span class="sig-return-icon">&#x2192;
-</span> 
-<span class="sig-return-typehint">
-<span class="pre">PointsGraph
-</span>
-</span>
 </span>
 <a class="reference internal" href="_modules/metacellsgraphspy/scatter_graphs.html#gene_gene_graph">
 <span class="viewcode-link">
@@ -811,6 +615,121 @@ the metacells), on log scale. See the Julia
 for details.
 </p>
 
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>x_gene
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>y_gene
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>gene_fraction_regularization
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>PointsGraph
+</em>
+</p>
+
+</dd>
+
+</dl>
+
 </dd>
 </dl>
 
@@ -834,16 +753,6 @@ for details.
 <span class="pre">daf
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">DafReader
-</span>
-</span>
 </em>, 
 <em class="sig-param">
 <span class="keyword-only-separator o">
@@ -858,33 +767,9 @@ for details.
 <span class="pre">axis
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">str
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -896,73 +781,9 @@ for details.
 <span class="pre">entries
 </span>
 </span>
-<span class="p">
-<span class="pre">:
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="n">
-<span class="pre">ndarray
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">Sequence
-</span>
-<span class="p">
-<span class="pre">[
-</span>
-</span>
-<span class="pre">str
-</span>
-<span class="p">
-<span class="pre">]
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">Sequence
-</span>
-<span class="p">
-<span class="pre">[
-</span>
-</span>
-<span class="pre">int
-</span>
-<span class="p">
-<span class="pre">]
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="p">
-<span class="pre">|
-</span>
-</span>
-<span class="w"> 
-</span>
-<span class="pre">None
-</span>
-</span>
-<span class="w"> 
-</span>
 <span class="o">
 <span class="pre">=
 </span>
-</span>
-<span class="w"> 
 </span>
 <span class="default_value">
 <span class="pre">None
@@ -970,14 +791,6 @@ for details.
 </span>
 </em>
 <span class="sig-paren">)
-</span> 
-<span class="sig-return">
-<span class="sig-return-icon">&#x2192;
-</span> 
-<span class="sig-return-typehint">
-<span class="pre">PointsGraph
-</span>
-</span>
 </span>
 <a class="reference internal" href="_modules/metacellsgraphspy/scatter_graphs.html#umap_graph">
 <span class="viewcode-link">
@@ -1005,6 +818,90 @@ Julia
 </a>
 for details.
 </p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>PointsGraph
+</em>
+</p>
+
+</dd>
+
+</dl>
 
 </dd>
 </dl>

@@ -26,6 +26,8 @@ extensions = [
 ]
 
 autodoc_member_order = 'bysource'
+# Sphinx mangles nested tuple types (e.g. ``Tuple[float, float]``) in signatures, so the types are listed below instead.
+autodoc_typehints = 'description'
 autosectionlabel_prefix_document = True
 nitpicky = True
 nitpick_ignore = [
