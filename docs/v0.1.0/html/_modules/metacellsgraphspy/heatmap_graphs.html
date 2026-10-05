@@ -71,10 +71,10 @@
            <div itemprop="articleBody">
              
   <h1>Source code for metacellsgraphspy.heatmap_graphs</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Heatmap graphs of a metacells repository. See the Julia</span>
 <span class="sd">`documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html&gt;`__ for details.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
@@ -87,7 +87,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;genes_heatmap_graph&quot;</span><span class="p">,</span>
+    <span class="s2">"genes_heatmap_graph"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -103,12 +103,12 @@
     <span class="n">columns_axis_title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">max_fold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HeatmapGraph</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The expression of the ``genes`` (by default, all of them) in each of the ``entries`` of the ``axis`` (by default,</span>
 <span class="sd">    the metacells), as the fold factor of the gene from its median across the entries. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.genes_heatmap_graph&gt;`__</span>
 <span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">HeatmapGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
         <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">genes_heatmap_graph</span><span class="p">(</span>
             <span class="n">daf</span><span class="p">,</span>

@@ -10,3 +10,5 @@ API
   scatter_graphs
   heatmap_graphs
   bar_graphs
+  anndata_data_sources
+  anndata_graphs

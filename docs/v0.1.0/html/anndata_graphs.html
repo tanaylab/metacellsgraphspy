@@ -13,7 +13,7 @@
   
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-<title>bar_graphs &mdash; MetacellsGraphs 0.1.0 documentation
+<title>anndata_graphs &mdash; MetacellsGraphs 0.1.0 documentation
 </title>
       
 <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
@@ -44,9 +44,7 @@
     
 <link rel="search" title="Search" href="search.html" />
     
-<link rel="next" title="anndata_data_sources" href="anndata_data_sources.html" />
-    
-<link rel="prev" title="heatmap_graphs" href="heatmap_graphs.html" /> 
+<link rel="prev" title="anndata_data_sources" href="anndata_data_sources.html" /> 
 
 </head>
 
@@ -122,31 +120,9 @@
 </a>
 </li>
 
-<li class="toctree-l2 current">
-<a class="current reference internal" href="#">bar_graphs
+<li class="toctree-l2">
+<a class="reference internal" href="bar_graphs.html">bar_graphs
 </a>
-<ul>
-
-<li class="toctree-l3">
-<a class="reference internal" href="#metacellsgraphspy.bar_graphs.degraded_genes_graph">
-<code class="docutils literal notranslate">
-<span class="pre">degraded_genes_graph()
-</span>
-</code>
-</a>
-</li>
-
-<li class="toctree-l3">
-<a class="reference internal" href="#metacellsgraphspy.bar_graphs.improved_genes_graph">
-<code class="docutils literal notranslate">
-<span class="pre">improved_genes_graph()
-</span>
-</code>
-</a>
-</li>
-
-</ul>
-
 </li>
 
 <li class="toctree-l2">
@@ -154,9 +130,22 @@
 </a>
 </li>
 
-<li class="toctree-l2">
-<a class="reference internal" href="anndata_graphs.html">anndata_graphs
+<li class="toctree-l2 current">
+<a class="current reference internal" href="#">anndata_graphs
 </a>
+<ul>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_gene_gene_graph">
+<code class="docutils literal notranslate">
+<span class="pre">ad_gene_gene_graph()
+</span>
+</code>
+</a>
+</li>
+
+</ul>
+
 </li>
 
 </ul>
@@ -203,12 +192,12 @@
 </a>
 </li>
       
-<li class="breadcrumb-item active">bar_graphs
+<li class="breadcrumb-item active">anndata_graphs
 </li>
       
 <li class="wy-breadcrumbs-aside">
             
-<a href="_sources/bar_graphs.rst.txt" rel="nofollow"> View page source
+<a href="_sources/anndata_graphs.rst.txt" rel="nofollow"> View page source
 </a>
       
 </li>
@@ -224,35 +213,77 @@
 <div itemprop="articleBody">
              
   
-<section id="module-metacellsgraphspy.bar_graphs">
+<section id="module-metacellsgraphspy.anndata_graphs">
 
-<span id="bar-graphs">
+<span id="anndata-graphs">
 </span>
-<h1>bar_graphs
-<a class="headerlink" href="#module-metacellsgraphspy.bar_graphs" title="Link to this heading">
+<h1>anndata_graphs
+<a class="headerlink" href="#module-metacellsgraphspy.anndata_graphs" title="Link to this heading">
 </a>
 </h1>
 
-<p>Bar graphs of a metacells repository. See the Julia
+<p>Graphs of a metacells 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> (e.g., read from an 
+<code class="docutils literal notranslate">
+<span class="pre">h5ad
+</span>
+</code> file).
+</p>
 
-<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html">documentation
-</a> for details.
+<p>These are the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterparts of some of the 
+<code class="docutils literal notranslate">
+<span class="pre">Daf
+</span>
+</code> graphs. They are implemented in Python only, using the
+
+<a class="reference internal" href="anndata_data_sources.html#module-metacellsgraphspy.anndata_data_sources" title="metacellsgraphspy.anndata_data_sources">
+<code class="xref py py-mod docutils literal notranslate">
+<span class="pre">anndata_data_sources
+</span>
+</code>
+</a>. Each 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code> entry is a metacell, each 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code> entry is a gene, and
+
+<code class="docutils literal notranslate">
+<span class="pre">X
+</span>
+</code> holds the fraction of the UMIs of each metacell in each gene.
 </p>
 
 <dl class="py function">
 
-<dt class="sig sig-object py" id="metacellsgraphspy.bar_graphs.degraded_genes_graph">
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_graphs.ad_gene_gene_graph">
 
 <span class="sig-prename descclassname">
-<span class="pre">metacellsgraphspy.bar_graphs.
+<span class="pre">metacellsgraphspy.anndata_graphs.
 </span>
 </span>
 <span class="sig-name descname">
-<span class="pre">degraded_genes_graph
+<span class="pre">ad_gene_gene_graph
 </span>
 </span>
 <span class="sig-paren">(
 </span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
 <em class="sig-param">
 <span class="keyword-only-separator o">
 <abbr title="Keyword-only parameters separator (PEP 3102)">
@@ -263,19 +294,19 @@
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">daf
+<span class="pre">x_gene
 </span>
 </span>
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">base_daf
+<span class="pre">y_gene
 </span>
 </span>
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">genes_count
+<span class="pre">entries
 </span>
 </span>
 <span class="o">
@@ -289,7 +320,7 @@
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">regulators_count
+<span class="pre">gene_fraction_regularization
 </span>
 </span>
 <span class="o">
@@ -303,23 +334,45 @@
 </em>
 <span class="sig-paren">)
 </span>
-<a class="reference internal" href="_modules/metacellsgraphspy/bar_graphs.html#degraded_genes_graph">
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_graphs.html#ad_gene_gene_graph">
 <span class="viewcode-link">
 <span class="pre">[source]
 </span>
 </span>
 </a>
-<a class="headerlink" href="#metacellsgraphspy.bar_graphs.degraded_genes_graph" title="Link to this definition">
+<a class="headerlink" href="#metacellsgraphspy.anndata_graphs.ad_gene_gene_graph" title="Link to this definition">
 </a>
 </dt>
 
 <dd>
-<p>The genes whose correlation with their cells the metacells degraded in the most of the base neighborhoods. See the
-Julia
-
-<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html#MetacellsGraphs.BarGraphs.degraded_genes_graph">documentation
-</a>
-for details.
+<p>The expression of 
+<code class="docutils literal notranslate">
+<span class="pre">x_gene
+</span>
+</code> against 
+<code class="docutils literal notranslate">
+<span class="pre">y_gene
+</span>
+</code>, a point per each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>, on log scale.
+This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="scatter_graphs.html#metacellsgraphspy.scatter_graphs.gene_gene_graph" title="metacellsgraphspy.scatter_graphs.gene_gene_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">gene_gene_graph()
+</span>
+</code>
+</a>.
 </p>
 
 <dl class="field-list simple">
@@ -334,29 +387,58 @@ for details.
 
 <li>
 <p>
-<strong>daf
+<strong>adata
 </strong> (
-<em>DafReader
+<em>AnnData
 </em>)
 </p>
 </li>
 
 <li>
 <p>
-<strong>base_daf
+<strong>x_gene
 </strong> (
-<em>DafReader
+<em>str
 </em>)
 </p>
 </li>
 
 <li>
 <p>
-<strong>genes_count
+<strong>y_gene
 </strong> (
-<em>int
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
 </em>
 <em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
 </em>
 <em>None
 </em>)
@@ -365,9 +447,9 @@ for details.
 
 <li>
 <p>
-<strong>regulators_count
+<strong>gene_fraction_regularization
 </strong> (
-<em>int
+<em>float
 </em>
 <em> | 
 </em>
@@ -387,167 +469,7 @@ for details.
 
 <dd class="field-even">
 <p>
-<em>SeriesBarsGraph
-</em>
-</p>
-
-</dd>
-
-</dl>
-
-</dd>
-</dl>
-
-
-<dl class="py function">
-
-<dt class="sig sig-object py" id="metacellsgraphspy.bar_graphs.improved_genes_graph">
-
-<span class="sig-prename descclassname">
-<span class="pre">metacellsgraphspy.bar_graphs.
-</span>
-</span>
-<span class="sig-name descname">
-<span class="pre">improved_genes_graph
-</span>
-</span>
-<span class="sig-paren">(
-</span>
-<em class="sig-param">
-<span class="keyword-only-separator o">
-<abbr title="Keyword-only parameters separator (PEP 3102)">
-<span class="pre">*
-</span>
-</abbr>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">daf
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">base_daf
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">genes_count
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">regulators_count
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
-</span>
-</em>
-<span class="sig-paren">)
-</span>
-<a class="reference internal" href="_modules/metacellsgraphspy/bar_graphs.html#improved_genes_graph">
-<span class="viewcode-link">
-<span class="pre">[source]
-</span>
-</span>
-</a>
-<a class="headerlink" href="#metacellsgraphspy.bar_graphs.improved_genes_graph" title="Link to this definition">
-</a>
-</dt>
-
-<dd>
-<p>The genes whose correlation with their cells the metacells improved in the most of the base neighborhoods. See the
-Julia
-
-<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html#MetacellsGraphs.BarGraphs.improved_genes_graph">documentation
-</a>
-for details.
-</p>
-
-<dl class="field-list simple">
-
-<dt class="field-odd">Parameters
-<span class="colon">:
-</span>
-</dt>
-
-<dd class="field-odd">
-<ul class="simple">
-
-<li>
-<p>
-<strong>daf
-</strong> (
-<em>DafReader
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>base_daf
-</strong> (
-<em>DafReader
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>genes_count
-</strong> (
-<em>int
-</em>
-<em> | 
-</em>
-<em>None
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>regulators_count
-</strong> (
-<em>int
-</em>
-<em> | 
-</em>
-<em>None
-</em>)
-</p>
-</li>
-
-</ul>
-
-</dd>
-
-<dt class="field-even">Return type
-<span class="colon">:
-</span>
-</dt>
-
-<dd class="field-even">
-<p>
-<em>SeriesBarsGraph
+<em>PointsGraph
 </em>
 </p>
 
@@ -570,14 +492,9 @@ for details.
 <footer>
 <div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         
-<a href="heatmap_graphs.html" class="btn btn-neutral float-left" title="heatmap_graphs" accesskey="p" rel="prev">
+<a href="anndata_data_sources.html" class="btn btn-neutral float-left" title="anndata_data_sources" accesskey="p" rel="prev">
 <span class="fa fa-arrow-circle-left" aria-hidden="true">
 </span> Previous
-</a>
-        
-<a href="anndata_data_sources.html" class="btn btn-neutral float-right" title="anndata_data_sources" accesskey="n" rel="next">Next 
-<span class="fa fa-arrow-circle-right" aria-hidden="true">
-</span>
 </a>
     
 </div>

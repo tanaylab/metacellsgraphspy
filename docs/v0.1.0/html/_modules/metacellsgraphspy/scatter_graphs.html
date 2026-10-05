@@ -71,10 +71,10 @@
            <div itemprop="articleBody">
              
   <h1>Source code for metacellsgraphspy.scatter_graphs</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Scatter graphs of a metacells repository. See the Julia</span>
 <span class="sd">`documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html&gt;`__ for details.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
@@ -87,9 +87,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;gene_base_delta_correlations_graph&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;gene_gene_graph&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;umap_graph&quot;</span><span class="p">,</span>
+    <span class="s2">"gene_base_delta_correlations_graph"</span><span class="p">,</span>
+    <span class="s2">"gene_gene_graph"</span><span class="p">,</span>
+    <span class="s2">"umap_graph"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -104,12 +104,12 @@
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointsGraph</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The expression of ``x_gene`` against ``y_gene``, a point per each of the ``entries`` of the ``axis`` (by default,</span>
 <span class="sd">    the metacells), on log scale. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_gene_graph&gt;`__</span>
 <span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">PointsGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
         <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">gene_gene_graph</span><span class="p">(</span>
             <span class="n">daf</span><span class="p">,</span>
@@ -128,12 +128,12 @@
 <div class="viewcode-block" id="umap_graph">
 <a class="viewcode-back" href="../../scatter_graphs.html#metacellsgraphspy.scatter_graphs.umap_graph">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">umap_graph</span><span class="p">(</span><span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointsGraph</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The 2D UMAP embedding, a point per each of the ``entries`` of the ``axis`` (by default, the metacells). See the</span>
 <span class="sd">    Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.umap_graph&gt;`__</span>
 <span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">PointsGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
         <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">umap_graph</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">)))</span>
     <span class="p">)</span></div>
@@ -152,13 +152,13 @@
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointsGraph</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    What the metacells did to one gene, a point per each of the ``entries`` of the ``axis`` (by default, the base</span>
 <span class="sd">    blocks): how much its correlation with the cells changed, against how much of the gene there is in the entry. See</span>
 <span class="sd">    the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_base_delta_correlations_graph&gt;`__</span>
 <span class="sd">    for details.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="n">PointsGraph</span><span class="o">.</span><span class="n">wrap_jl_object</span><span class="p">(</span>
         <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">gene_base_delta_correlations_graph</span><span class="p">(</span>
             <span class="n">daf</span><span class="o">=</span><span class="n">daf</span><span class="p">,</span>
