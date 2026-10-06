@@ -58,6 +58,12 @@ pc: $(TODO) ci staged  ## check everything before commit
 
 ci: format smells pytest docs dist  ## check everything in a CI server
 
+# In a full build, the check that everything is staged runs after the docs, which write files into the repository.
+# This lets the stages run in parallel (`make -j pc`). A stage run by itself is not affected.
+ifneq ($(filter pc ci,$(MAKECMDGOALS)),)
+staged: docs
+endif
+
 staged:  ## check everything is staged for git commit
 	@if git status . | grep -q 'Changes not staged\|Untracked files'; \
 	then \
