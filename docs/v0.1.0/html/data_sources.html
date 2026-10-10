@@ -853,6 +853,27 @@ already have into the
 one of the data or configuration structs a view holds), or a sequence of them.
 </p>
 
+<p>A 
+<code class="docutils literal notranslate">
+<span class="pre">fill_
+</span>
+</code> function which isn’t given its 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> (or 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code>) fills the entries its 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> are already named
+after, or else the whole axis. So when the first data source of a graph picks some entries, the rest follow it without
+being told which they are.
+</p>
+
 <p>Indices are 1-based, as in Julia: the 
 <code class="docutils literal notranslate">
 <span class="pre">entries

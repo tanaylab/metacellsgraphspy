@@ -145,3 +145,20 @@ def test_ad_fill_type(tmp_path: Path) -> None:
     }
     assert graph.configuration.points.colors.show_legend
     assert graph.configuration.points.colors.title == "type"
+
+
+def test_ad_fill_named_entries(tmp_path: Path) -> None:
+    """
+    A fill which isn't given its entries fills the entries its sinks are already named after.
+    """
+    graph = sg.points_graph()
+    adata = _test_adata()
+    mg.ad_fill_gene_expression(graph.x_axis_vector_fields(), adata, gene="A", entries=["M3", "M1"])
+    mg.ad_fill_type(
+        graph.points_colors_vector_fields(),
+        adata,
+        type_property="cell_type",
+        type_colors_csv=_type_colors_csv(tmp_path),
+    )
+    assert _list(graph.data.points.colors.vector) == ["T2", "T1"]
+    assert _list(graph.data.points.entities.names) == ["M3", "M1"]

@@ -78,7 +78,8 @@
 <span class="sd">``obs`` entry is a metacell, each ``var`` entry is a gene, and ``X`` holds the fraction of the UMIs of each metacell in</span>
 <span class="sd">each gene. The data they write into the ``somegraphspy`` graph is the same as their ``Daf`` counterparts write.</span>
 
-<span class="sd">The ``entries`` are the names or the (1-based) indices of the used metacells, as in the ``Daf`` data sources.</span>
+<span class="sd">The ``entries`` are the names or the (1-based) indices of the used metacells, as in the ``Daf`` data sources. As there,</span>
+<span class="sd">a fill which isn't given its ``entries`` fills the entries its ``sinks`` are already named after, or else all of them.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
@@ -89,6 +90,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>  <span class="c1"># type: ignore</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">anndata</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnnData</span>  <span class="c1"># type: ignore</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorDataSinks</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_vector_names_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_vector_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_vector_names_data</span>
 
@@ -126,6 +128,7 @@
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">gene</span><span class="si">}</span><span class="s2"> fraction"</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_vector_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">ad_get_gene_expression_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
     <span class="n">put_genes_expression_configuration</span><span class="p">(</span>
         <span class="n">sinks</span><span class="p">,</span> <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span>
@@ -169,6 +172,7 @@
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"type"</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_vector_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">ad_get_type_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">type_property</span><span class="o">=</span><span class="n">type_property</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
     <span class="n">put_type_configuration</span><span class="p">(</span>
         <span class="n">sinks</span><span class="p">,</span>
@@ -207,6 +211,13 @@
     <span class="n">color_per_type</span><span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">=</span> <span class="n">EMPTY_TYPE_COLOR</span> <span class="k">if</span> <span class="n">empty_type_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">empty_type_color</span>
     <span class="k">return</span> <span class="n">color_per_type</span></div>
 
+
+
+<span class="c1"># The entries a fill uses: the given ones, or else the names its sinks already hold. A ``None`` means all of them.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_vector_names_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">entries</span>
 
 
 <span class="c1"># The 0-based indices of the (1-based or named) entries, or of all the entries.</span>

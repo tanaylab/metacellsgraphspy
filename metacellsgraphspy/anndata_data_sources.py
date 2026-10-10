@@ -5,7 +5,8 @@ These are the ``AnnData`` counterparts of some of the ``Daf`` data sources. They
 ``obs`` entry is a metacell, each ``var`` entry is a gene, and ``X`` holds the fraction of the UMIs of each metacell in
 each gene. The data they write into the ``somegraphspy`` graph is the same as their ``Daf`` counterparts write.
 
-The ``entries`` are the names or the (1-based) indices of the used metacells, as in the ``Daf`` data sources.
+The ``entries`` are the names or the (1-based) indices of the used metacells, as in the ``Daf`` data sources. As there,
+a fill which isn't given its ``entries`` fills the entries its ``sinks`` are already named after, or else all of them.
 """
 
 from typing import Mapping
@@ -16,6 +17,7 @@ import pandas as pd
 import scipy.sparse as sp  # type: ignore
 from anndata import AnnData  # type: ignore
 from somegraphspy import VectorDataSinks
+from somegraphspy import get_vector_names_data
 from somegraphspy import put_vector_data
 from somegraphspy import put_vector_names_data
 
@@ -51,6 +53,7 @@ def ad_fill_gene_expression(
     """
     if title is None:
         title = f"{gene} fraction"
+    entries = _sinks_entries(sinks, entries)
     put_vector_data(sinks, ad_get_gene_expression_vector(adata, gene=gene, entries=entries), title=title)
     put_genes_expression_configuration(
         sinks, gene_fraction_regularization=gene_fraction_regularization, title=title, show_legend=show_legend
@@ -88,6 +91,7 @@ def ad_fill_type(
     """
     if title is None:
         title = "type"
+    entries = _sinks_entries(sinks, entries)
     put_vector_data(sinks, ad_get_type_vector(adata, type_property=type_property, entries=entries), title=title)
     put_type_configuration(
         sinks,
@@ -119,6 +123,13 @@ def ad_get_type_colors(type_colors_csv: str, *, empty_type_color: Optional[str] 
     color_per_type = dict(zip(frame.iloc[:, 0], frame.iloc[:, 1]))
     color_per_type[""] = EMPTY_TYPE_COLOR if empty_type_color is None else empty_type_color
     return color_per_type
+
+
+# The entries a fill uses: the given ones, or else the names its sinks already hold. A ``None`` means all of them.
+def _sinks_entries(sinks: VectorDataSinks, entries: Optional[Entries]) -> Optional[Entries]:
+    if entries is None:
+        return get_vector_names_data(sinks)
+    return entries
 
 
 # The 0-based indices of the (1-based or named) entries, or of all the entries.

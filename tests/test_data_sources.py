@@ -156,6 +156,19 @@ def test_fill_a_heatmap_graph() -> None:
     assert _list(graph.data.columns.annotations[1].values.vector) == ["B1", "B1", "B2"]
 
 
+def test_fill_named_entries() -> None:
+    """
+    A fill which isn't given its entries fills the entries its sinks are already named after.
+    """
+    daf = _test_daf()
+    graph = sg.heatmap_graph()
+    mg.fill_genes_expression_matrix(graph.entries_matrix_fields(), daf, genes=["A"], entries=["M3", "M1"])
+    mg.fill_block(graph.columns_annotations_colors_vector_fields(graph.add_columns_annotation()), daf)
+    graph.validate()
+    assert _list(graph.data.columns.annotations[0].values.vector) == ["B2", "B1"]
+    assert _list(graph.data.columns.entities.names) == ["M3", "M1"]
+
+
 def test_frame_sources() -> None:
     """
     A ``pandas`` frame is a source too, the way a gene report computed by ``metacellspy`` is.

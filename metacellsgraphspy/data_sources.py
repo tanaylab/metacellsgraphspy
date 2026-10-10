@@ -7,6 +7,10 @@ of a ``somegraphspy`` graph. The ``get_`` functions fetch and return the data, t
 already have into the ``sinks``, and the ``fill_`` functions do both. The ``sinks`` are any graph struct (a view, or
 one of the data or configuration structs a view holds), or a sequence of them.
 
+A ``fill_`` function which isn't given its ``entries`` (or ``genes``) fills the entries its ``sinks`` are already named
+after, or else the whole axis. So when the first data source of a graph picks some entries, the rest follow it without
+being told which they are.
+
 Indices are 1-based, as in Julia: the ``entries`` and ``genes`` given by index, the ``indices`` of the low level
 queries, and the gene indices returned by the gene selection functions.
 """

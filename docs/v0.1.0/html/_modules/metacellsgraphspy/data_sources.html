@@ -80,6 +80,10 @@
 <span class="sd">already have into the ``sinks``, and the ``fill_`` functions do both. The ``sinks`` are any graph struct (a view, or</span>
 <span class="sd">one of the data or configuration structs a view holds), or a sequence of them.</span>
 
+<span class="sd">A ``fill_`` function which isn't given its ``entries`` (or ``genes``) fills the entries its ``sinks`` are already named</span>
+<span class="sd">after, or else the whole axis. So when the first data source of a graph picks some entries, the rest follow it without</span>
+<span class="sd">being told which they are.</span>
+
 <span class="sd">Indices are 1-based, as in Julia: the ``entries`` and ``genes`` given by index, the ``indices`` of the low level</span>
 <span class="sd">queries, and the gene indices returned by the gene selection functions.</span>
 <span class="sd">"""</span>
