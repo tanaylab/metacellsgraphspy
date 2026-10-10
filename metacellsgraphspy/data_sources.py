@@ -37,6 +37,7 @@ from .julia_import import _to_julia_frame
 from .julia_import import jl
 
 __all__ = [
+    "EMPTY_BLOCK_COLOR",
     "EMPTY_TYPE_COLOR",
     "Entries",
     "GENE_FRACTION_REGULARIZATION_FOR_GRAPHS",
@@ -69,6 +70,7 @@ __all__ = [
     "get_axes_matrix",
     "get_axis_entries_vector",
     "get_axis_vector",
+    "get_block_colors",
     "get_block_vector",
     "get_boolean_annotation_vector",
     "get_column_vector",
@@ -92,6 +94,7 @@ __all__ = [
     "get_type_vector",
     "get_umap_vector",
     "get_vector_query",
+    "put_block_configuration",
     "put_boolean_annotation_configuration",
     "put_count_configuration",
     "put_gene_correlation_change_configuration",
@@ -124,6 +127,11 @@ MAX_FOLD_FOR_GRAPHS: float = float(jl.MetacellsGraphs.MAX_FOLD_FOR_GRAPHS)
 #: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_TYPE_COLOR>`__
 #: for details.
 EMPTY_TYPE_COLOR: str = str(jl.MetacellsGraphs.EMPTY_TYPE_COLOR)
+
+#: The color to give to entities without any block. See the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_BLOCK_COLOR>`__
+#: for details.
+EMPTY_BLOCK_COLOR: str = str(jl.MetacellsGraphs.EMPTY_BLOCK_COLOR)
 
 
 # Generic axis names.
@@ -1043,10 +1051,12 @@ def fill_block(
     via: Optional[Via] = None,
     empty_value: Optional[str] = None,
     title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+    empty_block_color: Optional[str] = None,
 ) -> None:
     """
-    Fill the ``sinks`` with the block of each of the ``entries`` of the ``daf`` ``axis``, and name the entities after
-    the ``entries``. See the Julia
+    Fill the ``sinks`` with the block of each of the ``entries`` of the ``daf`` ``axis``, each block in its own color,
+    and name the entities after the ``entries``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_block!>`__
     for details.
     """
@@ -1054,8 +1064,27 @@ def fill_block(
         _to_julia(sinks),
         daf,
         **_given(
-            axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value, title=title
+            axis=axis,
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            empty_value=empty_value,
+            title=title,
+            show_legend=show_legend,
+            empty_block_color=empty_block_color,
         ),
+    )
+
+
+def put_block_configuration(
+    sinks: Sinks, color_per_block: Mapping[str, str], *, title: Optional[str] = None, show_legend: Optional[bool] = None
+) -> None:
+    """
+    Show the blocks of the ``sinks`` using the ``color_per_block`` palette, named by the ``title``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_block_configuration!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_block_configuration_b(
+        _to_julia(sinks), _to_julia(dict(color_per_block)), **_given(title=title, show_legend=show_legend)
     )
 
 
@@ -1078,6 +1107,21 @@ def get_block_vector(
             **_given(axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value),
         )
     )
+
+
+def get_block_colors(
+    daf: DafReader, *, empty_value: Optional[str] = None, empty_block_color: Optional[str] = None
+) -> Mapping[str, str]:
+    """
+    Get the palette mapping each entry of the ``daf`` ``block`` axis to its own color, with an additional
+    ``empty_block_color`` for the ``empty_value`` of entries with no block. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_block_colors>`__
+    for details.
+    """
+    colors = jl.MetacellsGraphs.get_block_colors(
+        daf, **_given(empty_value=empty_value, empty_block_color=empty_block_color)
+    )
+    return {str(key): str(jl.getindex(colors, key)) for key in jl.keys(colors)}
 
 
 # Global flow order.

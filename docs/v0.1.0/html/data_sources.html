@@ -113,6 +113,15 @@
 <ul>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.EMPTY_BLOCK_COLOR">
+<code class="docutils literal notranslate">
+<span class="pre">EMPTY_BLOCK_COLOR
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.data_sources.EMPTY_TYPE_COLOR">
 <code class="docutils literal notranslate">
 <span class="pre">EMPTY_TYPE_COLOR
@@ -401,6 +410,15 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.get_block_colors">
+<code class="docutils literal notranslate">
+<span class="pre">get_block_colors()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.data_sources.get_block_vector">
 <code class="docutils literal notranslate">
 <span class="pre">get_block_vector()
@@ -602,6 +620,15 @@
 <a class="reference internal" href="#metacellsgraphspy.data_sources.get_vector_query">
 <code class="docutils literal notranslate">
 <span class="pre">get_vector_query()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.put_block_configuration">
+<code class="docutils literal notranslate">
+<span class="pre">put_block_configuration()
 </span>
 </code>
 </a>
@@ -841,6 +868,56 @@ one of the data or configuration structs a view holds), or a sequence of them.
 </code> of the low level
 queries, and the gene indices returned by the gene selection functions.
 </p>
+
+<dl class="py data">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.EMPTY_BLOCK_COLOR">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">EMPTY_BLOCK_COLOR
+</span>
+</span>
+<span class="property">
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">str
+</span>
+</span>
+<span class="property">
+<span class="w"> 
+</span>
+<span class="p">
+<span class="pre">=
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">'grey'
+</span>
+</span>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.EMPTY_BLOCK_COLOR" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The color to give to entities without any block. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_BLOCK_COLOR">documentation
+</a>
+for details.
+</p>
+
+</dd>
+</dl>
+
 
 <dl class="py data">
 
@@ -2718,6 +2795,34 @@ for details.
 <span class="pre">None
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_block_color
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -2748,8 +2853,8 @@ for details.
 <code class="docutils literal notranslate">
 <span class="pre">axis
 </span>
-</code>, and name the entities after
-the 
+</code>, each block in its own color,
+and name the entities after the 
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
@@ -2999,6 +3104,32 @@ for details.
 <li>
 <p>
 <strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_block_color
 </strong> (
 <em>str
 </em>
@@ -11274,6 +11405,167 @@ for details.
 
 <dl class="py function">
 
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_block_colors">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">get_block_colors
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_block_color
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#get_block_colors">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.get_block_colors" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the palette mapping each entry of the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code> 
+<code class="docutils literal notranslate">
+<span class="pre">block
+</span>
+</code> axis to its own color, with an additional
+
+<code class="docutils literal notranslate">
+<span class="pre">empty_block_color
+</span>
+</code> for the 
+<code class="docutils literal notranslate">
+<span class="pre">empty_value
+</span>
+</code> of entries with no block. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_block_colors">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_block_color
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>Mapping
+</em>[str, str]
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
 <dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_block_vector">
 
 <span class="sig-prename descclassname">
@@ -15737,6 +16029,323 @@ for details.
 <p>
 <em>ndarray
 </em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.put_block_configuration">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">put_block_configuration
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">color_per_block
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#put_block_configuration">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.put_block_configuration" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Show the blocks of the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> using the 
+<code class="docutils literal notranslate">
+<span class="pre">color_per_block
+</span>
+</code> palette, named by the 
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code>. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_block_configuration!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>color_per_block
+</strong> (
+<em>Mapping
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>, 
+</em>
+<em>str
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
 </p>
 
 </dd>

@@ -110,6 +110,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"EMPTY_BLOCK_COLOR"</span><span class="p">,</span>
     <span class="s2">"EMPTY_TYPE_COLOR"</span><span class="p">,</span>
     <span class="s2">"Entries"</span><span class="p">,</span>
     <span class="s2">"GENE_FRACTION_REGULARIZATION_FOR_GRAPHS"</span><span class="p">,</span>
@@ -142,6 +143,7 @@
     <span class="s2">"get_axes_matrix"</span><span class="p">,</span>
     <span class="s2">"get_axis_entries_vector"</span><span class="p">,</span>
     <span class="s2">"get_axis_vector"</span><span class="p">,</span>
+    <span class="s2">"get_block_colors"</span><span class="p">,</span>
     <span class="s2">"get_block_vector"</span><span class="p">,</span>
     <span class="s2">"get_boolean_annotation_vector"</span><span class="p">,</span>
     <span class="s2">"get_column_vector"</span><span class="p">,</span>
@@ -165,6 +167,7 @@
     <span class="s2">"get_type_vector"</span><span class="p">,</span>
     <span class="s2">"get_umap_vector"</span><span class="p">,</span>
     <span class="s2">"get_vector_query"</span><span class="p">,</span>
+    <span class="s2">"put_block_configuration"</span><span class="p">,</span>
     <span class="s2">"put_boolean_annotation_configuration"</span><span class="p">,</span>
     <span class="s2">"put_count_configuration"</span><span class="p">,</span>
     <span class="s2">"put_gene_correlation_change_configuration"</span><span class="p">,</span>
@@ -197,6 +200,11 @@
 <span class="c1">#: `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_TYPE_COLOR&gt;`__</span>
 <span class="c1">#: for details.</span>
 <span class="n">EMPTY_TYPE_COLOR</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">EMPTY_TYPE_COLOR</span><span class="p">)</span>
+
+<span class="c1">#: The color to give to entities without any block. See the Julia</span>
+<span class="c1">#: `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_BLOCK_COLOR&gt;`__</span>
+<span class="c1">#: for details.</span>
+<span class="n">EMPTY_BLOCK_COLOR</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">EMPTY_BLOCK_COLOR</span><span class="p">)</span>
 
 
 <span class="c1"># Generic axis names.</span>
@@ -1253,10 +1261,12 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_block_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Fill the ``sinks`` with the block of each of the ``entries`` of the ``daf`` ``axis``, and name the entities after</span>
-<span class="sd">    the ``entries``. See the Julia</span>
+<span class="sd">    Fill the ``sinks`` with the block of each of the ``entries`` of the ``daf`` ``axis``, each block in its own color,</span>
+<span class="sd">    and name the entities after the ``entries``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_block!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -1264,8 +1274,30 @@
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
         <span class="n">daf</span><span class="p">,</span>
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">empty_block_color</span><span class="o">=</span><span class="n">empty_block_color</span><span class="p">,</span>
         <span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="put_block_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_block_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_block_configuration</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="n">color_per_block</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Show the blocks of the ``sinks`` using the ``color_per_block`` palette, named by the ``title``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_block_configuration!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_block_configuration_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">color_per_block</span><span class="p">)),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -1291,6 +1323,24 @@
             <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_block_colors">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_block_colors">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_block_colors</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empty_block_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the palette mapping each entry of the ``daf`` ``block`` axis to its own color, with an additional</span>
+<span class="sd">    ``empty_block_color`` for the ``empty_value`` of entries with no block. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_block_colors&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_block_colors</span><span class="p">(</span>
+        <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">empty_block_color</span><span class="o">=</span><span class="n">empty_block_color</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">getindex</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">jl</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">colors</span><span class="p">)}</span></div>
 
 
 

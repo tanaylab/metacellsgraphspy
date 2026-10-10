@@ -58,6 +58,7 @@ def test_constants() -> None:
     assert mg.GENE_FRACTION_REGULARIZATION_FOR_GRAPHS == 1e-5
     assert mg.MAX_FOLD_FOR_GRAPHS == 3.0
     assert mg.EMPTY_TYPE_COLOR == "magenta"
+    assert mg.EMPTY_BLOCK_COLOR == "grey"
 
 
 def test_fill_a_points_graph() -> None:
@@ -104,6 +105,8 @@ def test_get_vectors() -> None:
     assert list(mg.get_axis_entries_vector(daf, axis="metacell", entries=[3, 1])) == ["M3", "M1"]
     assert list(mg.get_axis_vector(daf, axis="metacell", query_suffix=": block")) == ["B1", "B1", "B2"]
     assert list(mg.get_block_vector(daf)) == ["B1", "B1", "B2"]
+    assert list(mg.get_block_colors(daf)) == ["B1", "B2", ""]
+    assert mg.get_block_colors(daf)[""] == "grey"
     assert list(mg.get_type_vector(daf, entries=["M1", "M3"])) == ["T1", ""]
     assert mg.get_type_colors(daf) == {"T1": "red", "T2": "blue", "": "magenta"}
     assert list(mg.get_n_cells_vector(daf)) == [10, 20, 30]
@@ -142,6 +145,7 @@ def test_fill_a_heatmap_graph() -> None:
     graph = sg.heatmap_graph()
     mg.fill_genes_expression_matrix(graph.entries_matrix_fields(), daf, genes=[1, 2])
     mg.fill_type(graph.columns_annotations_colors_vector_fields(graph.add_columns_annotation()), daf)
+    mg.fill_block(graph.columns_annotations_colors_vector_fields(graph.add_columns_annotation()), daf)
     graph.validate()
     assert _list(graph.data.rows.entities.names) == ["A", "B"]
     assert _list(graph.data.columns.entities.names) == ["M1", "M2", "M3"]
@@ -149,6 +153,7 @@ def test_fill_a_heatmap_graph() -> None:
     assert matrix is not None
     assert matrix.shape == (2, 3)
     assert _list(graph.data.columns.annotations[0].values.vector) == ["T1", "T2", ""]
+    assert _list(graph.data.columns.annotations[1].values.vector) == ["B1", "B1", "B2"]
 
 
 def test_frame_sources() -> None:
@@ -188,3 +193,9 @@ def test_put_data_and_configuration() -> None:
     assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
     assert graph.configuration.points.colors.palette == {"a": "red"}
     assert graph.configuration.points.colors.title == "kind"
+
+    graph = sg.points_graph()
+    mg.put_block_configuration(graph.points_colors_vector_fields(), {"a": "green"}, title="group")
+    assert graph.configuration.points.colors.palette == {"a": "green"}
+    assert graph.configuration.points.colors.title == "group"
+    assert not graph.configuration.points.colors.show_legend
