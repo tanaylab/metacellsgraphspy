@@ -27950,13 +27950,13 @@ for details.
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">daf
+<span class="pre">value_per_entry
 </span>
 </span>
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">value_per_entry
+<span class="pre">name_per_entry
 </span>
 </span>
 </em>, 
@@ -27966,26 +27966,6 @@ for details.
 <span class="pre">*
 </span>
 </abbr>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">axis
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">entries
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
 </span>
 </em>, 
 <em class="sig-param">
@@ -28035,20 +28015,7 @@ for details.
 <code class="docutils literal notranslate">
 <span class="pre">value_per_entry
 </span>
-</code> of each of the 
-<code class="docutils literal notranslate">
-<span class="pre">entries
-</span>
-</code> of the 
-<code class="docutils literal notranslate">
-<span class="pre">daf
-</span>
-</code> 
-<code class="docutils literal notranslate">
-<span class="pre">axis
-</span>
-</code> into the
-
+</code> into the 
 <code class="docutils literal notranslate">
 <span class="pre">sinks
 </span>
@@ -28058,9 +28025,10 @@ for details.
 <span class="pre">put_boolean_configuration()
 </span>
 </code>
-</a>, and name the entities after the 
+</a>, and
+name the entities after the 
 <code class="docutils literal notranslate">
-<span class="pre">entries
+<span class="pre">name_per_entry
 </span>
 </code>. See the Julia
 
@@ -28220,15 +28188,6 @@ for details.
 
 <li>
 <p>
-<strong>daf
-</strong> (
-<em>DafReader
-</em>)
-</p>
-</li>
-
-<li>
-<p>
 <strong>value_per_entry
 </strong> (
 <em>ndarray
@@ -28248,16 +28207,7 @@ for details.
 
 <li>
 <p>
-<strong>axis
-</strong> (
-<em>str
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>entries
+<strong>name_per_entry
 </strong> (
 <em>ndarray
 </em>
@@ -28269,21 +28219,7 @@ for details.
 </em>
 <em>str
 </em>
-<em>] 
-</em>
-<em>| 
-</em>
-<em>Sequence
-</em>
-<em>[
-</em>
-<em>int
-</em>
-<em>] 
-</em>
-<em>| 
-</em>
-<em>None
+<em>]
 </em>)
 </p>
 </li>
@@ -28675,13 +28611,19 @@ for details.
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">daf
+<span class="pre">value_per_entry
 </span>
 </span>
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">value_per_entry
+<span class="pre">name_per_entry
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">color_per_value
 </span>
 </span>
 </em>, 
@@ -28695,61 +28637,7 @@ for details.
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">axis
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">colors_axis
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">entries
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
 <span class="pre">title
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">empty_value
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">empty_color
 </span>
 </span>
 <span class="o">
@@ -28792,37 +28680,24 @@ for details.
 <code class="docutils literal notranslate">
 <span class="pre">value_per_entry
 </span>
-</code> of each of the 
-<code class="docutils literal notranslate">
-<span class="pre">entries
-</span>
-</code> of the 
-<code class="docutils literal notranslate">
-<span class="pre">daf
-</span>
-</code> 
-<code class="docutils literal notranslate">
-<span class="pre">axis
-</span>
 </code> into the 
 <code class="docutils literal notranslate">
 <span class="pre">sinks
 </span>
-</code>, shown
-by 
+</code>, shown by 
 <a class="reference internal" href="#metacellsgraphspy.data_sources.put_category_configuration" title="metacellsgraphspy.data_sources.put_category_configuration">
 <code class="xref py py-func docutils literal notranslate">
 <span class="pre">put_category_configuration()
 </span>
 </code>
-</a> using the palette of the 
-<code class="docutils literal notranslate">
-<span class="pre">colors_axis
-</span>
-</code>, and name the entities after the
+</a> using the
 
 <code class="docutils literal notranslate">
-<span class="pre">entries
+<span class="pre">color_per_value
+</span>
+</code> palette, and name the entities after the 
+<code class="docutils literal notranslate">
+<span class="pre">name_per_entry
 </span>
 </code>. See the Julia
 
@@ -28982,15 +28857,6 @@ for details.
 
 <li>
 <p>
-<strong>daf
-</strong> (
-<em>DafReader
-</em>)
-</p>
-</li>
-
-<li>
-<p>
 <strong>value_per_entry
 </strong> (
 <em>ndarray
@@ -29010,25 +28876,7 @@ for details.
 
 <li>
 <p>
-<strong>axis
-</strong> (
-<em>str
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>colors_axis
-</strong> (
-<em>str
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>entries
+<strong>name_per_entry
 </strong> (
 <em>ndarray
 </em>
@@ -29040,21 +28888,26 @@ for details.
 </em>
 <em>str
 </em>
-<em>] 
-</em>
-<em>| 
-</em>
-<em>Sequence
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>color_per_value
+</strong> (
+<em>Mapping
 </em>
 <em>[
 </em>
-<em>int
+<em>str
 </em>
-<em>] 
+<em>, 
 </em>
-<em>| 
+<em>str
 </em>
-<em>None
+<em>]
 </em>)
 </p>
 </li>
@@ -29062,32 +28915,6 @@ for details.
 <li>
 <p>
 <strong>title
-</strong> (
-<em>str
-</em>
-<em> | 
-</em>
-<em>None
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>empty_value
-</strong> (
-<em>str
-</em>
-<em> | 
-</em>
-<em>None
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>empty_color
 </strong> (
 <em>str
 </em>
@@ -29725,13 +29552,13 @@ for details.
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">daf
+<span class="pre">value_per_entry
 </span>
 </span>
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">value_per_entry
+<span class="pre">name_per_entry
 </span>
 </span>
 </em>, 
@@ -29741,26 +29568,6 @@ for details.
 <span class="pre">*
 </span>
 </abbr>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">axis
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">entries
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
 </span>
 </em>, 
 <em class="sig-param">
@@ -29808,32 +29615,20 @@ for details.
 <code class="docutils literal notranslate">
 <span class="pre">value_per_entry
 </span>
-</code> of each of the 
-<code class="docutils literal notranslate">
-<span class="pre">entries
-</span>
-</code> of the 
-<code class="docutils literal notranslate">
-<span class="pre">daf
-</span>
-</code> 
-<code class="docutils literal notranslate">
-<span class="pre">axis
-</span>
 </code> into the 
 <code class="docutils literal notranslate">
 <span class="pre">sinks
 </span>
-</code>,
-shown by 
+</code>, shown by 
 <a class="reference internal" href="#metacellsgraphspy.data_sources.put_correlation_configuration" title="metacellsgraphspy.data_sources.put_correlation_configuration">
 <code class="xref py py-func docutils literal notranslate">
 <span class="pre">put_correlation_configuration()
 </span>
 </code>
-</a>, and name the entities after the 
+</a>, and
+name the entities after the 
 <code class="docutils literal notranslate">
-<span class="pre">entries
+<span class="pre">name_per_entry
 </span>
 </code>. See the Julia
 
@@ -29993,15 +29788,6 @@ for details.
 
 <li>
 <p>
-<strong>daf
-</strong> (
-<em>DafReader
-</em>)
-</p>
-</li>
-
-<li>
-<p>
 <strong>value_per_entry
 </strong> (
 <em>ndarray
@@ -30021,16 +29807,7 @@ for details.
 
 <li>
 <p>
-<strong>axis
-</strong> (
-<em>str
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>entries
+<strong>name_per_entry
 </strong> (
 <em>ndarray
 </em>
@@ -30042,21 +29819,7 @@ for details.
 </em>
 <em>str
 </em>
-<em>] 
-</em>
-<em>| 
-</em>
-<em>Sequence
-</em>
-<em>[
-</em>
-<em>int
-</em>
-<em>] 
-</em>
-<em>| 
-</em>
-<em>None
+<em>]
 </em>)
 </p>
 </li>
@@ -31113,13 +30876,13 @@ for details.
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">daf
+<span class="pre">value_per_entry
 </span>
 </span>
 </em>, 
 <em class="sig-param">
 <span class="n">
-<span class="pre">value_per_entry
+<span class="pre">name_per_entry
 </span>
 </span>
 </em>, 
@@ -31129,26 +30892,6 @@ for details.
 <span class="pre">*
 </span>
 </abbr>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">axis
-</span>
-</span>
-</em>, 
-<em class="sig-param">
-<span class="n">
-<span class="pre">entries
-</span>
-</span>
-<span class="o">
-<span class="pre">=
-</span>
-</span>
-<span class="default_value">
-<span class="pre">None
-</span>
 </span>
 </em>, 
 <em class="sig-param">
@@ -31210,32 +30953,20 @@ for details.
 <code class="docutils literal notranslate">
 <span class="pre">value_per_entry
 </span>
-</code> of each of the 
-<code class="docutils literal notranslate">
-<span class="pre">entries
-</span>
-</code> of the 
-<code class="docutils literal notranslate">
-<span class="pre">daf
-</span>
-</code> 
-<code class="docutils literal notranslate">
-<span class="pre">axis
-</span>
 </code> into the 
 <code class="docutils literal notranslate">
 <span class="pre">sinks
 </span>
-</code>,
-shown by 
+</code>, shown by 
 <a class="reference internal" href="#metacellsgraphspy.data_sources.put_size_configuration" title="metacellsgraphspy.data_sources.put_size_configuration">
 <code class="xref py py-func docutils literal notranslate">
 <span class="pre">put_size_configuration()
 </span>
 </code>
-</a>, and name the entities after the 
+</a>, and name
+the entities after the 
 <code class="docutils literal notranslate">
-<span class="pre">entries
+<span class="pre">name_per_entry
 </span>
 </code>. See the Julia
 
@@ -31395,15 +31126,6 @@ for details.
 
 <li>
 <p>
-<strong>daf
-</strong> (
-<em>DafReader
-</em>)
-</p>
-</li>
-
-<li>
-<p>
 <strong>value_per_entry
 </strong> (
 <em>ndarray
@@ -31423,16 +31145,7 @@ for details.
 
 <li>
 <p>
-<strong>axis
-</strong> (
-<em>str
-</em>)
-</p>
-</li>
-
-<li>
-<p>
-<strong>entries
+<strong>name_per_entry
 </strong> (
 <em>ndarray
 </em>
@@ -31444,21 +31157,7 @@ for details.
 </em>
 <em>str
 </em>
-<em>] 
-</em>
-<em>| 
-</em>
-<em>Sequence
-</em>
-<em>[
-</em>
-<em>int
-</em>
-<em>] 
-</em>
-<em>| 
-</em>
-<em>None
+<em>]
 </em>)
 </p>
 </li>

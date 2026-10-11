@@ -915,26 +915,23 @@
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_correlation_values">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">put_correlation_values</span><span class="p">(</span>
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">NumbersVector</span><span class="p">,</span>
+    <span class="n">name_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Put the correlation ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,</span>
-<span class="sd">    shown by :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    Put the correlation ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_correlation_configuration`, and</span>
+<span class="sd">    name the entities after the ``name_per_entry``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_correlation_values!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_correlation_values_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
-        <span class="n">daf</span><span class="p">,</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
-        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">name_per_entry</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
     <span class="p">)</span></div>
 
 
@@ -1296,27 +1293,24 @@
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_size_values">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">put_size_values</span><span class="p">(</span>
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">NumbersVector</span><span class="p">,</span>
+    <span class="n">name_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Put the size (count) ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,</span>
-<span class="sd">    shown by :py:func:`put_size_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    Put the size (count) ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_size_configuration`, and name</span>
+<span class="sd">    the entities after the ``name_per_entry``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_values!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_size_values_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
-        <span class="n">daf</span><span class="p">,</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
-        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span> <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">)),</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">name_per_entry</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span> <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">)),</span>
     <span class="p">)</span></div>
 
 
@@ -1992,37 +1986,25 @@
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_category_values">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">put_category_values</span><span class="p">(</span>
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
+    <span class="n">name_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
+    <span class="n">color_per_value</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">colors_axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Put the category ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``, shown</span>
-<span class="sd">    by :py:func:`put_category_configuration` using the palette of the ``colors_axis``, and name the entities after the</span>
-<span class="sd">    ``entries``. See the Julia</span>
+<span class="sd">    Put the category ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_category_configuration` using the</span>
+<span class="sd">    ``color_per_value`` palette, and name the entities after the ``name_per_entry``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_category_values!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_category_values_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
-        <span class="n">daf</span><span class="p">,</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
-        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
-        <span class="n">colors_axis</span><span class="o">=</span><span class="n">colors_axis</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
-            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
-            <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">,</span>
-            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
-        <span class="p">),</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">name_per_entry</span><span class="p">),</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">color_per_value</span><span class="p">)),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
     <span class="p">)</span></div>
 
 
@@ -2110,26 +2092,23 @@
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_boolean_values">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">put_boolean_values</span><span class="p">(</span>
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
+    <span class="n">name_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Put the Boolean *string* ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the</span>
-<span class="sd">    ``sinks``, shown by :py:func:`put_boolean_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    Put the Boolean *string* ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_boolean_configuration`, and</span>
+<span class="sd">    name the entities after the ``name_per_entry``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_values!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_boolean_values_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
-        <span class="n">daf</span><span class="p">,</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
-        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">name_per_entry</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
     <span class="p">)</span></div>
 
 

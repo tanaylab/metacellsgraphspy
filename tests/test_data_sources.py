@@ -181,9 +181,10 @@ def test_bucket_fills() -> None:
     assert _list(graph.data.points.colors.vector) == ["T1", "T2", ""]
 
     graph = sg.points_graph()
-    mg.put_size_values(graph.x_axis_vector_fields(), daf, np.array([1.0, 2.0, 3.0]), axis="metacell")
+    names = ["M1", "M2", "M3"]
+    mg.put_size_values(graph.x_axis_vector_fields(), np.array([1.0, 2.0, 3.0]), names)
     mg.put_category_values(
-        graph.points_colors_vector_fields(), daf, np.array(["B1", "B1", "B2"]), axis="metacell", colors_axis="block"
+        graph.points_colors_vector_fields(), np.array(["B1", "B1", "B2"]), names, mg.get_block_colors(daf)
     )
     assert _list(graph.data.x.vector) == [1.0, 2.0, 3.0]
     assert graph.configuration.points.colors.palette == mg.get_block_colors(daf)
@@ -199,9 +200,8 @@ def test_bucket_fills() -> None:
     )
     mg.put_boolean_values(
         heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()),
-        daf,
         np.array(["true", "false"]),
-        axis="gene",
+        ["A", "B"],
     )
     heatmap.validate()
     assert _list(heatmap.data.rows.annotations[0].values.vector) == ["false", "true"]
@@ -220,7 +220,7 @@ def test_bucket_fills() -> None:
         axis="gene",
         property="correlation_between_cells_and_punctuated_metacells",
     )
-    mg.put_correlation_values(graph.points_colors_vector_fields(), daf, np.array([0.1, 0.2, 0.3]), axis="gene")
+    mg.put_correlation_values(graph.points_colors_vector_fields(), np.array([0.1, 0.2, 0.3]), ["A", "B", "C"])
     assert graph.configuration.points.colors.scale.minimum == 0
     assert list(mg.get_correlation_between_cells_and_punctuated_metacells_vector(daf)) == list(
         mg.get_correlation_vector(daf, axis="gene", property="correlation_between_cells_and_punctuated_metacells")

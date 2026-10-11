@@ -759,26 +759,23 @@ def fill_correlation(
 
 def put_correlation_values(
     sinks: VectorDataSinks,
-    daf: DafReader,
     value_per_entry: NumbersVector,
+    name_per_entry: StringsVector,
     *,
-    axis: str,
-    entries: Optional[Entries] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Put the correlation ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,
-    shown by :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia
+    Put the correlation ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_correlation_configuration`, and
+    name the entities after the ``name_per_entry``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_correlation_values!>`__
     for details.
     """
     jl.MetacellsGraphs.put_correlation_values_b(
         _to_julia(sinks),
-        daf,
         _to_julia(value_per_entry),
-        axis=axis,
-        **_given(entries=_to_julia_array(entries), title=title, show_legend=show_legend),
+        _to_julia(name_per_entry),
+        **_given(title=title, show_legend=show_legend),
     )
 
 
@@ -1089,27 +1086,24 @@ def fill_size(
 
 def put_size_values(
     sinks: VectorDataSinks,
-    daf: DafReader,
     value_per_entry: NumbersVector,
+    name_per_entry: StringsVector,
     *,
-    axis: str,
-    entries: Optional[Entries] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
 ) -> None:
     """
-    Put the size (count) ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,
-    shown by :py:func:`put_size_configuration`, and name the entities after the ``entries``. See the Julia
+    Put the size (count) ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_size_configuration`, and name
+    the entities after the ``name_per_entry``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_values!>`__
     for details.
     """
     jl.MetacellsGraphs.put_size_values_b(
         _to_julia(sinks),
-        daf,
         _to_julia(value_per_entry),
-        axis=axis,
-        **_given(entries=_to_julia_array(entries), title=title, show_legend=show_legend, log_base=_to_julia(log_base)),
+        _to_julia(name_per_entry),
+        **_given(title=title, show_legend=show_legend, log_base=_to_julia(log_base)),
     )
 
 
@@ -1710,37 +1704,25 @@ def fill_category(
 
 def put_category_values(
     sinks: VectorDataSinks,
-    daf: DafReader,
     value_per_entry: StringsVector,
+    name_per_entry: StringsVector,
+    color_per_value: Mapping[str, str],
     *,
-    axis: str,
-    colors_axis: str,
-    entries: Optional[Entries] = None,
     title: Optional[str] = None,
-    empty_value: Optional[str] = None,
-    empty_color: Optional[str] = None,
     show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Put the category ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``, shown
-    by :py:func:`put_category_configuration` using the palette of the ``colors_axis``, and name the entities after the
-    ``entries``. See the Julia
+    Put the category ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_category_configuration` using the
+    ``color_per_value`` palette, and name the entities after the ``name_per_entry``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_category_values!>`__
     for details.
     """
     jl.MetacellsGraphs.put_category_values_b(
         _to_julia(sinks),
-        daf,
         _to_julia(value_per_entry),
-        axis=axis,
-        colors_axis=colors_axis,
-        **_given(
-            entries=_to_julia_array(entries),
-            title=title,
-            empty_value=empty_value,
-            empty_color=empty_color,
-            show_legend=show_legend,
-        ),
+        _to_julia(name_per_entry),
+        _to_julia(dict(color_per_value)),
+        **_given(title=title, show_legend=show_legend),
     )
 
 
@@ -1816,26 +1798,23 @@ def fill_boolean(
 
 def put_boolean_values(
     sinks: VectorDataSinks,
-    daf: DafReader,
     value_per_entry: StringsVector,
+    name_per_entry: StringsVector,
     *,
-    axis: str,
-    entries: Optional[Entries] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Put the Boolean *string* ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the
-    ``sinks``, shown by :py:func:`put_boolean_configuration`, and name the entities after the ``entries``. See the Julia
+    Put the Boolean *string* ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_boolean_configuration`, and
+    name the entities after the ``name_per_entry``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_values!>`__
     for details.
     """
     jl.MetacellsGraphs.put_boolean_values_b(
         _to_julia(sinks),
-        daf,
         _to_julia(value_per_entry),
-        axis=axis,
-        **_given(entries=_to_julia_array(entries), title=title, show_legend=show_legend),
+        _to_julia(name_per_entry),
+        **_given(title=title, show_legend=show_legend),
     )
 
 
