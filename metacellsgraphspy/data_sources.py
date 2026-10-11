@@ -59,6 +59,10 @@ __all__ = [
     "fill_column_boolean_annotation",
     "fill_column_names_data",
     "fill_column_vector_data",
+    "fill_correlation",
+    "fill_correlation_between_cells_and_projected_metacells",
+    "fill_correlation_between_cells_and_projected_punctuated_metacells",
+    "fill_correlation_between_cells_and_punctuated_metacells",
     "fill_gene_correlation",
     "fill_gene_correlation_change",
     "fill_gene_expression",
@@ -94,6 +98,10 @@ __all__ = [
     "get_category_colors",
     "get_category_vector",
     "get_column_vector",
+    "get_correlation_between_cells_and_projected_metacells_vector",
+    "get_correlation_between_cells_and_projected_punctuated_metacells_vector",
+    "get_correlation_between_cells_and_punctuated_metacells_vector",
+    "get_correlation_vector",
     "get_gene_correlation_change_vector",
     "get_gene_correlation_vector",
     "get_gene_expression_vector",
@@ -131,6 +139,7 @@ __all__ = [
     "put_category_values",
     "put_coordinates_configuration",
     "put_correlation_configuration",
+    "put_correlation_values",
     "put_expression_level_configuration",
     "put_fold_configuration",
     "put_size_configuration",
@@ -688,6 +697,213 @@ def put_correlation_configuration(
     """
     jl.MetacellsGraphs.put_correlation_configuration_b(
         _to_julia(sinks), _to_julia(values), **_given(title=title, show_legend=show_legend)
+    )
+
+
+def get_correlation_vector(
+    daf: DafReader,
+    *,
+    axis: str,
+    property: str,  # pylint: disable=redefined-builtin
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+) -> np.ndarray:
+    """
+    Get the correlation ``property`` of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_correlation_vector(
+            daf,
+            axis=axis,
+            property=property,
+            **_given(entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value),
+        )
+    )
+
+
+def fill_correlation(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: str,
+    property: str,  # pylint: disable=redefined-builtin
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    title: Optional[str] = None,
+    empty_value: Optional[float] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the correlation ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by
+    :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_correlation_b(
+        _to_julia(sinks),
+        daf,
+        axis=axis,
+        property=property,
+        **_given(
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            title=title,
+            empty_value=empty_value,
+            show_legend=show_legend,
+        ),
+    )
+
+
+def put_correlation_values(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    value_per_entry: NumbersVector,
+    *,
+    axis: str,
+    entries: Optional[Entries] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Put the correlation ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,
+    shown by :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_correlation_values!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_correlation_values_b(
+        _to_julia(sinks),
+        daf,
+        _to_julia(value_per_entry),
+        axis=axis,
+        **_given(entries=_to_julia_array(entries), title=title, show_legend=show_legend),
+    )
+
+
+def fill_correlation_between_cells_and_punctuated_metacells(  # pylint: disable=invalid-name
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the correlation of each gene between the cells and their punctuated metacells. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_punctuated_metacells!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_correlation_between_cells_and_punctuated_metacells_b(
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_correlation_between_cells_and_punctuated_metacells_vector(  # pylint: disable=invalid-name
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+) -> np.ndarray:
+    """
+    Get the correlation of each gene between the cells and their punctuated metacells. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_punctuated_metacells_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_correlation_between_cells_and_punctuated_metacells_vector(
+            daf, **_property_get_given(axis, entries, via, empty_value)
+        )
+    )
+
+
+def fill_correlation_between_cells_and_projected_punctuated_metacells(  # pylint: disable=invalid-name
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the correlation of each gene between the cells and their projected punctuated metacells. See
+    the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_projected_punctuated_metacells!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_correlation_between_cells_and_projected_punctuated_metacells_b(
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_correlation_between_cells_and_projected_punctuated_metacells_vector(  # pylint: disable=invalid-name
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+) -> np.ndarray:
+    """
+    Get the correlation of each gene between the cells and their projected punctuated metacells. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_projected_punctuated_metacells_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_correlation_between_cells_and_projected_punctuated_metacells_vector(
+            daf, **_property_get_given(axis, entries, via, empty_value)
+        )
+    )
+
+
+def fill_correlation_between_cells_and_projected_metacells(  # pylint: disable=invalid-name
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the correlation of each gene between the query cells and their projected atlas metacells.
+    See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_projected_metacells!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_correlation_between_cells_and_projected_metacells_b(
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_correlation_between_cells_and_projected_metacells_vector(  # pylint: disable=invalid-name
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+) -> np.ndarray:
+    """
+    Get the correlation of each gene between the query cells and their projected atlas metacells. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_projected_metacells_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_correlation_between_cells_and_projected_metacells_vector(
+            daf, **_property_get_given(axis, entries, via, empty_value)
+        )
     )
 
 
@@ -1643,7 +1859,7 @@ def fill_is_lateral(
     for details.
     """
     jl.MetacellsGraphs.fill_is_lateral_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1661,7 +1877,7 @@ def get_is_lateral_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_lateral_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_lateral_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
@@ -1682,7 +1898,7 @@ def fill_is_marker(
     for details.
     """
     jl.MetacellsGraphs.fill_is_marker_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1700,7 +1916,7 @@ def get_is_marker_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_marker_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_marker_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
@@ -1721,7 +1937,7 @@ def fill_is_transcription_factor(
     for details.
     """
     jl.MetacellsGraphs.fill_is_transcription_factor_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1740,7 +1956,7 @@ def get_is_transcription_factor_vector(
     """
     return _from_julia_array(
         jl.MetacellsGraphs.get_is_transcription_factor_vector(
-            daf, **_boolean_get_given(axis, entries, via, empty_value)
+            daf, **_property_get_given(axis, entries, via, empty_value)
         )
     )
 
@@ -1762,7 +1978,7 @@ def fill_is_regulator(
     for details.
     """
     jl.MetacellsGraphs.fill_is_regulator_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1781,7 +1997,7 @@ def get_is_regulator_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_regulator_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_regulator_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
@@ -1802,7 +2018,7 @@ def fill_is_forbidden(
     for details.
     """
     jl.MetacellsGraphs.fill_is_forbidden_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1820,7 +2036,7 @@ def get_is_forbidden_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_forbidden_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_forbidden_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
@@ -1841,7 +2057,7 @@ def fill_is_skeleton(
     for details.
     """
     jl.MetacellsGraphs.fill_is_skeleton_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1859,7 +2075,7 @@ def get_is_skeleton_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_skeleton_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_skeleton_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
@@ -1880,7 +2096,7 @@ def fill_is_correlated_with_skeleton(
     for details.
     """
     jl.MetacellsGraphs.fill_is_correlated_with_skeleton_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1900,7 +2116,7 @@ def get_is_correlated_with_skeleton_vector(
     """
     return _from_julia_array(
         jl.MetacellsGraphs.get_is_correlated_with_skeleton_vector(
-            daf, **_boolean_get_given(axis, entries, via, empty_value)
+            daf, **_property_get_given(axis, entries, via, empty_value)
         )
     )
 
@@ -1922,7 +2138,7 @@ def fill_is_mitochondrial(
     for details.
     """
     jl.MetacellsGraphs.fill_is_mitochondrial_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1940,7 +2156,7 @@ def get_is_mitochondrial_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_mitochondrial_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_mitochondrial_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
@@ -1961,7 +2177,7 @@ def fill_is_ribosomal(
     for details.
     """
     jl.MetacellsGraphs.fill_is_ribosomal_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -1979,7 +2195,7 @@ def get_is_ribosomal_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_ribosomal_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_ribosomal_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
@@ -2000,7 +2216,7 @@ def fill_is_excluded(
     for details.
     """
     jl.MetacellsGraphs.fill_is_excluded_b(
-        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
     )
 
 
@@ -2018,16 +2234,16 @@ def get_is_excluded_vector(
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_is_excluded_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+        jl.MetacellsGraphs.get_is_excluded_vector(daf, **_property_get_given(axis, entries, via, empty_value))
     )
 
 
-# The keywords given to a per-property Boolean fill, as passed to Julia.
-def _boolean_fill_given(  # pylint: disable=too-many-positional-arguments
+# The keywords given to a per-property fill, as passed to Julia.
+def _property_fill_given(  # pylint: disable=too-many-positional-arguments
     axis: Optional[str],
     entries: Optional[Entries],
     via: Optional[Via],
-    empty_value: Optional[bool],
+    empty_value: Optional[Union[bool, float]],
     title: Optional[str],
     show_legend: Optional[bool],
 ) -> Mapping[str, Any]:
@@ -2041,9 +2257,9 @@ def _boolean_fill_given(  # pylint: disable=too-many-positional-arguments
     )
 
 
-# The keywords given to a per-property Boolean get, as passed to Julia.
-def _boolean_get_given(
-    axis: Optional[str], entries: Optional[Entries], via: Optional[Via], empty_value: Optional[bool]
+# The keywords given to a per-property get, as passed to Julia.
+def _property_get_given(
+    axis: Optional[str], entries: Optional[Entries], via: Optional[Via], empty_value: Optional[Union[bool, float]]
 ) -> Mapping[str, Any]:
     return _given(axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value)
 

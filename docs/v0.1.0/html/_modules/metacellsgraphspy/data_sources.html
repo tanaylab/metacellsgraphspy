@@ -132,6 +132,10 @@
     <span class="s2">"fill_column_boolean_annotation"</span><span class="p">,</span>
     <span class="s2">"fill_column_names_data"</span><span class="p">,</span>
     <span class="s2">"fill_column_vector_data"</span><span class="p">,</span>
+    <span class="s2">"fill_correlation"</span><span class="p">,</span>
+    <span class="s2">"fill_correlation_between_cells_and_projected_metacells"</span><span class="p">,</span>
+    <span class="s2">"fill_correlation_between_cells_and_projected_punctuated_metacells"</span><span class="p">,</span>
+    <span class="s2">"fill_correlation_between_cells_and_punctuated_metacells"</span><span class="p">,</span>
     <span class="s2">"fill_gene_correlation"</span><span class="p">,</span>
     <span class="s2">"fill_gene_correlation_change"</span><span class="p">,</span>
     <span class="s2">"fill_gene_expression"</span><span class="p">,</span>
@@ -167,6 +171,10 @@
     <span class="s2">"get_category_colors"</span><span class="p">,</span>
     <span class="s2">"get_category_vector"</span><span class="p">,</span>
     <span class="s2">"get_column_vector"</span><span class="p">,</span>
+    <span class="s2">"get_correlation_between_cells_and_projected_metacells_vector"</span><span class="p">,</span>
+    <span class="s2">"get_correlation_between_cells_and_projected_punctuated_metacells_vector"</span><span class="p">,</span>
+    <span class="s2">"get_correlation_between_cells_and_punctuated_metacells_vector"</span><span class="p">,</span>
+    <span class="s2">"get_correlation_vector"</span><span class="p">,</span>
     <span class="s2">"get_gene_correlation_change_vector"</span><span class="p">,</span>
     <span class="s2">"get_gene_correlation_vector"</span><span class="p">,</span>
     <span class="s2">"get_gene_expression_vector"</span><span class="p">,</span>
@@ -204,6 +212,7 @@
     <span class="s2">"put_category_values"</span><span class="p">,</span>
     <span class="s2">"put_coordinates_configuration"</span><span class="p">,</span>
     <span class="s2">"put_correlation_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_correlation_values"</span><span class="p">,</span>
     <span class="s2">"put_expression_level_configuration"</span><span class="p">,</span>
     <span class="s2">"put_fold_configuration"</span><span class="p">,</span>
     <span class="s2">"put_size_configuration"</span><span class="p">,</span>
@@ -835,6 +844,240 @@
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_correlation_configuration_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_correlation_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_correlation_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_correlation_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the correlation ``property`` of each of the ``entries`` of the ``daf`` ``axis``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_correlation_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_correlation">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_correlation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_correlation</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with the correlation ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by</span>
+<span class="sd">    :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_correlation_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="put_correlation_values">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_correlation_values">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_correlation_values</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">NumbersVector</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Put the correlation ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,</span>
+<span class="sd">    shown by :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_correlation_values!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_correlation_values_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_correlation_between_cells_and_punctuated_metacells">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_punctuated_metacells">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_correlation_between_cells_and_punctuated_metacells</span><span class="p">(</span>  <span class="c1"># pylint: disable=invalid-name</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with the correlation of each gene between the cells and their punctuated metacells. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_punctuated_metacells!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_correlation_between_cells_and_punctuated_metacells_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_correlation_between_cells_and_punctuated_metacells_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_correlation_between_cells_and_punctuated_metacells_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_correlation_between_cells_and_punctuated_metacells_vector</span><span class="p">(</span>  <span class="c1"># pylint: disable=invalid-name</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the correlation of each gene between the cells and their punctuated metacells. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_punctuated_metacells_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_correlation_between_cells_and_punctuated_metacells_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_correlation_between_cells_and_projected_punctuated_metacells">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_punctuated_metacells">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_correlation_between_cells_and_projected_punctuated_metacells</span><span class="p">(</span>  <span class="c1"># pylint: disable=invalid-name</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with the correlation of each gene between the cells and their projected punctuated metacells. See</span>
+<span class="sd">    the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_projected_punctuated_metacells!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_correlation_between_cells_and_projected_punctuated_metacells_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_correlation_between_cells_and_projected_punctuated_metacells_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_punctuated_metacells_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_correlation_between_cells_and_projected_punctuated_metacells_vector</span><span class="p">(</span>  <span class="c1"># pylint: disable=invalid-name</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the correlation of each gene between the cells and their projected punctuated metacells. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_projected_punctuated_metacells_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_correlation_between_cells_and_projected_punctuated_metacells_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_correlation_between_cells_and_projected_metacells">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_metacells">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_correlation_between_cells_and_projected_metacells</span><span class="p">(</span>  <span class="c1"># pylint: disable=invalid-name</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with the correlation of each gene between the query cells and their projected atlas metacells.</span>
+<span class="sd">    See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_projected_metacells!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_correlation_between_cells_and_projected_metacells_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_correlation_between_cells_and_projected_metacells_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_metacells_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_correlation_between_cells_and_projected_metacells_vector</span><span class="p">(</span>  <span class="c1"># pylint: disable=invalid-name</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the correlation of each gene between the query cells and their projected atlas metacells. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_projected_metacells_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_correlation_between_cells_and_projected_metacells_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -1913,7 +2156,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_lateral_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -1934,7 +2177,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_lateral_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_lateral_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
@@ -1958,7 +2201,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_marker_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -1979,7 +2222,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_marker_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_marker_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
@@ -2003,7 +2246,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_transcription_factor_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2025,7 +2268,7 @@
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
         <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_transcription_factor_vector</span><span class="p">(</span>
-            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
 
@@ -2050,7 +2293,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_regulator_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2072,7 +2315,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_regulator_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_regulator_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
@@ -2096,7 +2339,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_forbidden_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2117,7 +2360,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_forbidden_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_forbidden_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
@@ -2141,7 +2384,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_skeleton_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2162,7 +2405,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_skeleton_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_skeleton_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
@@ -2186,7 +2429,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_correlated_with_skeleton_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2209,7 +2452,7 @@
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
         <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_correlated_with_skeleton_vector</span><span class="p">(</span>
-            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
 
@@ -2234,7 +2477,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_mitochondrial_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2255,7 +2498,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_mitochondrial_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_mitochondrial_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
@@ -2279,7 +2522,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_ribosomal_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2300,7 +2543,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_ribosomal_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_ribosomal_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
@@ -2324,7 +2567,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_excluded_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -2345,17 +2588,17 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_excluded_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_excluded_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_property_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
     <span class="p">)</span></div>
 
 
 
-<span class="c1"># The keywords given to a per-property Boolean fill, as passed to Julia.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_boolean_fill_given</span><span class="p">(</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
+<span class="c1"># The keywords given to a per-property fill, as passed to Julia.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_property_fill_given</span><span class="p">(</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
     <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span>
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">],</span>
-    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -2369,9 +2612,9 @@
     <span class="p">)</span>
 
 
-<span class="c1"># The keywords given to a per-property Boolean get, as passed to Julia.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_boolean_get_given</span><span class="p">(</span>
-    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span> <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">],</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+<span class="c1"># The keywords given to a per-property get, as passed to Julia.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_property_get_given</span><span class="p">(</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span> <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">],</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">)</span>
 

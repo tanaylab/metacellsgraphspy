@@ -248,6 +248,42 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.fill_correlation">
+<code class="docutils literal notranslate">
+<span class="pre">fill_correlation()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_metacells">
+<code class="docutils literal notranslate">
+<span class="pre">fill_correlation_between_cells_and_projected_metacells()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_punctuated_metacells">
+<code class="docutils literal notranslate">
+<span class="pre">fill_correlation_between_cells_and_projected_punctuated_metacells()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_punctuated_metacells">
+<code class="docutils literal notranslate">
+<span class="pre">fill_correlation_between_cells_and_punctuated_metacells()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.data_sources.fill_gene_correlation">
 <code class="docutils literal notranslate">
 <span class="pre">fill_gene_correlation()
@@ -557,6 +593,42 @@
 <a class="reference internal" href="#metacellsgraphspy.data_sources.get_column_vector">
 <code class="docutils literal notranslate">
 <span class="pre">get_column_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_metacells_vector">
+<code class="docutils literal notranslate">
+<span class="pre">get_correlation_between_cells_and_projected_metacells_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_punctuated_metacells_vector">
+<code class="docutils literal notranslate">
+<span class="pre">get_correlation_between_cells_and_projected_punctuated_metacells_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.get_correlation_between_cells_and_punctuated_metacells_vector">
+<code class="docutils literal notranslate">
+<span class="pre">get_correlation_between_cells_and_punctuated_metacells_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.get_correlation_vector">
+<code class="docutils literal notranslate">
+<span class="pre">get_correlation_vector()
 </span>
 </code>
 </a>
@@ -890,6 +962,15 @@
 <a class="reference internal" href="#metacellsgraphspy.data_sources.put_correlation_configuration">
 <code class="docutils literal notranslate">
 <span class="pre">put_correlation_configuration()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.put_correlation_values">
+<code class="docutils literal notranslate">
+<span class="pre">put_correlation_values()
 </span>
 </code>
 </a>
@@ -5207,6 +5288,1738 @@ for details.
 <strong>title
 </strong> (
 <em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.fill_correlation">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">fill_correlation
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">property
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#fill_correlation">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.fill_correlation" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the correlation 
+<code class="docutils literal notranslate">
+<span class="pre">property
+</span>
+</code> of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code> 
+<code class="docutils literal notranslate">
+<span class="pre">axis
+</span>
+</code>, shown by
+
+<a class="reference internal" href="#metacellsgraphspy.data_sources.put_correlation_configuration" title="metacellsgraphspy.data_sources.put_correlation_configuration">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">put_correlation_configuration()
+</span>
+</code>
+</a>, and name the entities after the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code>. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>property
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_metacells">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">fill_correlation_between_cells_and_projected_metacells
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#fill_correlation_between_cells_and_projected_metacells">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_metacells" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the correlation of each gene between the query cells and their projected atlas metacells.
+See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_projected_metacells!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_punctuated_metacells">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">fill_correlation_between_cells_and_projected_punctuated_metacells
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#fill_correlation_between_cells_and_projected_punctuated_metacells">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_projected_punctuated_metacells" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the correlation of each gene between the cells and their projected punctuated metacells. See
+the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_projected_punctuated_metacells!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.fill_correlation_between_cells_and_punctuated_metacells">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">fill_correlation_between_cells_and_punctuated_metacells
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#fill_correlation_between_cells_and_punctuated_metacells">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.fill_correlation_between_cells_and_punctuated_metacells" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the correlation of each gene between the cells and their punctuated metacells. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_correlation_between_cells_and_punctuated_metacells!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
 </em>
 <em> | 
 </em>
@@ -18391,6 +20204,921 @@ for details.
 
 <dl class="py function">
 
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_metacells_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">get_correlation_between_cells_and_projected_metacells_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#get_correlation_between_cells_and_projected_metacells_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_metacells_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the correlation of each gene between the query cells and their projected atlas metacells. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_projected_metacells_vector">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_punctuated_metacells_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">get_correlation_between_cells_and_projected_punctuated_metacells_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#get_correlation_between_cells_and_projected_punctuated_metacells_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.get_correlation_between_cells_and_projected_punctuated_metacells_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the correlation of each gene between the cells and their projected punctuated metacells. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_projected_punctuated_metacells_vector">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_correlation_between_cells_and_punctuated_metacells_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">get_correlation_between_cells_and_punctuated_metacells_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#get_correlation_between_cells_and_punctuated_metacells_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.get_correlation_between_cells_and_punctuated_metacells_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the correlation of each gene between the cells and their punctuated metacells. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_between_cells_and_punctuated_metacells_vector">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_correlation_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">get_correlation_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">property
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">via
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">empty_value
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#get_correlation_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.get_correlation_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the correlation 
+<code class="docutils literal notranslate">
+<span class="pre">property
+</span>
+</code> of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code> 
+<code class="docutils literal notranslate">
+<span class="pre">axis
+</span>
+</code>. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_correlation_vector">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>property
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>via
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>empty_value
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
 <dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_gene_correlation_change_vector">
 
 <span class="sig-prename descclassname">
@@ -26924,6 +29652,411 @@ for details.
 <em>float
 </em>
 <em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.put_correlation_values">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">put_correlation_values
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">value_per_entry
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#put_correlation_values">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.put_correlation_values" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Put the correlation 
+<code class="docutils literal notranslate">
+<span class="pre">value_per_entry
+</span>
+</code> of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code> 
+<code class="docutils literal notranslate">
+<span class="pre">axis
+</span>
+</code> into the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code>,
+shown by 
+<a class="reference internal" href="#metacellsgraphspy.data_sources.put_correlation_configuration" title="metacellsgraphspy.data_sources.put_correlation_configuration">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">put_correlation_configuration()
+</span>
+</code>
+</a>, and name the entities after the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code>. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_correlation_values!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>value_per_entry
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>float
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
 </em>)
 </p>
 </li>

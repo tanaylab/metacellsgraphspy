@@ -208,6 +208,24 @@ def test_bucket_fills() -> None:
     assert _list(heatmap.data.rows.annotations[1].values.vector) == ["false", "true"]
     assert _list(heatmap.data.rows.annotations[2].values.vector) == ["true", "false"]
 
+    daf.set_vector(
+        "gene", "correlation_between_cells_and_punctuated_metacells", np.array([0.5, -0.1, 0.2], dtype="float32")
+    )
+    graph = sg.points_graph()
+    mg.fill_correlation_between_cells_and_punctuated_metacells(graph.points_colors_vector_fields(), daf)
+    assert graph.configuration.points.colors.scale.minimum == np.float32(-0.1)
+    mg.fill_correlation(
+        graph.points_colors_vector_fields(),
+        daf,
+        axis="gene",
+        property="correlation_between_cells_and_punctuated_metacells",
+    )
+    mg.put_correlation_values(graph.points_colors_vector_fields(), daf, np.array([0.1, 0.2, 0.3]), axis="gene")
+    assert graph.configuration.points.colors.scale.minimum == 0
+    assert list(mg.get_correlation_between_cells_and_punctuated_metacells_vector(daf)) == list(
+        mg.get_correlation_vector(daf, axis="gene", property="correlation_between_cells_and_punctuated_metacells")
+    )
+
 
 def test_frame_sources() -> None:
     """
