@@ -103,6 +103,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegersVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MatrixDataSinks</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumbersMatrix</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumbersVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sinks</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringsVector</span>
@@ -202,9 +203,9 @@
     <span class="s2">"put_category_configuration"</span><span class="p">,</span>
     <span class="s2">"put_category_values"</span><span class="p">,</span>
     <span class="s2">"put_coordinates_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_correlation_configuration"</span><span class="p">,</span>
     <span class="s2">"put_expression_level_configuration"</span><span class="p">,</span>
     <span class="s2">"put_fold_configuration"</span><span class="p">,</span>
-    <span class="s2">"put_gene_correlation_change_configuration"</span><span class="p">,</span>
     <span class="s2">"put_size_configuration"</span><span class="p">,</span>
     <span class="s2">"put_size_values"</span><span class="p">,</span>
     <span class="s2">"put_umap_data"</span><span class="p">,</span>
@@ -749,15 +750,19 @@
     <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Fill the ``sinks`` with the correlation of the ``gene`` per each of the ``entries`` of some ``daf`` ``axis``, and</span>
-<span class="sd">    name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    Fill the ``sinks`` with the correlation of the ``gene`` per each of the ``entries`` of some ``daf`` ``axis``, shown</span>
+<span class="sd">    by :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_gene_correlation!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_gene_correlation_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
     <span class="p">)</span></div>
 
 
@@ -813,19 +818,23 @@
 
 
 
-<div class="viewcode-block" id="put_gene_correlation_change_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_gene_correlation_change_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_gene_correlation_change_configuration</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<div class="viewcode-block" id="put_correlation_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_correlation_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_correlation_configuration</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span>
+    <span class="n">values</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NumbersVector</span><span class="p">,</span> <span class="n">NumbersMatrix</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Name the correlation change in the configuration, and include it in the legend if ``show_legend`` where it is the</span>
-<span class="sd">    colors. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_gene_correlation_change_configuration!&gt;`__</span>
+<span class="sd">    Show a correlation (or a difference of correlations) on a linear scale, named by the ``title``. As colors, zero is</span>
+<span class="sd">    white, and the colors follow the range of the ``values``, which always includes zero. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_correlation_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_gene_correlation_change_configuration_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_correlation_configuration_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 

@@ -30,6 +30,7 @@ from dafpy import DafReader
 from somegraphspy import IntegersVector
 from somegraphspy import LogBase
 from somegraphspy import MatrixDataSinks
+from somegraphspy import NumbersMatrix
 from somegraphspy import NumbersVector
 from somegraphspy import Sinks
 from somegraphspy import StringsVector
@@ -129,9 +130,9 @@ __all__ = [
     "put_category_configuration",
     "put_category_values",
     "put_coordinates_configuration",
+    "put_correlation_configuration",
     "put_expression_level_configuration",
     "put_fold_configuration",
-    "put_gene_correlation_change_configuration",
     "put_size_configuration",
     "put_size_values",
     "put_umap_data",
@@ -611,15 +612,19 @@ def fill_gene_correlation(
     axis: Optional[str] = None,
     entries: Optional[Entries] = None,
     title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Fill the ``sinks`` with the correlation of the ``gene`` per each of the ``entries`` of some ``daf`` ``axis``, and
-    name the entities after the ``entries``. See the Julia
+    Fill the ``sinks`` with the correlation of the ``gene`` per each of the ``entries`` of some ``daf`` ``axis``, shown
+    by :py:func:`put_correlation_configuration`, and name the entities after the ``entries``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_gene_correlation!>`__
     for details.
     """
     jl.MetacellsGraphs.fill_gene_correlation_b(
-        _to_julia(sinks), daf, gene=gene, **_given(axis=axis, entries=_to_julia_array(entries), title=title)
+        _to_julia(sinks),
+        daf,
+        gene=gene,
+        **_given(axis=axis, entries=_to_julia_array(entries), title=title, show_legend=show_legend),
     )
 
 
@@ -668,17 +673,21 @@ def fill_gene_correlation_change(
     )
 
 
-def put_gene_correlation_change_configuration(
-    sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None
+def put_correlation_configuration(
+    sinks: Sinks,
+    values: Union[NumbersVector, NumbersMatrix],
+    *,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Name the correlation change in the configuration, and include it in the legend if ``show_legend`` where it is the
-    colors. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_gene_correlation_change_configuration!>`__
+    Show a correlation (or a difference of correlations) on a linear scale, named by the ``title``. As colors, zero is
+    white, and the colors follow the range of the ``values``, which always includes zero. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_correlation_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_gene_correlation_change_configuration_b(
-        _to_julia(sinks), **_given(title=title, show_legend=show_legend)
+    jl.MetacellsGraphs.put_correlation_configuration_b(
+        _to_julia(sinks), _to_julia(values), **_given(title=title, show_legend=show_legend)
     )
 
 
