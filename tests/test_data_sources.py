@@ -112,11 +112,11 @@ def test_get_vectors() -> None:
     assert list(mg.get_total_UMIs_vector(daf, via=["block"])) == [3000, 3000, 6000]
     assert list(mg.get_top_marker_gene_indices(daf, markers_count=1)) == [2]
     assert list(mg.get_skeleton_gene_indices(daf)) == [2]
-    assert list(mg.get_boolean_annotation_vector(daf, axis="gene", property="is_skeleton")) == [
-        "false",
-        "true",
-        "false",
-    ]
+    assert list(mg.get_boolean_vector(daf, axis="gene", property="is_skeleton")) == ["false", "true", "false"]
+    assert list(mg.get_is_skeleton_vector(daf)) == ["false", "true", "false"]
+    assert list(mg.get_size_vector(daf, axis="metacell", property="n_cells")) == [10, 20, 30]
+    assert list(mg.get_category_vector(daf, axis="metacell", property="type")) == ["T1", "T2", ""]
+    assert mg.get_category_colors(daf, axis="type") == mg.get_type_colors(daf)
     assert list(mg.get_vector_query(daf, query="@ metacell : n_cells", indices=[2])) == [20]
 
 
@@ -166,6 +166,47 @@ def test_fill_named_entries() -> None:
     graph.validate()
     assert _list(graph.data.columns.annotations[0].values.vector) == ["B2", "B1"]
     assert _list(graph.data.columns.entities.names) == ["M3", "M1"]
+
+
+def test_bucket_fills() -> None:
+    """
+    The generic fill and put of each display bucket, and a per-property fill, reach Julia.
+    """
+    daf = _test_daf()
+    graph = sg.points_graph()
+    mg.fill_size(graph.x_axis_vector_fields(), daf, axis="metacell", property="n_cells", log_base=sg.LogBase.Log2Base)
+    mg.fill_category(graph.points_colors_vector_fields(), daf, axis="metacell", property="type")
+    assert _list(graph.data.x.vector) == [10, 20, 30]
+    assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
+    assert _list(graph.data.points.colors.vector) == ["T1", "T2", ""]
+
+    graph = sg.points_graph()
+    mg.put_size_values(graph.x_axis_vector_fields(), daf, np.array([1.0, 2.0, 3.0]), axis="metacell")
+    mg.put_category_values(
+        graph.points_colors_vector_fields(), daf, np.array(["B1", "B1", "B2"]), axis="metacell", colors_axis="block"
+    )
+    assert _list(graph.data.x.vector) == [1.0, 2.0, 3.0]
+    assert graph.configuration.points.colors.palette == mg.get_block_colors(daf)
+
+    heatmap = sg.heatmap_graph()
+    mg.fill_genes_expression_matrix(heatmap.entries_matrix_fields(), daf, genes=["A", "B"])
+    mg.fill_is_skeleton(heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()), daf)
+    mg.fill_boolean(
+        heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()),
+        daf,
+        axis="gene",
+        property="is_skeleton",
+    )
+    mg.put_boolean_values(
+        heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()),
+        daf,
+        np.array(["true", "false"]),
+        axis="gene",
+    )
+    heatmap.validate()
+    assert _list(heatmap.data.rows.annotations[0].values.vector) == ["false", "true"]
+    assert _list(heatmap.data.rows.annotations[1].values.vector) == ["false", "true"]
+    assert _list(heatmap.data.rows.annotations[2].values.vector) == ["true", "false"]
 
 
 def test_frame_sources() -> None:

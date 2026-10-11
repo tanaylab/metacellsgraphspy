@@ -18,6 +18,7 @@ queries, and the gene indices returned by the gene selection functions.
 # A function per Julia data source, so the module is as long as the Julia one.
 # pylint: disable=too-many-lines
 
+from typing import Any
 from typing import Mapping
 from typing import Optional
 from typing import Sequence
@@ -27,6 +28,7 @@ import numpy as np
 import pandas as pd
 from dafpy import DafReader
 from somegraphspy import IntegersVector
+from somegraphspy import LogBase
 from somegraphspy import MatrixDataSinks
 from somegraphspy import NumbersVector
 from somegraphspy import Sinks
@@ -51,7 +53,8 @@ __all__ = [
     "fill_axis_names_data",
     "fill_axis_vector_data",
     "fill_block",
-    "fill_boolean_annotation",
+    "fill_boolean",
+    "fill_category",
     "fill_column_boolean_annotation",
     "fill_column_names_data",
     "fill_column_vector_data",
@@ -61,12 +64,23 @@ __all__ = [
     "fill_genes_expression_matrix",
     "fill_genes_fold_matrix",
     "fill_global_flow_order",
+    "fill_is_correlated_with_skeleton",
+    "fill_is_excluded",
+    "fill_is_forbidden",
+    "fill_is_lateral",
+    "fill_is_marker",
+    "fill_is_mitochondrial",
+    "fill_is_regulator",
+    "fill_is_ribosomal",
+    "fill_is_skeleton",
+    "fill_is_transcription_factor",
     "fill_mean_cells_per_metacell",
     "fill_mean_total_UMIs_per_cell",
     "fill_mean_total_UMIs_per_metacell",
     "fill_module_regulators_hovers",
     "fill_n_cells",
     "fill_n_metacells",
+    "fill_size",
     "fill_total_UMIs",
     "fill_type",
     "fill_umap",
@@ -75,7 +89,9 @@ __all__ = [
     "get_axis_vector",
     "get_block_colors",
     "get_block_vector",
-    "get_boolean_annotation_vector",
+    "get_boolean_vector",
+    "get_category_colors",
+    "get_category_vector",
     "get_column_vector",
     "get_gene_correlation_change_vector",
     "get_gene_correlation_vector",
@@ -83,6 +99,16 @@ __all__ = [
     "get_genes_expression_matrix",
     "get_genes_fold_matrix",
     "get_global_flow_order_vector",
+    "get_is_correlated_with_skeleton_vector",
+    "get_is_excluded_vector",
+    "get_is_forbidden_vector",
+    "get_is_lateral_vector",
+    "get_is_marker_vector",
+    "get_is_mitochondrial_vector",
+    "get_is_regulator_vector",
+    "get_is_ribosomal_vector",
+    "get_is_skeleton_vector",
+    "get_is_transcription_factor_vector",
     "get_matrix_query",
     "get_mean_cells_per_metacell_vector",
     "get_mean_total_UMIs_per_cell_vector",
@@ -90,6 +116,7 @@ __all__ = [
     "get_module_regulators_hovers",
     "get_n_cells_vector",
     "get_n_metacells_vector",
+    "get_size_vector",
     "get_skeleton_gene_indices",
     "get_top_marker_gene_indices",
     "get_total_UMIs_vector",
@@ -98,12 +125,15 @@ __all__ = [
     "get_umap_vector",
     "get_vector_query",
     "put_boolean_configuration",
+    "put_boolean_values",
     "put_category_configuration",
+    "put_category_values",
     "put_coordinates_configuration",
     "put_expression_level_configuration",
     "put_fold_configuration",
     "put_gene_correlation_change_configuration",
     "put_size_configuration",
+    "put_size_values",
     "put_umap_data",
 ]
 
@@ -387,16 +417,22 @@ def put_expression_level_configuration(
     gene_fraction_regularization: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
-    Show an expression level (of a gene, or of a gene module) on a log-base-2 scale, regularized by
-    ``gene_fraction_regularization``, named by the ``title``. See the Julia
+    Show an expression level (of a gene, or of a gene module) on a log scale of the ``log_base`` (2 by default),
+    regularized by ``gene_fraction_regularization``, named by the ``title``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_expression_level_configuration!>`__
     for details.
     """
     jl.MetacellsGraphs.put_expression_level_configuration_b(
         _to_julia(sinks),
-        **_given(gene_fraction_regularization=gene_fraction_regularization, title=title, show_legend=show_legend),
+        **_given(
+            gene_fraction_regularization=gene_fraction_regularization,
+            title=title,
+            show_legend=show_legend,
+            log_base=_to_julia(log_base),
+        ),
     )
 
 
@@ -410,10 +446,12 @@ def fill_gene_expression(
     gene_fraction_regularization: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``gene`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
-    ``axis``, shown in log base 2, and name the entities after the ``entries``. See the Julia
+    ``axis``, shown by :py:func:`put_expression_level_configuration`, and name the entities after the ``entries``. See
+    the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_gene_expression!>`__
     for details.
     """
@@ -427,6 +465,7 @@ def fill_gene_expression(
             gene_fraction_regularization=gene_fraction_regularization,
             title=title,
             show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -457,10 +496,11 @@ def fill_genes_expression_matrix(
     gene_fraction_regularization: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``genes`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
-    ``axis``, shown in log base 2, and name the rows and the columns. See the Julia
+    ``axis``, shown by :py:func:`put_expression_level_configuration`, and name the rows and the columns. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_genes_expression_matrix!>`__
     for details.
     """
@@ -474,6 +514,7 @@ def fill_genes_expression_matrix(
             gene_fraction_regularization=gene_fraction_regularization,
             title=title,
             show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -748,14 +789,103 @@ def get_skeleton_gene_indices(daf: DafReader) -> np.ndarray:
 # Counts.
 
 
-def put_size_configuration(sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None) -> None:
+def put_size_configuration(
+    sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None, log_base: Optional[LogBase] = None
+) -> None:
     """
-    Show a size (a count) on a log-base-10 scale, regularized by 1, in the ``YlOrRd`` color scale, named by the
-    ``title``. See the Julia
+    Show a size (a count) on a log scale of the ``log_base`` (10 by default), regularized by 1, in the ``YlOrRd`` color
+    scale, named by the ``title``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_size_configuration_b(_to_julia(sinks), **_given(title=title, show_legend=show_legend))
+    jl.MetacellsGraphs.put_size_configuration_b(
+        _to_julia(sinks), **_given(title=title, show_legend=show_legend, log_base=_to_julia(log_base))
+    )
+
+
+def get_size_vector(
+    daf: DafReader,
+    *,
+    axis: str,
+    property: str,  # pylint: disable=redefined-builtin
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[float] = None,
+) -> np.ndarray:
+    """
+    Get the size (count) ``property`` of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_size_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_size_vector(
+            daf,
+            axis=axis,
+            property=property,
+            **_given(entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value),
+        )
+    )
+
+
+def fill_size(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: str,
+    property: str,  # pylint: disable=redefined-builtin
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    title: Optional[str] = None,
+    empty_value: Optional[float] = None,
+    show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the size (count) ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown
+    by :py:func:`put_size_configuration`, and name the entities after the ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_size!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_size_b(
+        _to_julia(sinks),
+        daf,
+        axis=axis,
+        property=property,
+        **_given(
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            title=title,
+            empty_value=empty_value,
+            show_legend=show_legend,
+            log_base=_to_julia(log_base),
+        ),
+    )
+
+
+def put_size_values(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    value_per_entry: NumbersVector,
+    *,
+    axis: str,
+    entries: Optional[Entries] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
+) -> None:
+    """
+    Put the size (count) ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,
+    shown by :py:func:`put_size_configuration`, and name the entities after the ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_values!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_size_values_b(
+        _to_julia(sinks),
+        daf,
+        _to_julia(value_per_entry),
+        axis=axis,
+        **_given(entries=_to_julia_array(entries), title=title, show_legend=show_legend, log_base=_to_julia(log_base)),
+    )
 
 
 def fill_total_UMIs(  # pylint: disable=invalid-name
@@ -768,6 +898,7 @@ def fill_total_UMIs(  # pylint: disable=invalid-name
     empty_value: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the total UMIs of each of the ``entries`` of the ``daf`` ``axis``, shown as a count, and
@@ -785,6 +916,7 @@ def fill_total_UMIs(  # pylint: disable=invalid-name
             empty_value=empty_value,
             title=title,
             show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -820,6 +952,7 @@ def fill_n_cells(
     empty_value: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the number of cells of each of the ``entries`` of the ``daf`` ``axis``, shown as a count,
@@ -837,6 +970,7 @@ def fill_n_cells(
             empty_value=empty_value,
             title=title,
             show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -872,6 +1006,7 @@ def fill_n_metacells(
     empty_value: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the number of metacells of each of the ``entries`` of the ``daf`` ``axis`` (by default, the
@@ -889,6 +1024,7 @@ def fill_n_metacells(
             empty_value=empty_value,
             title=title,
             show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -924,6 +1060,7 @@ def fill_mean_cells_per_metacell(
     via: Optional[Via] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the mean number of cells per metacell of each of the ``entries`` of the ``daf`` ``axis``
@@ -935,7 +1072,12 @@ def fill_mean_cells_per_metacell(
         _to_julia(sinks),
         daf,
         **_given(
-            axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), title=title, show_legend=show_legend
+            axis=axis,
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            title=title,
+            show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -965,6 +1107,7 @@ def fill_mean_total_UMIs_per_metacell(  # pylint: disable=invalid-name
     via: Optional[Via] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the mean total UMIs per metacell of each of the ``entries`` of the ``daf`` ``axis`` (by
@@ -976,7 +1119,12 @@ def fill_mean_total_UMIs_per_metacell(  # pylint: disable=invalid-name
         _to_julia(sinks),
         daf,
         **_given(
-            axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), title=title, show_legend=show_legend
+            axis=axis,
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            title=title,
+            show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -1006,6 +1154,7 @@ def fill_mean_total_UMIs_per_cell(  # pylint: disable=invalid-name
     via: Optional[Via] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the mean total UMIs per cell of each of the ``entries`` of the ``daf`` ``axis``, shown as a
@@ -1017,7 +1166,12 @@ def fill_mean_total_UMIs_per_cell(  # pylint: disable=invalid-name
         _to_julia(sinks),
         daf,
         **_given(
-            axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), title=title, show_legend=show_legend
+            axis=axis,
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            title=title,
+            show_legend=show_legend,
+            log_base=_to_julia(log_base),
         ),
     )
 
@@ -1049,8 +1203,9 @@ def fill_block(
     via: Optional[Via] = None,
     empty_value: Optional[str] = None,
     title: Optional[str] = None,
+    colors_axis: Optional[str] = None,
+    empty_color: Optional[str] = None,
     show_legend: Optional[bool] = None,
-    empty_block_color: Optional[str] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the block of each of the ``entries`` of the ``daf`` ``axis``, each block in its own color,
@@ -1067,8 +1222,9 @@ def fill_block(
             via=_to_julia_array(via),
             empty_value=empty_value,
             title=title,
+            colors_axis=colors_axis,
+            empty_color=empty_color,
             show_legend=show_legend,
-            empty_block_color=empty_block_color,
         ),
     )
 
@@ -1095,17 +1251,15 @@ def get_block_vector(
 
 
 def get_block_colors(
-    daf: DafReader, *, empty_value: Optional[str] = None, empty_block_color: Optional[str] = None
+    daf: DafReader, *, empty_value: Optional[str] = None, empty_color: Optional[str] = None
 ) -> Mapping[str, str]:
     """
-    Get the palette mapping each entry of the ``daf`` ``block`` axis to its own color, with an additional
-    ``empty_block_color`` for the ``empty_value`` of entries with no block. See the Julia
+    Get the palette of the ``daf`` ``block`` axis, with an additional ``empty_color`` for the ``empty_value`` of entries
+    with no block. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_block_colors>`__
     for details.
     """
-    colors = jl.MetacellsGraphs.get_block_colors(
-        daf, **_given(empty_value=empty_value, empty_block_color=empty_block_color)
-    )
+    colors = jl.MetacellsGraphs.get_block_colors(daf, **_given(empty_value=empty_value, empty_color=empty_color))
     return {str(key): str(jl.getindex(colors, key)) for key in jl.keys(colors)}
 
 
@@ -1171,16 +1325,16 @@ def fill_type(
     *,
     axis: Optional[str] = None,
     entries: Optional[Entries] = None,
-    type_property: Optional[str] = None,
-    type_axis: Optional[str] = None,
     via: Optional[Via] = None,
+    empty_value: Optional[str] = None,
     title: Optional[str] = None,
+    colors_axis: Optional[str] = None,
+    empty_color: Optional[str] = None,
     show_legend: Optional[bool] = None,
-    empty_type_color: Optional[str] = None,
 ) -> None:
     """
-    Fill the ``sinks`` with the ``type_property`` of each of the ``entries`` of the ``daf`` ``axis``, colored by the
-    ``color`` of the ``type_axis``, and name the entities after the ``entries``. See the Julia
+    Fill the ``sinks`` with the type of each of the ``entries`` of the ``daf`` ``axis``, colored by the palette of the
+    ``colors_axis`` (by default, the ``color`` of each type), and name the entities after the ``entries``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_type!>`__
     for details.
     """
@@ -1190,14 +1344,51 @@ def fill_type(
         **_given(
             axis=axis,
             entries=_to_julia_array(entries),
-            type_property=type_property,
-            type_axis=type_axis,
             via=_to_julia_array(via),
+            empty_value=empty_value,
             title=title,
+            colors_axis=colors_axis,
+            empty_color=empty_color,
             show_legend=show_legend,
-            empty_type_color=empty_type_color,
         ),
     )
+
+
+def get_type_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[str] = None,
+) -> np.ndarray:
+    """
+    Get the type of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_type_vector(
+            daf,
+            **_given(axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value),
+        )
+    )
+
+
+def get_type_colors(
+    daf: DafReader, *, empty_value: Optional[str] = None, empty_color: Optional[str] = None
+) -> Mapping[str, str]:
+    """
+    Get the palette of the ``daf`` ``type`` axis (the ``color`` of each type), with an additional ``empty_color`` for the
+    ``empty_value`` of entries with no type. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_colors>`__
+    for details.
+    """
+    colors = jl.MetacellsGraphs.get_type_colors(daf, **_given(empty_value=empty_value, empty_color=empty_color))
+    return {str(key): str(jl.getindex(colors, key)) for key in jl.keys(colors)}
+
+
+# Categories.
 
 
 def put_category_configuration(
@@ -1214,68 +1405,121 @@ def put_category_configuration(
     )
 
 
-def get_type_vector(
+def get_category_colors(
+    daf: DafReader, *, axis: str, empty_value: Optional[str] = None, empty_color: Optional[str] = None
+) -> Mapping[str, str]:
+    """
+    Get the palette mapping each entry of the ``daf`` ``axis`` of a category to its color (its ``color`` if the axis
+    has one, or a computed one otherwise), with an additional ``empty_color`` for the ``empty_value`` of entries with no
+    value. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_category_colors>`__
+    for details.
+    """
+    colors = jl.MetacellsGraphs.get_category_colors(
+        daf, axis=axis, **_given(empty_value=empty_value, empty_color=empty_color)
+    )
+    return {str(key): str(jl.getindex(colors, key)) for key in jl.keys(colors)}
+
+
+def get_category_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
+    axis: str,
+    property: str,  # pylint: disable=redefined-builtin
     entries: Optional[Entries] = None,
-    type_property: Optional[str] = None,
     via: Optional[Via] = None,
+    empty_value: Optional[str] = None,
 ) -> np.ndarray:
     """
-    Get the ``type_property`` for each of the ``entries`` of the ``daf`` ``axis``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_vector>`__
+    Get the category ``property`` (e.g. the type) of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_category_vector>`__
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_type_vector(
+        jl.MetacellsGraphs.get_category_vector(
             daf,
-            **_given(
-                axis=axis, entries=_to_julia_array(entries), type_property=type_property, via=_to_julia_array(via)
-            ),
+            axis=axis,
+            property=property,
+            **_given(entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value),
         )
     )
 
 
-def get_type_colors(
-    daf: DafReader, *, type_axis: Optional[str] = None, empty_type_color: Optional[str] = None
-) -> Mapping[str, str]:
-    """
-    Get the palette mapping each entry of the ``daf`` ``type_axis`` to its ``color``, with an additional
-    ``empty_type_color`` for entries with no type (empty string). See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_colors>`__
-    for details.
-    """
-    colors = jl.MetacellsGraphs.get_type_colors(daf, **_given(type_axis=type_axis, empty_type_color=empty_type_color))
-    return {str(key): str(jl.getindex(colors, key)) for key in jl.keys(colors)}
-
-
-# Boolean annotations.
-
-
-def fill_boolean_annotation(
+def fill_category(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
     entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
     title: Optional[str] = None,
+    empty_value: Optional[str] = None,
+    colors_axis: Optional[str] = None,
+    empty_color: Optional[str] = None,
     show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Fill the ``sinks`` with the Boolean mask ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown as
-    ``true`` in black and ``false`` in light grey, and name the entities after the ``entries``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_boolean_annotation!>`__
+    Fill the ``sinks`` with the category ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by
+    :py:func:`put_category_configuration` using the palette of the ``colors_axis`` (by default, the axis named after the
+    ``property``), and name the entities after the ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_category!>`__
     for details.
     """
-    jl.MetacellsGraphs.fill_boolean_annotation_b(
+    jl.MetacellsGraphs.fill_category_b(
         _to_julia(sinks),
         daf,
         axis=axis,
         property=property,
-        **_given(entries=_to_julia_array(entries), title=title, show_legend=show_legend),
+        **_given(
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            title=title,
+            empty_value=empty_value,
+            colors_axis=colors_axis,
+            empty_color=empty_color,
+            show_legend=show_legend,
+        ),
     )
+
+
+def put_category_values(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    value_per_entry: StringsVector,
+    *,
+    axis: str,
+    colors_axis: str,
+    entries: Optional[Entries] = None,
+    title: Optional[str] = None,
+    empty_value: Optional[str] = None,
+    empty_color: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Put the category ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``, shown
+    by :py:func:`put_category_configuration` using the palette of the ``colors_axis``, and name the entities after the
+    ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_category_values!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_category_values_b(
+        _to_julia(sinks),
+        daf,
+        _to_julia(value_per_entry),
+        axis=axis,
+        colors_axis=colors_axis,
+        **_given(
+            entries=_to_julia_array(entries),
+            title=title,
+            empty_value=empty_value,
+            empty_color=empty_color,
+            show_legend=show_legend,
+        ),
+    )
+
+
+# Booleans.
 
 
 def put_boolean_configuration(sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None) -> None:
@@ -1287,24 +1531,512 @@ def put_boolean_configuration(sinks: Sinks, *, title: Optional[str] = None, show
     jl.MetacellsGraphs.put_boolean_configuration_b(_to_julia(sinks), **_given(title=title, show_legend=show_legend))
 
 
-def get_boolean_annotation_vector(
+def get_boolean_vector(
     daf: DafReader,
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
     entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get the Boolean mask ``property`` of each of the ``entries`` of the ``daf`` ``axis``, as the *strings* ``"true"``
-    and ``"false"``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_boolean_annotation_vector>`__
+    Get the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``, as the *strings* ``"true"`` and
+    ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_boolean_vector>`__
     for details.
     """
     return _from_julia_array(
-        jl.MetacellsGraphs.get_boolean_annotation_vector(
-            daf, axis=axis, property=property, **_given(entries=_to_julia_array(entries))
+        jl.MetacellsGraphs.get_boolean_vector(
+            daf,
+            axis=axis,
+            property=property,
+            **_given(entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value),
         )
     )
+
+
+def fill_boolean(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: str,
+    property: str,  # pylint: disable=redefined-builtin
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    title: Optional[str] = None,
+    empty_value: Optional[bool] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by
+    :py:func:`put_boolean_configuration`, and name the entities after the ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_boolean!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_boolean_b(
+        _to_julia(sinks),
+        daf,
+        axis=axis,
+        property=property,
+        **_given(
+            entries=_to_julia_array(entries),
+            via=_to_julia_array(via),
+            title=title,
+            empty_value=empty_value,
+            show_legend=show_legend,
+        ),
+    )
+
+
+def put_boolean_values(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    value_per_entry: StringsVector,
+    *,
+    axis: str,
+    entries: Optional[Entries] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Put the Boolean *string* ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the
+    ``sinks``, shown by :py:func:`put_boolean_configuration`, and name the entities after the ``entries``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_values!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_boolean_values_b(
+        _to_julia(sinks),
+        daf,
+        _to_julia(value_per_entry),
+        axis=axis,
+        **_given(entries=_to_julia_array(entries), title=title, show_legend=show_legend),
+    )
+
+
+# Gene flags.
+
+
+def fill_is_lateral(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is lateral. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_lateral!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_lateral_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_lateral_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is lateral, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_lateral_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_lateral_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+def fill_is_marker(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is a marker gene. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_marker!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_marker_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_marker_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is a marker gene, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_marker_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_marker_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+def fill_is_transcription_factor(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is a transcription factor (binds to DNA). See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_transcription_factor!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_transcription_factor_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_transcription_factor_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is a transcription factor, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_transcription_factor_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_transcription_factor_vector(
+            daf, **_boolean_get_given(axis, entries, via, empty_value)
+        )
+    )
+
+
+def fill_is_regulator(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene regulates the expression of other genes. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_regulator!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_regulator_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_regulator_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene regulates the expression of other genes, as the *strings* ``"true"`` and ``"false"``. See
+    the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_regulator_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_regulator_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+def fill_is_forbidden(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is forbidden. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_forbidden!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_forbidden_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_forbidden_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is forbidden, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_forbidden_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_forbidden_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+def fill_is_skeleton(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is a skeleton gene. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_skeleton!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_skeleton_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_skeleton_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is a skeleton gene, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_skeleton_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_skeleton_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+def fill_is_correlated_with_skeleton(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is correlated with some skeleton gene. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_correlated_with_skeleton!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_correlated_with_skeleton_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_correlated_with_skeleton_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is correlated with some skeleton gene, as the *strings* ``"true"`` and ``"false"``. See the
+    Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_correlated_with_skeleton_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_correlated_with_skeleton_vector(
+            daf, **_boolean_get_given(axis, entries, via, empty_value)
+        )
+    )
+
+
+def fill_is_mitochondrial(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is mitochondrial. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_mitochondrial!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_mitochondrial_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_mitochondrial_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is mitochondrial, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_mitochondrial_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_mitochondrial_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+def fill_is_ribosomal(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is ribosomal. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_ribosomal!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_ribosomal_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_ribosomal_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is ribosomal, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_ribosomal_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_ribosomal_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+def fill_is_excluded(
+    sinks: VectorDataSinks,
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with whether each gene is excluded. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_excluded!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.fill_is_excluded_b(
+        _to_julia(sinks), daf, **_boolean_fill_given(axis, entries, via, empty_value, title, show_legend)
+    )
+
+
+def get_is_excluded_vector(
+    daf: DafReader,
+    *,
+    axis: Optional[str] = None,
+    entries: Optional[Entries] = None,
+    via: Optional[Via] = None,
+    empty_value: Optional[bool] = None,
+) -> np.ndarray:
+    """
+    Get whether each gene is excluded, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_excluded_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_excluded_vector(daf, **_boolean_get_given(axis, entries, via, empty_value))
+    )
+
+
+# The keywords given to a per-property Boolean fill, as passed to Julia.
+def _boolean_fill_given(  # pylint: disable=too-many-positional-arguments
+    axis: Optional[str],
+    entries: Optional[Entries],
+    via: Optional[Via],
+    empty_value: Optional[bool],
+    title: Optional[str],
+    show_legend: Optional[bool],
+) -> Mapping[str, Any]:
+    return _given(
+        axis=axis,
+        entries=_to_julia_array(entries),
+        via=_to_julia_array(via),
+        empty_value=empty_value,
+        title=title,
+        show_legend=show_legend,
+    )
+
+
+# The keywords given to a per-property Boolean get, as passed to Julia.
+def _boolean_get_given(
+    axis: Optional[str], entries: Optional[Entries], via: Optional[Via], empty_value: Optional[bool]
+) -> Mapping[str, Any]:
+    return _given(axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value)
 
 
 # Low level queries.

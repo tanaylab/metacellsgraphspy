@@ -91,6 +91,7 @@
 <span class="c1"># A function per Julia data source, so the module is as long as the Julia one.</span>
 <span class="c1"># pylint: disable=too-many-lines</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
@@ -100,6 +101,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegersVector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MatrixDataSinks</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumbersVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sinks</span>
@@ -124,7 +126,8 @@
     <span class="s2">"fill_axis_names_data"</span><span class="p">,</span>
     <span class="s2">"fill_axis_vector_data"</span><span class="p">,</span>
     <span class="s2">"fill_block"</span><span class="p">,</span>
-    <span class="s2">"fill_boolean_annotation"</span><span class="p">,</span>
+    <span class="s2">"fill_boolean"</span><span class="p">,</span>
+    <span class="s2">"fill_category"</span><span class="p">,</span>
     <span class="s2">"fill_column_boolean_annotation"</span><span class="p">,</span>
     <span class="s2">"fill_column_names_data"</span><span class="p">,</span>
     <span class="s2">"fill_column_vector_data"</span><span class="p">,</span>
@@ -134,12 +137,23 @@
     <span class="s2">"fill_genes_expression_matrix"</span><span class="p">,</span>
     <span class="s2">"fill_genes_fold_matrix"</span><span class="p">,</span>
     <span class="s2">"fill_global_flow_order"</span><span class="p">,</span>
+    <span class="s2">"fill_is_correlated_with_skeleton"</span><span class="p">,</span>
+    <span class="s2">"fill_is_excluded"</span><span class="p">,</span>
+    <span class="s2">"fill_is_forbidden"</span><span class="p">,</span>
+    <span class="s2">"fill_is_lateral"</span><span class="p">,</span>
+    <span class="s2">"fill_is_marker"</span><span class="p">,</span>
+    <span class="s2">"fill_is_mitochondrial"</span><span class="p">,</span>
+    <span class="s2">"fill_is_regulator"</span><span class="p">,</span>
+    <span class="s2">"fill_is_ribosomal"</span><span class="p">,</span>
+    <span class="s2">"fill_is_skeleton"</span><span class="p">,</span>
+    <span class="s2">"fill_is_transcription_factor"</span><span class="p">,</span>
     <span class="s2">"fill_mean_cells_per_metacell"</span><span class="p">,</span>
     <span class="s2">"fill_mean_total_UMIs_per_cell"</span><span class="p">,</span>
     <span class="s2">"fill_mean_total_UMIs_per_metacell"</span><span class="p">,</span>
     <span class="s2">"fill_module_regulators_hovers"</span><span class="p">,</span>
     <span class="s2">"fill_n_cells"</span><span class="p">,</span>
     <span class="s2">"fill_n_metacells"</span><span class="p">,</span>
+    <span class="s2">"fill_size"</span><span class="p">,</span>
     <span class="s2">"fill_total_UMIs"</span><span class="p">,</span>
     <span class="s2">"fill_type"</span><span class="p">,</span>
     <span class="s2">"fill_umap"</span><span class="p">,</span>
@@ -148,7 +162,9 @@
     <span class="s2">"get_axis_vector"</span><span class="p">,</span>
     <span class="s2">"get_block_colors"</span><span class="p">,</span>
     <span class="s2">"get_block_vector"</span><span class="p">,</span>
-    <span class="s2">"get_boolean_annotation_vector"</span><span class="p">,</span>
+    <span class="s2">"get_boolean_vector"</span><span class="p">,</span>
+    <span class="s2">"get_category_colors"</span><span class="p">,</span>
+    <span class="s2">"get_category_vector"</span><span class="p">,</span>
     <span class="s2">"get_column_vector"</span><span class="p">,</span>
     <span class="s2">"get_gene_correlation_change_vector"</span><span class="p">,</span>
     <span class="s2">"get_gene_correlation_vector"</span><span class="p">,</span>
@@ -156,6 +172,16 @@
     <span class="s2">"get_genes_expression_matrix"</span><span class="p">,</span>
     <span class="s2">"get_genes_fold_matrix"</span><span class="p">,</span>
     <span class="s2">"get_global_flow_order_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_correlated_with_skeleton_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_excluded_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_forbidden_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_lateral_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_marker_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_mitochondrial_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_regulator_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_ribosomal_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_skeleton_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_transcription_factor_vector"</span><span class="p">,</span>
     <span class="s2">"get_matrix_query"</span><span class="p">,</span>
     <span class="s2">"get_mean_cells_per_metacell_vector"</span><span class="p">,</span>
     <span class="s2">"get_mean_total_UMIs_per_cell_vector"</span><span class="p">,</span>
@@ -163,6 +189,7 @@
     <span class="s2">"get_module_regulators_hovers"</span><span class="p">,</span>
     <span class="s2">"get_n_cells_vector"</span><span class="p">,</span>
     <span class="s2">"get_n_metacells_vector"</span><span class="p">,</span>
+    <span class="s2">"get_size_vector"</span><span class="p">,</span>
     <span class="s2">"get_skeleton_gene_indices"</span><span class="p">,</span>
     <span class="s2">"get_top_marker_gene_indices"</span><span class="p">,</span>
     <span class="s2">"get_total_UMIs_vector"</span><span class="p">,</span>
@@ -171,12 +198,15 @@
     <span class="s2">"get_umap_vector"</span><span class="p">,</span>
     <span class="s2">"get_vector_query"</span><span class="p">,</span>
     <span class="s2">"put_boolean_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_boolean_values"</span><span class="p">,</span>
     <span class="s2">"put_category_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_category_values"</span><span class="p">,</span>
     <span class="s2">"put_coordinates_configuration"</span><span class="p">,</span>
     <span class="s2">"put_expression_level_configuration"</span><span class="p">,</span>
     <span class="s2">"put_fold_configuration"</span><span class="p">,</span>
     <span class="s2">"put_gene_correlation_change_configuration"</span><span class="p">,</span>
     <span class="s2">"put_size_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_size_values"</span><span class="p">,</span>
     <span class="s2">"put_umap_data"</span><span class="p">,</span>
 <span class="p">]</span>
 
@@ -501,16 +531,22 @@
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show an expression level (of a gene, or of a gene module) on a log-base-2 scale, regularized by</span>
-<span class="sd">    ``gene_fraction_regularization``, named by the ``title``. See the Julia</span>
+<span class="sd">    Show an expression level (of a gene, or of a gene module) on a log scale of the ``log_base`` (2 by default),</span>
+<span class="sd">    regularized by ``gene_fraction_regularization``, named by the ``title``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_expression_level_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_expression_level_configuration_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
+        <span class="p">),</span>
     <span class="p">)</span></div>
 
 
@@ -527,10 +563,12 @@
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the ``gene`` expression level (linear fraction) per each of the ``entries`` of some ``daf``</span>
-<span class="sd">    ``axis``, shown in log base 2, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    ``axis``, shown by :py:func:`put_expression_level_configuration`, and name the entities after the ``entries``. See</span>
+<span class="sd">    the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_gene_expression!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -544,6 +582,7 @@
             <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span>
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -580,10 +619,11 @@
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the ``genes`` expression level (linear fraction) per each of the ``entries`` of some ``daf``</span>
-<span class="sd">    ``axis``, shown in log base 2, and name the rows and the columns. See the Julia</span>
+<span class="sd">    ``axis``, shown by :py:func:`put_expression_level_configuration`, and name the rows and the columns. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_genes_expression_matrix!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -597,6 +637,7 @@
             <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span>
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -919,14 +960,112 @@
 
 <div class="viewcode-block" id="put_size_configuration">
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_size_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_size_configuration</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_size_configuration</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show a size (a count) on a log-base-10 scale, regularized by 1, in the ``YlOrRd`` color scale, named by the</span>
-<span class="sd">    ``title``. See the Julia</span>
+<span class="sd">    Show a size (a count) on a log scale of the ``log_base`` (10 by default), regularized by 1, in the ``YlOrRd`` color</span>
+<span class="sd">    scale, named by the ``title``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_size_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">))</span></div>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_size_configuration_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span> <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_size_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_size_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_size_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the size (count) ``property`` of each of the ``entries`` of the ``daf`` ``axis``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_size_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_size_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_size">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_size">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_size</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with the size (count) ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown</span>
+<span class="sd">    by :py:func:`put_size_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_size!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_size_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="put_size_values">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_size_values">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_size_values</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">NumbersVector</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Put the size (count) ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``,</span>
+<span class="sd">    shown by :py:func:`put_size_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_values!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_size_values_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span> <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">)),</span>
+    <span class="p">)</span></div>
 
 
 
@@ -942,6 +1081,7 @@
     <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the total UMIs of each of the ``entries`` of the ``daf`` ``axis``, shown as a count, and</span>
@@ -959,6 +1099,7 @@
             <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -1000,6 +1141,7 @@
     <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the number of cells of each of the ``entries`` of the ``daf`` ``axis``, shown as a count,</span>
@@ -1017,6 +1159,7 @@
             <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -1058,6 +1201,7 @@
     <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the number of metacells of each of the ``entries`` of the ``daf`` ``axis`` (by default, the</span>
@@ -1075,6 +1219,7 @@
             <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -1116,6 +1261,7 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the mean number of cells per metacell of each of the ``entries`` of the ``daf`` ``axis``</span>
@@ -1127,7 +1273,12 @@
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
         <span class="n">daf</span><span class="p">,</span>
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -1163,6 +1314,7 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the mean total UMIs per metacell of each of the ``entries`` of the ``daf`` ``axis`` (by</span>
@@ -1174,7 +1326,12 @@
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
         <span class="n">daf</span><span class="p">,</span>
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -1210,6 +1367,7 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the mean total UMIs per cell of each of the ``entries`` of the ``daf`` ``axis``, shown as a</span>
@@ -1221,7 +1379,12 @@
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
         <span class="n">daf</span><span class="p">,</span>
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+            <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -1259,8 +1422,9 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">colors_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">empty_block_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the block of each of the ``entries`` of the ``daf`` ``axis``, each block in its own color,</span>
@@ -1277,8 +1441,9 @@
             <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
             <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">colors_axis</span><span class="o">=</span><span class="n">colors_axis</span><span class="p">,</span>
+            <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">,</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
-            <span class="n">empty_block_color</span><span class="o">=</span><span class="n">empty_block_color</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
@@ -1311,17 +1476,15 @@
 <div class="viewcode-block" id="get_block_colors">
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_block_colors">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_block_colors</span><span class="p">(</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empty_block_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Get the palette mapping each entry of the ``daf`` ``block`` axis to its own color, with an additional</span>
-<span class="sd">    ``empty_block_color`` for the ``empty_value`` of entries with no block. See the Julia</span>
+<span class="sd">    Get the palette of the ``daf`` ``block`` axis, with an additional ``empty_color`` for the ``empty_value`` of entries</span>
+<span class="sd">    with no block. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_block_colors&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">colors</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_block_colors</span><span class="p">(</span>
-        <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">empty_block_color</span><span class="o">=</span><span class="n">empty_block_color</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_block_colors</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">))</span>
     <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">getindex</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">jl</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">colors</span><span class="p">)}</span></div>
 
 
@@ -1396,16 +1559,16 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">type_property</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">type_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">colors_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">empty_type_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Fill the ``sinks`` with the ``type_property`` of each of the ``entries`` of the ``daf`` ``axis``, colored by the</span>
-<span class="sd">    ``color`` of the ``type_axis``, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    Fill the ``sinks`` with the type of each of the ``entries`` of the ``daf`` ``axis``, colored by the palette of the</span>
+<span class="sd">    ``colors_axis`` (by default, the ``color`` of each type), and name the entities after the ``entries``. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_type!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -1415,15 +1578,58 @@
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
             <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
             <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
-            <span class="n">type_property</span><span class="o">=</span><span class="n">type_property</span><span class="p">,</span>
-            <span class="n">type_axis</span><span class="o">=</span><span class="n">type_axis</span><span class="p">,</span>
             <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
             <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">colors_axis</span><span class="o">=</span><span class="n">colors_axis</span><span class="p">,</span>
+            <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">,</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
-            <span class="n">empty_type_color</span><span class="o">=</span><span class="n">empty_type_color</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
 
+
+
+<div class="viewcode-block" id="get_type_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_type_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_type_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the type of each of the ``entries`` of the ``daf`` ``axis``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_type_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_type_colors">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_type_colors">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_type_colors</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the palette of the ``daf`` ``type`` axis (the ``color`` of each type), with an additional ``empty_color`` for the</span>
+<span class="sd">    ``empty_value`` of entries with no type. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_colors&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_type_colors</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">getindex</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">jl</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">colors</span><span class="p">)}</span></div>
+
+
+
+<span class="c1"># Categories.</span>
 
 
 <div class="viewcode-block" id="put_category_configuration">
@@ -1443,77 +1649,133 @@
 
 
 
-<div class="viewcode-block" id="get_type_vector">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_type_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_type_vector</span><span class="p">(</span>
+<div class="viewcode-block" id="get_category_colors">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_category_colors">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_category_colors</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the palette mapping each entry of the ``daf`` ``axis`` of a category to its color (its ``color`` if the axis</span>
+<span class="sd">    has one, or a computed one otherwise), with an additional ``empty_color`` for the ``empty_value`` of entries with no</span>
+<span class="sd">    value. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_category_colors&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_category_colors</span><span class="p">(</span>
+        <span class="n">daf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">getindex</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">jl</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">colors</span><span class="p">)}</span></div>
+
+
+
+<div class="viewcode-block" id="get_category_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_category_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_category_vector</span><span class="p">(</span>
     <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">type_property</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Get the ``type_property`` for each of the ``entries`` of the ``daf`` ``axis``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_vector&gt;`__</span>
+<span class="sd">    Get the category ``property`` (e.g. the type) of each of the ``entries`` of the ``daf`` ``axis``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_category_vector&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_type_vector</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_category_vector</span><span class="p">(</span>
             <span class="n">daf</span><span class="p">,</span>
-            <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
-                <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">type_property</span><span class="o">=</span><span class="n">type_property</span><span class="p">,</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">)</span>
-            <span class="p">),</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="get_type_colors">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_type_colors">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_type_colors</span><span class="p">(</span>
-    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">type_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">empty_type_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Get the palette mapping each entry of the ``daf`` ``type_axis`` to its ``color``, with an additional</span>
-<span class="sd">    ``empty_type_color`` for entries with no type (empty string). See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_type_colors&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    """</span>
-    <span class="n">colors</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_type_colors</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">type_axis</span><span class="o">=</span><span class="n">type_axis</span><span class="p">,</span> <span class="n">empty_type_color</span><span class="o">=</span><span class="n">empty_type_color</span><span class="p">))</span>
-    <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">getindex</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">jl</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">colors</span><span class="p">)}</span></div>
-
-
-
-<span class="c1"># Boolean annotations.</span>
-
-
-<div class="viewcode-block" id="fill_boolean_annotation">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_boolean_annotation">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">fill_boolean_annotation</span><span class="p">(</span>
+<div class="viewcode-block" id="fill_category">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_category">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_category</span><span class="p">(</span>
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
     <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">colors_axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Fill the ``sinks`` with the Boolean mask ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown as</span>
-<span class="sd">    ``true`` in black and ``false`` in light grey, and name the entities after the ``entries``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_boolean_annotation!&gt;`__</span>
+<span class="sd">    Fill the ``sinks`` with the category ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by</span>
+<span class="sd">    :py:func:`put_category_configuration` using the palette of the ``colors_axis`` (by default, the axis named after the</span>
+<span class="sd">    ``property``), and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_category!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_boolean_annotation_b</span><span class="p">(</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_category_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
         <span class="n">daf</span><span class="p">,</span>
         <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
         <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+            <span class="n">colors_axis</span><span class="o">=</span><span class="n">colors_axis</span><span class="p">,</span>
+            <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+        <span class="p">),</span>
     <span class="p">)</span></div>
 
+
+
+<div class="viewcode-block" id="put_category_values">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_category_values">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_category_values</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">colors_axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Put the category ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the ``sinks``, shown</span>
+<span class="sd">    by :py:func:`put_category_configuration` using the palette of the ``colors_axis``, and name the entities after the</span>
+<span class="sd">    ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_category_values!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_category_values_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="n">colors_axis</span><span class="o">=</span><span class="n">colors_axis</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+            <span class="n">empty_color</span><span class="o">=</span><span class="n">empty_color</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># Booleans.</span>
 
 
 <div class="viewcode-block" id="put_boolean_configuration">
@@ -1528,27 +1790,581 @@
 
 
 
-<div class="viewcode-block" id="get_boolean_annotation_vector">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_boolean_annotation_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_boolean_annotation_vector</span><span class="p">(</span>
+<div class="viewcode-block" id="get_boolean_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_boolean_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_boolean_vector</span><span class="p">(</span>
     <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Get the Boolean mask ``property`` of each of the ``entries`` of the ``daf`` ``axis``, as the *strings* ``"true"``</span>
-<span class="sd">    and ``"false"``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_boolean_annotation_vector&gt;`__</span>
+<span class="sd">    Get the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``, as the *strings* ``"true"`` and</span>
+<span class="sd">    ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_boolean_vector&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
-        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_boolean_annotation_vector</span><span class="p">(</span>
-            <span class="n">daf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">))</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_boolean_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
 
+
+
+<div class="viewcode-block" id="fill_boolean">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_boolean">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_boolean</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by</span>
+<span class="sd">    :py:func:`put_boolean_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_boolean!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_boolean_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="put_boolean_values">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_boolean_values">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_boolean_values</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="n">value_per_entry</span><span class="p">:</span> <span class="n">StringsVector</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Put the Boolean *string* ``value_per_entry`` of each of the ``entries`` of the ``daf`` ``axis`` into the</span>
+<span class="sd">    ``sinks``, shown by :py:func:`put_boolean_configuration`, and name the entities after the ``entries``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_values!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_boolean_values_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
+        <span class="n">daf</span><span class="p">,</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">value_per_entry</span><span class="p">),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># Gene flags.</span>
+
+
+<div class="viewcode-block" id="fill_is_lateral">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_lateral">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_lateral</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is lateral. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_lateral!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_lateral_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_lateral_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_lateral_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_lateral_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is lateral, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_lateral_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_lateral_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_marker">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_marker">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_marker</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is a marker gene. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_marker!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_marker_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_marker_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_marker_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_marker_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is a marker gene, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_marker_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_marker_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_transcription_factor">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_transcription_factor">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_transcription_factor</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is a transcription factor (binds to DNA). See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_transcription_factor!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_transcription_factor_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_transcription_factor_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_transcription_factor_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_transcription_factor_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is a transcription factor, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_transcription_factor_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_transcription_factor_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_regulator">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_regulator">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_regulator</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene regulates the expression of other genes. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_regulator!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_regulator_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_regulator_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_regulator_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_regulator_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene regulates the expression of other genes, as the *strings* ``"true"`` and ``"false"``. See</span>
+<span class="sd">    the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_regulator_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_regulator_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_forbidden">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_forbidden">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_forbidden</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is forbidden. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_forbidden!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_forbidden_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_forbidden_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_forbidden_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_forbidden_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is forbidden, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_forbidden_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_forbidden_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_skeleton">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_skeleton">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_skeleton</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is a skeleton gene. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_skeleton!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_skeleton_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_skeleton_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_skeleton_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_skeleton_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is a skeleton gene, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_skeleton_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_skeleton_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_correlated_with_skeleton">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_correlated_with_skeleton">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_correlated_with_skeleton</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is correlated with some skeleton gene. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_correlated_with_skeleton!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_correlated_with_skeleton_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_correlated_with_skeleton_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_correlated_with_skeleton_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_correlated_with_skeleton_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is correlated with some skeleton gene, as the *strings* ``"true"`` and ``"false"``. See the</span>
+<span class="sd">    Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_correlated_with_skeleton_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_correlated_with_skeleton_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_mitochondrial">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_mitochondrial">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_mitochondrial</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is mitochondrial. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_mitochondrial!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_mitochondrial_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_mitochondrial_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_mitochondrial_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_mitochondrial_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is mitochondrial, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_mitochondrial_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_mitochondrial_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_ribosomal">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_ribosomal">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_ribosomal</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is ribosomal. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_ribosomal!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_ribosomal_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_ribosomal_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_ribosomal_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_ribosomal_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is ribosomal, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_ribosomal_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_ribosomal_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="fill_is_excluded">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_is_excluded">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_is_excluded</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Fill the ``sinks`` with whether each gene is excluded. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.fill_is_excluded!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_is_excluded_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_fill_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_excluded_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_excluded_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_excluded_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each gene is excluded, as the *strings* ``"true"`` and ``"false"``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_excluded_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_excluded_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_boolean_get_given</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">via</span><span class="p">,</span> <span class="n">empty_value</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># The keywords given to a per-property Boolean fill, as passed to Julia.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_boolean_fill_given</span><span class="p">(</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">],</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">_given</span><span class="p">(</span>
+        <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+        <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+        <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+        <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># The keywords given to a per-property Boolean get, as passed to Julia.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_boolean_get_given</span><span class="p">(</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span> <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">],</span> <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">)</span>
 
 
 <span class="c1"># Low level queries.</span>
