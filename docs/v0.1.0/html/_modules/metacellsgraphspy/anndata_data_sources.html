@@ -94,10 +94,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_vector_data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_vector_names_data</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">EMPTY_TYPE_COLOR</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">EMPTY_CATEGORY_COLOR</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">Entries</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_genes_expression_configuration</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_type_configuration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_category_configuration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_expression_level_configuration</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"ad_fill_gene_expression"</span><span class="p">,</span>
@@ -130,7 +130,7 @@
         <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">gene</span><span class="si">}</span><span class="s2"> fraction"</span>
     <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_vector_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">ad_get_gene_expression_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">put_genes_expression_configuration</span><span class="p">(</span>
+    <span class="n">put_expression_level_configuration</span><span class="p">(</span>
         <span class="n">sinks</span><span class="p">,</span> <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span>
     <span class="p">)</span>
     <span class="n">put_vector_names_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">_entry_names</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">entries</span><span class="p">))</span></div>
@@ -174,7 +174,7 @@
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"type"</span>
     <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_vector_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">ad_get_type_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">type_property</span><span class="o">=</span><span class="n">type_property</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">put_type_configuration</span><span class="p">(</span>
+    <span class="n">put_category_configuration</span><span class="p">(</span>
         <span class="n">sinks</span><span class="p">,</span>
         <span class="n">ad_get_type_colors</span><span class="p">(</span><span class="n">type_colors_csv</span><span class="p">,</span> <span class="n">empty_type_color</span><span class="o">=</span><span class="n">empty_type_color</span><span class="p">),</span>
         <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
@@ -201,14 +201,14 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">ad_get_type_colors</span><span class="p">(</span><span class="n">type_colors_csv</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">empty_type_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the palette mapping each type to its color from the ``type_colors_csv`` file, with an additional</span>
-<span class="sd">    ``empty_type_color`` (by default, :py:obj:`~metacellsgraphspy.data_sources.EMPTY_TYPE_COLOR`) for entries with no</span>
+<span class="sd">    ``empty_type_color`` (by default, :py:obj:`~metacellsgraphspy.data_sources.EMPTY_CATEGORY_COLOR`) for entries with no</span>
 <span class="sd">    type (the empty string). The file has a header line. Its first column is the type and its second column is the</span>
 <span class="sd">    color. The names of the columns don't matter. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.get_type_colors`.</span>
 <span class="sd">    """</span>
     <span class="n">frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">type_colors_csv</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">color_per_type</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]))</span>
-    <span class="n">color_per_type</span><span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">=</span> <span class="n">EMPTY_TYPE_COLOR</span> <span class="k">if</span> <span class="n">empty_type_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">empty_type_color</span>
+    <span class="n">color_per_type</span><span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">=</span> <span class="n">EMPTY_CATEGORY_COLOR</span> <span class="k">if</span> <span class="n">empty_type_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">empty_type_color</span>
     <span class="k">return</span> <span class="n">color_per_type</span></div>
 
 

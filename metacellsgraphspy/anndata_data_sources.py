@@ -21,10 +21,10 @@ from somegraphspy import get_vector_names_data
 from somegraphspy import put_vector_data
 from somegraphspy import put_vector_names_data
 
-from .data_sources import EMPTY_TYPE_COLOR
+from .data_sources import EMPTY_CATEGORY_COLOR
 from .data_sources import Entries
-from .data_sources import put_genes_expression_configuration
-from .data_sources import put_type_configuration
+from .data_sources import put_category_configuration
+from .data_sources import put_expression_level_configuration
 
 __all__ = [
     "ad_fill_gene_expression",
@@ -55,7 +55,7 @@ def ad_fill_gene_expression(
         title = f"{gene} fraction"
     entries = _sinks_entries(sinks, entries)
     put_vector_data(sinks, ad_get_gene_expression_vector(adata, gene=gene, entries=entries), title=title)
-    put_genes_expression_configuration(
+    put_expression_level_configuration(
         sinks, gene_fraction_regularization=gene_fraction_regularization, title=title, show_legend=show_legend
     )
     put_vector_names_data(sinks, _entry_names(adata, entries))
@@ -93,7 +93,7 @@ def ad_fill_type(
         title = "type"
     entries = _sinks_entries(sinks, entries)
     put_vector_data(sinks, ad_get_type_vector(adata, type_property=type_property, entries=entries), title=title)
-    put_type_configuration(
+    put_category_configuration(
         sinks,
         ad_get_type_colors(type_colors_csv, empty_type_color=empty_type_color),
         title=title,
@@ -114,14 +114,14 @@ def ad_get_type_vector(adata: AnnData, *, type_property: str, entries: Optional[
 def ad_get_type_colors(type_colors_csv: str, *, empty_type_color: Optional[str] = None) -> Mapping[str, str]:
     """
     Get the palette mapping each type to its color from the ``type_colors_csv`` file, with an additional
-    ``empty_type_color`` (by default, :py:obj:`~metacellsgraphspy.data_sources.EMPTY_TYPE_COLOR`) for entries with no
+    ``empty_type_color`` (by default, :py:obj:`~metacellsgraphspy.data_sources.EMPTY_CATEGORY_COLOR`) for entries with no
     type (the empty string). The file has a header line. Its first column is the type and its second column is the
     color. The names of the columns don't matter. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.get_type_colors`.
     """
     frame = pd.read_csv(type_colors_csv, dtype=str, keep_default_na=False)
     color_per_type = dict(zip(frame.iloc[:, 0], frame.iloc[:, 1]))
-    color_per_type[""] = EMPTY_TYPE_COLOR if empty_type_color is None else empty_type_color
+    color_per_type[""] = EMPTY_CATEGORY_COLOR if empty_type_color is None else empty_type_color
     return color_per_type
 
 

@@ -116,7 +116,7 @@ def test_ad_get_type_colors(tmp_path: Path) -> None:
         ("T2", "#00ff00"),
         ("T1", "#ff0000"),
         ("T3", "#0000ff"),
-        ("", mg.EMPTY_TYPE_COLOR),
+        ("", mg.EMPTY_CATEGORY_COLOR),
     ]
     assert mg.ad_get_type_colors(type_colors_csv, empty_type_color="grey")[""] == "grey"
 
@@ -141,7 +141,7 @@ def test_ad_fill_type(tmp_path: Path) -> None:
         "T1": "#ff0000",
         "T2": "#00ff00",
         "T3": "#0000ff",
-        "": mg.EMPTY_TYPE_COLOR,
+        "": mg.EMPTY_CATEGORY_COLOR,
     }
     assert graph.configuration.points.colors.show_legend
     assert graph.configuration.points.colors.title == "type"

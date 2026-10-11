@@ -41,8 +41,7 @@ from .julia_import import _to_julia_frame
 from .julia_import import jl
 
 __all__ = [
-    "EMPTY_BLOCK_COLOR",
-    "EMPTY_TYPE_COLOR",
+    "EMPTY_CATEGORY_COLOR",
     "Entries",
     "GENE_FRACTION_REGULARIZATION_FOR_GRAPHS",
     "MAX_FOLD_FOR_GRAPHS",
@@ -98,14 +97,13 @@ __all__ = [
     "get_type_vector",
     "get_umap_vector",
     "get_vector_query",
-    "put_block_configuration",
-    "put_boolean_annotation_configuration",
-    "put_count_configuration",
+    "put_boolean_configuration",
+    "put_category_configuration",
+    "put_coordinates_configuration",
+    "put_expression_level_configuration",
+    "put_fold_configuration",
     "put_gene_correlation_change_configuration",
-    "put_genes_expression_configuration",
-    "put_genes_fold_configuration",
-    "put_type_configuration",
-    "put_umap_configuration",
+    "put_size_configuration",
     "put_umap_data",
 ]
 
@@ -127,15 +125,10 @@ GENE_FRACTION_REGULARIZATION_FOR_GRAPHS: float = float(jl.MetacellsGraphs.GENE_F
 #: for details.
 MAX_FOLD_FOR_GRAPHS: float = float(jl.MetacellsGraphs.MAX_FOLD_FOR_GRAPHS)
 
-#: The color to give to entities without any type annotation. See the Julia
-#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_TYPE_COLOR>`__
+#: The color to give to entities without any value of a category (e.g. with no type or no block). See the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_CATEGORY_COLOR>`__
 #: for details.
-EMPTY_TYPE_COLOR: str = str(jl.MetacellsGraphs.EMPTY_TYPE_COLOR)
-
-#: The color to give to entities without any block. See the Julia
-#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_BLOCK_COLOR>`__
-#: for details.
-EMPTY_BLOCK_COLOR: str = str(jl.MetacellsGraphs.EMPTY_BLOCK_COLOR)
+EMPTY_CATEGORY_COLOR: str = str(jl.MetacellsGraphs.EMPTY_CATEGORY_COLOR)
 
 
 # Generic axis names.
@@ -388,7 +381,7 @@ def get_axes_matrix(
 # Gene expression.
 
 
-def put_genes_expression_configuration(
+def put_expression_level_configuration(
     sinks: Sinks,
     *,
     gene_fraction_regularization: Optional[float] = None,
@@ -396,12 +389,12 @@ def put_genes_expression_configuration(
     show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Show gene expression (linear fraction) on a log-base-2 scale, regularized by ``gene_fraction_regularization``,
-    named by the ``title``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_genes_expression_configuration!>`__
+    Show an expression level (of a gene, or of a gene module) on a log-base-2 scale, regularized by
+    ``gene_fraction_regularization``, named by the ``title``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_expression_level_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_genes_expression_configuration_b(
+    jl.MetacellsGraphs.put_expression_level_configuration_b(
         _to_julia(sinks),
         **_given(gene_fraction_regularization=gene_fraction_regularization, title=title, show_legend=show_legend),
     )
@@ -536,16 +529,16 @@ def fill_genes_fold_matrix(
     )
 
 
-def put_genes_fold_configuration(
+def put_fold_configuration(
     sinks: Sinks, *, max_fold: Optional[float] = None, title: Optional[str] = None, show_legend: Optional[bool] = None
 ) -> None:
     """
-    Show the genes fold (log base-2 minus the median) in the range -``max_fold`` (blue) to 0 (white) to +``max_fold``
-    (red), named by the ``title``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_genes_fold_configuration!>`__
+    Show a fold (the log base 2 of a ratio) in the range -``max_fold`` (blue) to 0 (white) to +``max_fold`` (red),
+    named by the ``title``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_fold_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_genes_fold_configuration_b(
+    jl.MetacellsGraphs.put_fold_configuration_b(
         _to_julia(sinks), **_given(max_fold=max_fold, title=title, show_legend=show_legend)
     )
 
@@ -705,13 +698,13 @@ def put_umap_data(sinks: VectorDataSinks, coordinate_per_entry: NumbersVector, *
     jl.MetacellsGraphs.put_umap_data_b(_to_julia(sinks), _to_julia_array(coordinate_per_entry), **_given(title=title))
 
 
-def put_umap_configuration(sinks: Sinks, *, title: Optional[str] = None) -> None:
+def put_coordinates_configuration(sinks: Sinks, *, title: Optional[str] = None) -> None:
     """
-    Show UMAP coordinates without ticks or a grid, named by the ``title``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_umap_configuration!>`__
+    Show the coordinates of an embedding (e.g. a UMAP) without ticks or a grid, named by the ``title``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_coordinates_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_umap_configuration_b(_to_julia(sinks), **_given(title=title))
+    jl.MetacellsGraphs.put_coordinates_configuration_b(_to_julia(sinks), **_given(title=title))
 
 
 def get_umap_vector(
@@ -755,13 +748,14 @@ def get_skeleton_gene_indices(daf: DafReader) -> np.ndarray:
 # Counts.
 
 
-def put_count_configuration(sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None) -> None:
+def put_size_configuration(sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None) -> None:
     """
-    Show a count on a log-base-2 scale, in the ``YlOrRd`` color scale, named by the ``title``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_count_configuration!>`__
+    Show a size (a count) on a log-base-10 scale, regularized by 1, in the ``YlOrRd`` color scale, named by the
+    ``title``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_count_configuration_b(_to_julia(sinks), **_given(title=title, show_legend=show_legend))
+    jl.MetacellsGraphs.put_size_configuration_b(_to_julia(sinks), **_given(title=title, show_legend=show_legend))
 
 
 def fill_total_UMIs(  # pylint: disable=invalid-name
@@ -1079,19 +1073,6 @@ def fill_block(
     )
 
 
-def put_block_configuration(
-    sinks: Sinks, color_per_block: Mapping[str, str], *, title: Optional[str] = None, show_legend: Optional[bool] = None
-) -> None:
-    """
-    Show the blocks of the ``sinks`` using the ``color_per_block`` palette, named by the ``title``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_block_configuration!>`__
-    for details.
-    """
-    jl.MetacellsGraphs.put_block_configuration_b(
-        _to_julia(sinks), _to_julia(dict(color_per_block)), **_given(title=title, show_legend=show_legend)
-    )
-
-
 def get_block_vector(
     daf: DafReader,
     *,
@@ -1219,16 +1200,17 @@ def fill_type(
     )
 
 
-def put_type_configuration(
-    sinks: Sinks, color_per_type: Mapping[str, str], *, title: Optional[str] = None, show_legend: Optional[bool] = None
+def put_category_configuration(
+    sinks: Sinks, color_per_value: Mapping[str, str], *, title: Optional[str] = None, show_legend: Optional[bool] = None
 ) -> None:
     """
-    Show the types of the ``sinks`` using the ``color_per_type`` palette, named by the ``title``. See the Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_type_configuration!>`__
+    Show the values of a category (e.g. types or blocks) of the ``sinks`` using the ``color_per_value`` palette, named
+    by the ``title``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_category_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_type_configuration_b(
-        _to_julia(sinks), _to_julia(dict(color_per_type)), **_given(title=title, show_legend=show_legend)
+    jl.MetacellsGraphs.put_category_configuration_b(
+        _to_julia(sinks), _to_julia(dict(color_per_value)), **_given(title=title, show_legend=show_legend)
     )
 
 
@@ -1296,18 +1278,13 @@ def fill_boolean_annotation(
     )
 
 
-def put_boolean_annotation_configuration(
-    sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None
-) -> None:
+def put_boolean_configuration(sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None) -> None:
     """
-    Show Boolean *string* annotations: ``true`` in black and ``false`` in light grey, named by the ``title``. See the
-    Julia
-    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_annotation_configuration!>`__
+    Show Boolean *string* values: ``true`` in black and ``false`` in light grey, named by the ``title``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_configuration!>`__
     for details.
     """
-    jl.MetacellsGraphs.put_boolean_annotation_configuration_b(
-        _to_julia(sinks), **_given(title=title, show_legend=show_legend)
-    )
+    jl.MetacellsGraphs.put_boolean_configuration_b(_to_julia(sinks), **_given(title=title, show_legend=show_legend))
 
 
 def get_boolean_annotation_vector(

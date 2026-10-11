@@ -114,8 +114,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"EMPTY_BLOCK_COLOR"</span><span class="p">,</span>
-    <span class="s2">"EMPTY_TYPE_COLOR"</span><span class="p">,</span>
+    <span class="s2">"EMPTY_CATEGORY_COLOR"</span><span class="p">,</span>
     <span class="s2">"Entries"</span><span class="p">,</span>
     <span class="s2">"GENE_FRACTION_REGULARIZATION_FOR_GRAPHS"</span><span class="p">,</span>
     <span class="s2">"MAX_FOLD_FOR_GRAPHS"</span><span class="p">,</span>
@@ -171,14 +170,13 @@
     <span class="s2">"get_type_vector"</span><span class="p">,</span>
     <span class="s2">"get_umap_vector"</span><span class="p">,</span>
     <span class="s2">"get_vector_query"</span><span class="p">,</span>
-    <span class="s2">"put_block_configuration"</span><span class="p">,</span>
-    <span class="s2">"put_boolean_annotation_configuration"</span><span class="p">,</span>
-    <span class="s2">"put_count_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_boolean_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_category_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_coordinates_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_expression_level_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_fold_configuration"</span><span class="p">,</span>
     <span class="s2">"put_gene_correlation_change_configuration"</span><span class="p">,</span>
-    <span class="s2">"put_genes_expression_configuration"</span><span class="p">,</span>
-    <span class="s2">"put_genes_fold_configuration"</span><span class="p">,</span>
-    <span class="s2">"put_type_configuration"</span><span class="p">,</span>
-    <span class="s2">"put_umap_configuration"</span><span class="p">,</span>
+    <span class="s2">"put_size_configuration"</span><span class="p">,</span>
     <span class="s2">"put_umap_data"</span><span class="p">,</span>
 <span class="p">]</span>
 
@@ -200,15 +198,10 @@
 <span class="c1">#: for details.</span>
 <span class="n">MAX_FOLD_FOR_GRAPHS</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">MAX_FOLD_FOR_GRAPHS</span><span class="p">)</span>
 
-<span class="c1">#: The color to give to entities without any type annotation. See the Julia</span>
-<span class="c1">#: `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_TYPE_COLOR&gt;`__</span>
+<span class="c1">#: The color to give to entities without any value of a category (e.g. with no type or no block). See the Julia</span>
+<span class="c1">#: `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_CATEGORY_COLOR&gt;`__</span>
 <span class="c1">#: for details.</span>
-<span class="n">EMPTY_TYPE_COLOR</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">EMPTY_TYPE_COLOR</span><span class="p">)</span>
-
-<span class="c1">#: The color to give to entities without any block. See the Julia</span>
-<span class="c1">#: `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_BLOCK_COLOR&gt;`__</span>
-<span class="c1">#: for details.</span>
-<span class="n">EMPTY_BLOCK_COLOR</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">EMPTY_BLOCK_COLOR</span><span class="p">)</span>
+<span class="n">EMPTY_CATEGORY_COLOR</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">EMPTY_CATEGORY_COLOR</span><span class="p">)</span>
 
 
 <span class="c1"># Generic axis names.</span>
@@ -500,9 +493,9 @@
 <span class="c1"># Gene expression.</span>
 
 
-<div class="viewcode-block" id="put_genes_expression_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_genes_expression_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_genes_expression_configuration</span><span class="p">(</span>
+<div class="viewcode-block" id="put_expression_level_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_expression_level_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_expression_level_configuration</span><span class="p">(</span>
     <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -510,12 +503,12 @@
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show gene expression (linear fraction) on a log-base-2 scale, regularized by ``gene_fraction_regularization``,</span>
-<span class="sd">    named by the ``title``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_genes_expression_configuration!&gt;`__</span>
+<span class="sd">    Show an expression level (of a gene, or of a gene module) on a log-base-2 scale, regularized by</span>
+<span class="sd">    ``gene_fraction_regularization``, named by the ``title``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_expression_level_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_genes_expression_configuration_b</span><span class="p">(</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_expression_level_configuration_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span>
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">),</span>
     <span class="p">)</span></div>
@@ -666,18 +659,18 @@
 
 
 
-<div class="viewcode-block" id="put_genes_fold_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_genes_fold_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_genes_fold_configuration</span><span class="p">(</span>
+<div class="viewcode-block" id="put_fold_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_fold_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_fold_configuration</span><span class="p">(</span>
     <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">max_fold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show the genes fold (log base-2 minus the median) in the range -``max_fold`` (blue) to 0 (white) to +``max_fold``</span>
-<span class="sd">    (red), named by the ``title``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_genes_fold_configuration!&gt;`__</span>
+<span class="sd">    Show a fold (the log base 2 of a ratio) in the range -``max_fold`` (blue) to 0 (white) to +``max_fold`` (red),</span>
+<span class="sd">    named by the ``title``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_fold_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_genes_fold_configuration_b</span><span class="p">(</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_fold_configuration_b</span><span class="p">(</span>
         <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">max_fold</span><span class="o">=</span><span class="n">max_fold</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
@@ -862,15 +855,15 @@
 
 
 
-<div class="viewcode-block" id="put_umap_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_umap_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_umap_configuration</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="put_coordinates_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_coordinates_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_coordinates_configuration</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show UMAP coordinates without ticks or a grid, named by the ``title``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_umap_configuration!&gt;`__</span>
+<span class="sd">    Show the coordinates of an embedding (e.g. a UMAP) without ticks or a grid, named by the ``title``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_coordinates_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_umap_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">))</span></div>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_coordinates_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">))</span></div>
 
 
 
@@ -924,15 +917,16 @@
 <span class="c1"># Counts.</span>
 
 
-<div class="viewcode-block" id="put_count_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_count_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_count_configuration</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="put_size_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_size_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_size_configuration</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show a count on a log-base-2 scale, in the ``YlOrRd`` color scale, named by the ``title``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_count_configuration!&gt;`__</span>
+<span class="sd">    Show a size (a count) on a log-base-10 scale, regularized by 1, in the ``YlOrRd`` color scale, named by the</span>
+<span class="sd">    ``title``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_count_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">))</span></div>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_size_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">))</span></div>
 
 
 
@@ -1290,22 +1284,6 @@
 
 
 
-<div class="viewcode-block" id="put_block_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_block_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_block_configuration</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="n">color_per_block</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show the blocks of the ``sinks`` using the ``color_per_block`` palette, named by the ``title``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_block_configuration!&gt;`__</span>
-<span class="sd">    for details.</span>
-<span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_block_configuration_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">color_per_block</span><span class="p">)),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
-    <span class="p">)</span></div>
-
-
-
 <div class="viewcode-block" id="get_block_vector">
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_block_vector">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_block_vector</span><span class="p">(</span>
@@ -1448,18 +1426,19 @@
 
 
 
-<div class="viewcode-block" id="put_type_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_type_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_type_configuration</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="n">color_per_type</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<div class="viewcode-block" id="put_category_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_category_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_category_configuration</span><span class="p">(</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="n">color_per_value</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show the types of the ``sinks`` using the ``color_per_type`` palette, named by the ``title``. See the Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_type_configuration!&gt;`__</span>
+<span class="sd">    Show the values of a category (e.g. types or blocks) of the ``sinks`` using the ``color_per_value`` palette, named</span>
+<span class="sd">    by the ``title``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_category_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_type_configuration_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">color_per_type</span><span class="p">)),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_category_configuration_b</span><span class="p">(</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">color_per_value</span><span class="p">)),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -1537,20 +1516,15 @@
 
 
 
-<div class="viewcode-block" id="put_boolean_annotation_configuration">
-<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_boolean_annotation_configuration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">put_boolean_annotation_configuration</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="put_boolean_configuration">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.put_boolean_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_boolean_configuration</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">Sinks</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Show Boolean *string* annotations: ``true`` in black and ``false`` in light grey, named by the ``title``. See the</span>
-<span class="sd">    Julia</span>
-<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_annotation_configuration!&gt;`__</span>
+<span class="sd">    Show Boolean *string* values: ``true`` in black and ``false`` in light grey, named by the ``title``. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
-    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_boolean_annotation_configuration_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span>
-    <span class="p">)</span></div>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_boolean_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">))</span></div>
 
 
 

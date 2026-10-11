@@ -57,8 +57,7 @@ def test_constants() -> None:
     """
     assert mg.GENE_FRACTION_REGULARIZATION_FOR_GRAPHS == 1e-5
     assert mg.MAX_FOLD_FOR_GRAPHS == 3.0
-    assert mg.EMPTY_TYPE_COLOR == "magenta"
-    assert mg.EMPTY_BLOCK_COLOR == "grey"
+    assert mg.EMPTY_CATEGORY_COLOR == "grey"
 
 
 def test_fill_a_points_graph() -> None:
@@ -77,7 +76,7 @@ def test_fill_a_points_graph() -> None:
     assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
     assert _list(graph.data.points.entities.names) == ["M1", "M2", "M3"]
     assert _list(graph.data.points.colors.vector) == ["T1", "T2", ""]
-    assert graph.configuration.points.colors.palette == {"T1": "red", "T2": "blue", "": "magenta"}
+    assert graph.configuration.points.colors.palette == {"T1": "red", "T2": "blue", "": "grey"}
 
 
 def test_fill_several_sinks() -> None:
@@ -91,8 +90,8 @@ def test_fill_several_sinks() -> None:
     sg.put_vector_order_data(graph.points_entities(), [3, 1, 2])
     assert _list(graph.data.x.vector) == [10, 20, 30]
     assert _list(graph.data.points.colors.vector) == [10, 20, 30]
-    assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
-    assert graph.configuration.points.colors.scale.log_base == sg.LogBase.Log2Base
+    assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log10Base
+    assert graph.configuration.points.colors.scale.log_base == sg.LogBase.Log10Base
     assert _list(graph.data.points.entities.mask) == [True, False, True]
     assert _list(graph.data.points.entities.order) == [3, 1, 2]
 
@@ -108,7 +107,7 @@ def test_get_vectors() -> None:
     assert list(mg.get_block_colors(daf)) == ["B1", "B2", ""]
     assert mg.get_block_colors(daf)[""] == "grey"
     assert list(mg.get_type_vector(daf, entries=["M1", "M3"])) == ["T1", ""]
-    assert mg.get_type_colors(daf) == {"T1": "red", "T2": "blue", "": "magenta"}
+    assert mg.get_type_colors(daf) == {"T1": "red", "T2": "blue", "": "grey"}
     assert list(mg.get_n_cells_vector(daf)) == [10, 20, 30]
     assert list(mg.get_total_UMIs_vector(daf, via=["block"])) == [3000, 3000, 6000]
     assert list(mg.get_top_marker_gene_indices(daf, markers_count=1)) == [2]
@@ -196,19 +195,15 @@ def test_put_data_and_configuration() -> None:
     sg.put_vector_data(graph.x_axis_vector_fields(), np.array([1.0, 2.0]), title="X")
     sg.put_vector_names_data(graph.points_entities(), ["a", "b"])
     mg.put_umap_data(graph.y_axis_vector_fields(), np.array([3.0, 4.0]))
-    mg.put_umap_configuration(graph.y_axis_vector_fields())
-    mg.put_count_configuration(graph.x_axis_vector_fields())
-    mg.put_type_configuration(graph.points_colors_vector_fields(), {"a": "red"}, title="kind")
+    mg.put_coordinates_configuration(graph.y_axis_vector_fields())
+    mg.put_size_configuration(graph.x_axis_vector_fields())
+    mg.put_category_configuration(graph.points_colors_vector_fields(), {"a": "red"}, title="kind", show_legend=False)
     assert _list(graph.data.x.vector) == [1.0, 2.0]
     assert _list(graph.data.points.entities.names) == ["a", "b"]
     assert _list(graph.data.y.vector) == [3.0, 4.0]
     assert not graph.configuration.y_axis.show_ticks
-    assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
+    assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log10Base
+    assert graph.configuration.x_axis.scale.log_regularization == 1
     assert graph.configuration.points.colors.palette == {"a": "red"}
     assert graph.configuration.points.colors.title == "kind"
-
-    graph = sg.points_graph()
-    mg.put_block_configuration(graph.points_colors_vector_fields(), {"a": "green"}, title="group")
-    assert graph.configuration.points.colors.palette == {"a": "green"}
-    assert graph.configuration.points.colors.title == "group"
     assert not graph.configuration.points.colors.show_legend
