@@ -80,6 +80,8 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">PointsGraph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">PointsGraphConfiguration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_to_julia</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">Entries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_given</span>
@@ -89,6 +91,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"gene_base_delta_correlations_graph"</span><span class="p">,</span>
     <span class="s2">"gene_gene_graph"</span><span class="p">,</span>
+    <span class="s2">"put_hidden_entries_configuration"</span><span class="p">,</span>
     <span class="s2">"umap_graph"</span><span class="p">,</span>
 <span class="p">]</span>
 
@@ -172,6 +175,19 @@
             <span class="p">),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="put_hidden_entries_configuration">
+<a class="viewcode-back" href="../../scatter_graphs.html#metacellsgraphspy.scatter_graphs.put_hidden_entries_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_hidden_entries_configuration</span><span class="p">(</span><span class="n">configuration</span><span class="p">:</span> <span class="n">PointsGraphConfiguration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Exclude the hidden (masked) entries from the ranges of the axes, as :py:func:`gene_base_delta_correlations_graph`</span>
+<span class="sd">    does. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.put_hidden_entries_configuration!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_hidden_entries_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">configuration</span><span class="p">))</span></div>
 
 </pre></div>
 

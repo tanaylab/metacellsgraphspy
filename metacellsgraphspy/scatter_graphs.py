@@ -7,6 +7,8 @@ from typing import Optional
 
 from dafpy import DafReader
 from somegraphspy import PointsGraph
+from somegraphspy import PointsGraphConfiguration
+from somegraphspy.julia_import import _to_julia
 
 from .data_sources import Entries
 from .julia_import import _given
@@ -16,6 +18,7 @@ from .julia_import import jl
 __all__ = [
     "gene_base_delta_correlations_graph",
     "gene_gene_graph",
+    "put_hidden_entries_configuration",
     "umap_graph",
 ]
 
@@ -91,3 +94,13 @@ def gene_base_delta_correlations_graph(
             ),
         )
     )
+
+
+def put_hidden_entries_configuration(configuration: PointsGraphConfiguration) -> None:
+    """
+    Exclude the hidden (masked) entries from the ranges of the axes, as :py:func:`gene_base_delta_correlations_graph`
+    does. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.put_hidden_entries_configuration!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_hidden_entries_configuration_b(_to_julia(configuration))

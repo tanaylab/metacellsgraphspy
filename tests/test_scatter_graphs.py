@@ -14,6 +14,7 @@ from typing import List
 
 import dafpy as dp
 import numpy as np
+import somegraphspy as sg
 from somegraphspy import PointsGraph
 
 import metacellsgraphspy as mg
@@ -116,6 +117,16 @@ def test_gene_base_delta_correlations_graph() -> None:
     assert [round(float(y), 3) for y in _list(graph.data.y.vector)] == [0.1, 0.2]
     assert graph.figure is not None
     assert list(mg.get_gene_is_correlated_vector(base_daf, gene="A")) == [True, True]
+
+
+def test_put_hidden_entries_configuration() -> None:
+    """
+    The hidden entries can be excluded from the ranges of any points graph.
+    """
+    graph = sg.points_graph()
+    mg.put_hidden_entries_configuration(graph.configuration)
+    assert not graph.configuration.x_axis.scale.include_hidden
+    assert not graph.configuration.y_axis.scale.include_hidden
 
 
 def test_gene_fraction_regularization() -> None:
