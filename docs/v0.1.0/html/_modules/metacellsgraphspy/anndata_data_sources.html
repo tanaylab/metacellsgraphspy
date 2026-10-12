@@ -78,8 +78,9 @@
 <span class="sd">``obs`` entry is a metacell, each ``var`` entry is a gene, and ``X`` holds the fraction of the UMIs of each metacell in</span>
 <span class="sd">each gene. The data they write into the ``somegraphspy`` graph is the same as their ``Daf`` counterparts write.</span>
 
-<span class="sd">The ``entries`` are the names or the (1-based) indices of the used metacells, as in the ``Daf`` data sources. As there,</span>
-<span class="sd">a fill which isn't given its ``entries`` fills the entries its ``sinks`` are already named after, or else all of them.</span>
+<span class="sd">The ``entries`` are the names, the (1-based) indices, or a Boolean mask of the used metacells, as in the ``Daf`` data</span>
+<span class="sd">sources. As there, a fill which isn't given its ``entries`` fills the entries its ``sinks`` are already named after, or</span>
+<span class="sd">else all of them.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
@@ -220,11 +221,17 @@
     <span class="k">return</span> <span class="n">entries</span>
 
 
-<span class="c1"># The 0-based indices of the (1-based or named) entries, or of all the entries.</span>
+<span class="c1"># The 0-based indices of the (1-based, named or masked) entries, or of all the entries.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_entry_indices</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">n_obs</span><span class="p">)</span>
     <span class="n">entries_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">entries_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">"b"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries_array</span><span class="p">)</span> <span class="o">!=</span> <span class="n">adata</span><span class="o">.</span><span class="n">n_obs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"mask length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">entries_array</span><span class="p">)</span><span class="si">}</span><span class="s2"> is different from the number of entries: </span><span class="si">{</span><span class="n">adata</span><span class="o">.</span><span class="n">n_obs</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">entries_array</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">entries_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="s2">"iu"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">entries_array</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">indices</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">(</span><span class="n">entries_array</span><span class="p">)</span>

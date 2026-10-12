@@ -112,8 +112,9 @@ def test_get_vectors() -> None:
     assert list(mg.get_total_UMIs_vector(daf, via=["block"])) == [3000, 3000, 6000]
     assert list(mg.get_top_marker_gene_indices(daf, markers_count=1)) == [2]
     assert list(mg.get_skeleton_gene_indices(daf)) == [2]
-    assert list(mg.get_boolean_vector(daf, axis="gene", property="is_skeleton")) == ["false", "true", "false"]
-    assert list(mg.get_is_skeleton_vector(daf)) == ["false", "true", "false"]
+    assert list(mg.get_boolean_vector(daf, axis="gene", property="is_skeleton")) == [False, True, False]
+    assert list(mg.get_is_skeleton_vector(daf)) == [False, True, False]
+    assert list(mg.get_axis_entries_vector(daf, axis="gene", entries=mg.get_is_skeleton_vector(daf))) == ["B"]
     assert list(mg.get_size_vector(daf, axis="metacell", property="n_cells")) == [10, 20, 30]
     assert list(mg.get_category_vector(daf, axis="metacell", property="type")) == ["T1", "T2", ""]
     assert mg.get_category_colors(daf, axis="type") == mg.get_type_colors(daf)
@@ -200,7 +201,7 @@ def test_bucket_fills() -> None:
     )
     mg.put_boolean_values(
         heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()),
-        np.array(["true", "false"]),
+        np.array([True, False]),
         ["A", "B"],
     )
     heatmap.validate()

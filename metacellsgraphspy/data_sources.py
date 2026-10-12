@@ -13,6 +13,9 @@ being told which they are.
 
 Indices are 1-based, as in Julia: the ``entries`` and ``genes`` given by index, the ``indices`` of the low level
 queries, and the gene indices returned by the gene selection functions.
+
+The ``entries`` and ``genes`` can also be given by a Boolean mask over the axis. In particular, any Boolean get can serve
+as the mask (e.g., ``entries=get_is_marker_vector(daf)``).
 """
 
 # A function per Julia data source, so the module is as long as the Julia one.
@@ -27,6 +30,7 @@ from typing import Union
 import numpy as np
 import pandas as pd
 from dafpy import DafReader
+from somegraphspy import BoolsVector
 from somegraphspy import IntegersVector
 from somegraphspy import LogBase
 from somegraphspy import MatrixDataSinks
@@ -105,6 +109,7 @@ __all__ = [
     "get_gene_correlation_change_vector",
     "get_gene_correlation_vector",
     "get_gene_expression_vector",
+    "get_gene_is_correlated_vector",
     "get_genes_expression_matrix",
     "get_genes_fold_matrix",
     "get_global_flow_order_vector",
@@ -147,8 +152,8 @@ __all__ = [
     "put_umap_data",
 ]
 
-#: Which entries of an axis a data source uses: their names, or their (1-based) indices.
-Entries = Union[StringsVector, IntegersVector]
+#: Which entries of an axis a data source uses: their names, their (1-based) indices, or a Boolean mask over the axis.
+Entries = Union[StringsVector, IntegersVector, BoolsVector]
 
 #: A chain of axes to walk before asking for a property (e.g., ``["metacell"]`` to ask for the block of the metacell of
 #: each cell).
@@ -648,6 +653,22 @@ def get_gene_correlation_vector(
     """
     return _from_julia_array(
         jl.MetacellsGraphs.get_gene_correlation_vector(
+            daf, gene=gene, **_given(axis=axis, entries=_to_julia_array(entries))
+        )
+    )
+
+
+def get_gene_is_correlated_vector(
+    daf: DafReader, *, gene: str, axis: Optional[str] = None, entries: Optional[Entries] = None
+) -> np.ndarray:
+    """
+    Get whether the :py:func:`get_gene_correlation_vector` of the ``gene`` is not zero for each of the ``entries`` of
+    some ``daf`` ``axis``. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_gene_is_correlated_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_gene_is_correlated_vector(
             daf, gene=gene, **_given(axis=axis, entries=_to_julia_array(entries))
         )
     )
@@ -1748,8 +1769,8 @@ def get_boolean_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``, as the *strings* ``"true"`` and
-    ``"false"``. See the Julia
+    Get the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``. This can be shown as colors, or
+    used as a mask. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_boolean_vector>`__
     for details.
     """
@@ -1798,15 +1819,15 @@ def fill_boolean(
 
 def put_boolean_values(
     sinks: VectorDataSinks,
-    value_per_entry: StringsVector,
-    name_per_entry: StringsVector,
+    value_per_entry: BoolsVector,
+    name_per_entry: Optional[StringsVector],
     *,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Put the Boolean *string* ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_boolean_configuration`, and
-    name the entities after the ``name_per_entry``. See the Julia
+    Put the Boolean ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_boolean_configuration`, and name the
+    entities after the ``name_per_entry`` (if given). See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_values!>`__
     for details.
     """
@@ -1851,7 +1872,7 @@ def get_is_lateral_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is lateral, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is lateral. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_lateral_vector>`__
     for details.
     """
@@ -1890,7 +1911,7 @@ def get_is_marker_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is a marker gene, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is a marker gene. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_marker_vector>`__
     for details.
     """
@@ -1929,7 +1950,7 @@ def get_is_transcription_factor_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is a transcription factor, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is a transcription factor. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_transcription_factor_vector>`__
     for details.
     """
@@ -1970,8 +1991,7 @@ def get_is_regulator_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene regulates the expression of other genes, as the *strings* ``"true"`` and ``"false"``. See
-    the Julia
+    Get whether each gene regulates the expression of other genes. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_regulator_vector>`__
     for details.
     """
@@ -2010,7 +2030,7 @@ def get_is_forbidden_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is forbidden, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is forbidden. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_forbidden_vector>`__
     for details.
     """
@@ -2049,7 +2069,7 @@ def get_is_skeleton_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is a skeleton gene, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is a skeleton gene. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_skeleton_vector>`__
     for details.
     """
@@ -2088,8 +2108,7 @@ def get_is_correlated_with_skeleton_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is correlated with some skeleton gene, as the *strings* ``"true"`` and ``"false"``. See the
-    Julia
+    Get whether each gene is correlated with some skeleton gene. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_correlated_with_skeleton_vector>`__
     for details.
     """
@@ -2130,7 +2149,7 @@ def get_is_mitochondrial_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is mitochondrial, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is mitochondrial. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_mitochondrial_vector>`__
     for details.
     """
@@ -2169,7 +2188,7 @@ def get_is_ribosomal_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is ribosomal, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is ribosomal. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_ribosomal_vector>`__
     for details.
     """
@@ -2208,7 +2227,7 @@ def get_is_excluded_vector(
     empty_value: Optional[bool] = None,
 ) -> np.ndarray:
     """
-    Get whether each gene is excluded, as the *strings* ``"true"`` and ``"false"``. See the Julia
+    Get whether each gene is excluded. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_excluded_vector>`__
     for details.
     """

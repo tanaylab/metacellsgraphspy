@@ -84,6 +84,19 @@ def test_ad_unknown_entries() -> None:
         mg.ad_get_gene_expression_vector(_test_adata(), gene="A", entries=["M1", "M4"])
 
 
+def test_ad_masked_entries() -> None:
+    """
+    A Boolean mask picks the entries, and must cover the whole ``obs``.
+    """
+    adata = _test_adata()
+    assert _list(mg.ad_get_gene_expression_vector(adata, gene="A", entries=np.array([True, False, True]))) == [
+        np.float32(0.1),
+        np.float32(0.3),
+    ]
+    with pytest.raises(ValueError, match="mask length: 2"):
+        mg.ad_get_gene_expression_vector(adata, gene="A", entries=[True, False])
+
+
 def test_ad_fill_gene_expression() -> None:
     """
     The gene expression fills an axis the same way as the ``Daf`` data source.

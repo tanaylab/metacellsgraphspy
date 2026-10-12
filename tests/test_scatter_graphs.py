@@ -115,6 +115,7 @@ def test_gene_base_delta_correlations_graph() -> None:
     assert [round(float(x), 3) for x in _list(graph.data.x.vector)] == [0.1, -0.1]
     assert [round(float(y), 3) for y in _list(graph.data.y.vector)] == [0.1, 0.2]
     assert graph.figure is not None
+    assert list(mg.get_gene_is_correlated_vector(base_daf, gene="A")) == [True, True]
 
 
 def test_gene_fraction_regularization() -> None:

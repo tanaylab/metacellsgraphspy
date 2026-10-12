@@ -662,6 +662,15 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.get_gene_is_correlated_vector">
+<code class="docutils literal notranslate">
+<span class="pre">get_gene_is_correlated_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.data_sources.get_genes_expression_matrix">
 <code class="docutils literal notranslate">
 <span class="pre">get_genes_expression_matrix()
@@ -1205,6 +1214,22 @@ being told which they are.
 queries, and the gene indices returned by the gene selection functions.
 </p>
 
+<p>The 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> and 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code> can also be given by a Boolean mask over the axis. In particular, any Boolean get can serve
+as the mask (e.g., 
+<code class="docutils literal notranslate">
+<span class="pre">entries=get_is_marker_vector(daf)
+</span>
+</code>).
+</p>
+
 <dl class="py data">
 
 <dt class="sig sig-object py" id="metacellsgraphspy.data_sources.EMPTY_CATEGORY_COLOR">
@@ -1272,7 +1297,7 @@ for details.
 </dt>
 
 <dd>
-<p>Which entries of an axis a data source uses: their names, or their (1-based) indices.
+<p>Which entries of an axis a data source uses: their names, their (1-based) indices, or a Boolean mask over the axis.
 </p>
 
 <p>alias of 
@@ -1294,6 +1319,14 @@ for details.
 </code>[
 <code class="xref py py-class docutils literal notranslate">
 <span class="pre">int
+</span>
+</code>] | 
+<code class="xref py py-class docutils literal notranslate">
+<span class="pre">Sequence
+</span>
+</code>[
+<code class="xref py py-class docutils literal notranslate">
+<span class="pre">bool
 </span>
 </code>]
 </p>
@@ -1783,6 +1816,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -1811,6 +1854,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -2174,6 +2227,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -2202,6 +2265,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -2513,6 +2586,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -2939,6 +3022,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -3359,6 +3452,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -3840,6 +3943,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -4332,6 +4445,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -5688,6 +5811,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -6109,6 +6242,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -6540,6 +6683,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -6960,6 +7113,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -7404,6 +7567,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -7843,6 +8016,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -8274,6 +8457,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -8718,6 +8911,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -8759,6 +8962,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -9188,6 +9401,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -9229,6 +9452,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -9643,6 +9876,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -10044,6 +10287,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -10474,6 +10727,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -10894,6 +11157,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -11324,6 +11597,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -11744,6 +12027,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -12174,6 +12467,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -12594,6 +12897,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -13024,6 +13337,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -13449,6 +13772,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -13869,6 +14202,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -14316,6 +14659,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -14758,6 +15111,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -15195,6 +15558,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -15943,6 +16316,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -16407,6 +16790,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -16894,6 +17287,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -17358,6 +17761,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -17854,6 +18267,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -18299,6 +18722,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -18531,6 +18964,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -18559,6 +19002,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -18723,6 +19176,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -18981,6 +19444,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -19351,6 +19824,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -19522,18 +20005,8 @@ for details.
 <code class="docutils literal notranslate">
 <span class="pre">axis
 </span>
-</code>, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and
-
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+</code>. This can be shown as colors, or
+used as a mask. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_boolean_vector">documentation
 </a>
@@ -19600,6 +20073,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -20029,6 +20512,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -20366,6 +20859,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -20590,6 +21093,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -20809,6 +21322,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -21052,6 +21575,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -21327,6 +21860,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -21518,6 +22061,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -21719,6 +22272,228 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.get_gene_is_correlated_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">get_gene_is_correlated_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">gene
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#get_gene_is_correlated_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.get_gene_is_correlated_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get whether the 
+<a class="reference internal" href="#metacellsgraphspy.data_sources.get_gene_correlation_vector" title="metacellsgraphspy.data_sources.get_gene_correlation_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_gene_correlation_vector()
+</span>
+</code>
+</a> of the 
+<code class="docutils literal notranslate">
+<span class="pre">gene
+</span>
+</code> is not zero for each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of
+some 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code> 
+<code class="docutils literal notranslate">
+<span class="pre">axis
+</span>
+</code>. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_gene_is_correlated_vector">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>gene
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -21901,6 +22676,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -21942,6 +22727,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -22129,6 +22924,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -22170,6 +22975,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -22379,6 +23194,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -22530,18 +23355,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is correlated with some skeleton gene, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the
-Julia
+<p>Get whether each gene is correlated with some skeleton gene. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_correlated_with_skeleton_vector">documentation
 </a>
@@ -22603,6 +23417,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -22765,17 +23589,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is excluded, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is excluded. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_excluded_vector">documentation
 </a>
@@ -22837,6 +23651,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -22999,17 +23823,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is forbidden, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is forbidden. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_forbidden_vector">documentation
 </a>
@@ -23071,6 +23885,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -23233,17 +24057,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is lateral, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is lateral. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_lateral_vector">documentation
 </a>
@@ -23305,6 +24119,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -23467,17 +24291,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is a marker gene, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is a marker gene. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_marker_vector">documentation
 </a>
@@ -23539,6 +24353,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -23701,17 +24525,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is mitochondrial, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is mitochondrial. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_mitochondrial_vector">documentation
 </a>
@@ -23773,6 +24587,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -23935,18 +24759,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene regulates the expression of other genes, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See
-the Julia
+<p>Get whether each gene regulates the expression of other genes. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_regulator_vector">documentation
 </a>
@@ -24008,6 +24821,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -24170,17 +24993,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is ribosomal, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is ribosomal. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_ribosomal_vector">documentation
 </a>
@@ -24242,6 +25055,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -24404,17 +25227,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is a skeleton gene, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is a skeleton gene. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_skeleton_vector">documentation
 </a>
@@ -24476,6 +25289,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -24638,17 +25461,7 @@ for details.
 </dt>
 
 <dd>
-<p>Get whether each gene is a transcription factor, as the 
-<em>strings
-</em> 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;true&quot;
-</span>
-</code> and 
-<code class="docutils literal notranslate">
-<span class="pre">&quot;false&quot;
-</span>
-</code>. See the Julia
+<p>Get whether each gene is a transcription factor. See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_transcription_factor_vector">documentation
 </a>
@@ -24710,6 +25523,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -25126,6 +25949,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -25330,6 +26163,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -25540,6 +26383,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -25908,6 +26761,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -26140,6 +27003,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -26383,6 +27256,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -26827,6 +27710,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -27228,6 +28121,16 @@ for details.
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -27450,6 +28353,16 @@ for details.
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -28010,8 +28923,6 @@ for details.
 
 <dd>
 <p>Put the Boolean 
-<em>string
-</em> 
 <code class="docutils literal notranslate">
 <span class="pre">value_per_entry
 </span>
@@ -28025,12 +28936,12 @@ for details.
 <span class="pre">put_boolean_configuration()
 </span>
 </code>
-</a>, and
-name the entities after the 
+</a>, and name the
+entities after the 
 <code class="docutils literal notranslate">
 <span class="pre">name_per_entry
 </span>
-</code>. See the Julia
+</code> (if given). See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_values!">documentation
 </a>
@@ -28198,7 +29109,7 @@ for details.
 </em>
 <em>[
 </em>
-<em>str
+<em>bool
 </em>
 <em>]
 </em>)
@@ -28219,7 +29130,11 @@ for details.
 </em>
 <em>str
 </em>
-<em>]
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
 </em>)
 </p>
 </li>

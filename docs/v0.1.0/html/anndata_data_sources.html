@@ -308,12 +308,12 @@ each gene. The data they write into the
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
-</code> are the names or the (1-based) indices of the used metacells, as in the 
+</code> are the names, the (1-based) indices, or a Boolean mask of the used metacells, as in the 
 <code class="docutils literal notranslate">
 <span class="pre">Daf
 </span>
-</code> data sources. As there,
-a fill which isn’t given its 
+</code> data
+sources. As there, a fill which isn’t given its 
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
@@ -321,7 +321,8 @@ a fill which isn’t given its
 <code class="docutils literal notranslate">
 <span class="pre">sinks
 </span>
-</code> are already named after, or else all of them.
+</code> are already named after, or
+else all of them.
 </p>
 
 <dl class="py function">
@@ -669,6 +670,16 @@ a fill which isn’t given its
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -1118,6 +1129,16 @@ a fill which isn’t given its
 </em>
 <em>| 
 </em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
 <em>None
 </em>)
 </p>
@@ -1321,6 +1342,16 @@ is the
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>
@@ -1637,6 +1668,16 @@ the empty string. This is the
 <em>[
 </em>
 <em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
 </em>
 <em>] 
 </em>

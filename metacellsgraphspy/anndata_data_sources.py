@@ -5,8 +5,9 @@ These are the ``AnnData`` counterparts of some of the ``Daf`` data sources. They
 ``obs`` entry is a metacell, each ``var`` entry is a gene, and ``X`` holds the fraction of the UMIs of each metacell in
 each gene. The data they write into the ``somegraphspy`` graph is the same as their ``Daf`` counterparts write.
 
-The ``entries`` are the names or the (1-based) indices of the used metacells, as in the ``Daf`` data sources. As there,
-a fill which isn't given its ``entries`` fills the entries its ``sinks`` are already named after, or else all of them.
+The ``entries`` are the names, the (1-based) indices, or a Boolean mask of the used metacells, as in the ``Daf`` data
+sources. As there, a fill which isn't given its ``entries`` fills the entries its ``sinks`` are already named after, or
+else all of them.
 """
 
 from typing import Mapping
@@ -132,11 +133,17 @@ def _sinks_entries(sinks: VectorDataSinks, entries: Optional[Entries]) -> Option
     return entries
 
 
-# The 0-based indices of the (1-based or named) entries, or of all the entries.
+# The 0-based indices of the (1-based, named or masked) entries, or of all the entries.
 def _entry_indices(adata: AnnData, entries: Optional[Entries]) -> np.ndarray:
     if entries is None:
         return np.arange(adata.n_obs)
     entries_array = np.asarray(entries)
+    if entries_array.dtype.kind == "b":
+        if len(entries_array) != adata.n_obs:
+            raise ValueError(
+                f"mask length: {len(entries_array)} is different from the number of entries: {adata.n_obs}"
+            )
+        return np.flatnonzero(entries_array)
     if entries_array.dtype.kind in "iu":
         return entries_array - 1
     indices = adata.obs_names.get_indexer(entries_array)
