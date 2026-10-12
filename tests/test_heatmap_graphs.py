@@ -10,6 +10,7 @@ from typing import List
 
 import dafpy as dp
 import numpy as np
+import somegraphspy as sg
 from somegraphspy import HeatmapGraph
 
 import metacellsgraphspy as mg
@@ -87,3 +88,15 @@ def test_genes_heatmap_graph_of_blocks() -> None:
     assert isinstance(graph, HeatmapGraph)
     assert _list(graph.data.columns.entities.names) == ["B1", "B2"]
     assert graph.configuration.columns.title == "Blocks!"
+
+
+def test_put_genes_heatmap_configuration() -> None:
+    """
+    The layout of a genes heatmap is given the sizes, so it serves a heatmap filled from any source.
+    """
+    graph = sg.heatmap_graph()
+    mg.put_genes_heatmap_configuration(graph.configuration, n_genes=1, n_entries=2, rows_axis_title="Markers")
+    assert graph.configuration.rows.title == "Markers"
+    assert graph.configuration.rows.order_source is None
+    assert graph.configuration.columns.order_source == sg.OrderSource.OptimalTreeReorder
+    assert not graph.configuration.columns.show_ticks

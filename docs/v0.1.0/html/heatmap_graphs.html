@@ -131,6 +131,15 @@
 </a>
 </li>
 
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.heatmap_graphs.put_genes_heatmap_configuration">
+<code class="docutils literal notranslate">
+<span class="pre">put_genes_heatmap_configuration()
+</span>
+</code>
+</a>
+</li>
+
 </ul>
 
 </li>
@@ -525,6 +534,193 @@ for details.
 <p>
 <em>HeatmapGraph
 </em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.heatmap_graphs.put_genes_heatmap_configuration">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.heatmap_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">put_genes_heatmap_configuration
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">configuration
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">n_genes
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">n_entries
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">rows_axis_title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">columns_axis_title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/heatmap_graphs.html#put_genes_heatmap_configuration">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.heatmap_graphs.put_genes_heatmap_configuration" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Lay out a heatmap of 
+<code class="docutils literal notranslate">
+<span class="pre">n_genes
+</span>
+</code> genes (the rows) by 
+<code class="docutils literal notranslate">
+<span class="pre">n_entries
+</span>
+</code> entries (the columns), as
+
+<a class="reference internal" href="#metacellsgraphspy.heatmap_graphs.genes_heatmap_graph" title="metacellsgraphspy.heatmap_graphs.genes_heatmap_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">genes_heatmap_graph()
+</span>
+</code>
+</a> shows it. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.put_genes_heatmap_configuration!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>configuration
+</strong> (
+<em>HeatmapGraphConfiguration
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>n_genes
+</strong> (
+<em>int
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>n_entries
+</strong> (
+<em>int
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>rows_axis_title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>columns_axis_title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
 </p>
 
 </dd>

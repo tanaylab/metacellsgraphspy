@@ -7,6 +7,8 @@ from typing import Optional
 
 from dafpy import DafReader
 from somegraphspy import HeatmapGraph
+from somegraphspy import HeatmapGraphConfiguration
+from somegraphspy.julia_import import _to_julia
 
 from .data_sources import Entries
 from .julia_import import _given
@@ -15,6 +17,7 @@ from .julia_import import jl
 
 __all__ = [
     "genes_heatmap_graph",
+    "put_genes_heatmap_configuration",
 ]
 
 
@@ -46,4 +49,26 @@ def genes_heatmap_graph(
                 max_fold=max_fold,
             ),
         )
+    )
+
+
+def put_genes_heatmap_configuration(
+    configuration: HeatmapGraphConfiguration,
+    *,
+    n_genes: int,
+    n_entries: int,
+    rows_axis_title: Optional[str] = None,
+    columns_axis_title: Optional[str] = None,
+) -> None:
+    """
+    Lay out a heatmap of ``n_genes`` genes (the rows) by ``n_entries`` entries (the columns), as
+    :py:func:`genes_heatmap_graph` shows it. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.put_genes_heatmap_configuration!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_genes_heatmap_configuration_b(
+        _to_julia(configuration),
+        n_genes=n_genes,
+        n_entries=n_entries,
+        **_given(rows_axis_title=rows_axis_title, columns_axis_title=columns_axis_title),
     )
