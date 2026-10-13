@@ -142,6 +142,24 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_genes_expression_matrix">
+<code class="docutils literal notranslate">
+<span class="pre">ad_fill_genes_expression_matrix()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_genes_fold_matrix">
+<code class="docutils literal notranslate">
+<span class="pre">ad_fill_genes_fold_matrix()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_is_excluded">
 <code class="docutils literal notranslate">
 <span class="pre">ad_fill_is_excluded()
@@ -199,6 +217,24 @@
 <a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_gene_expression_vector">
 <code class="docutils literal notranslate">
 <span class="pre">ad_get_gene_expression_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_genes_expression_matrix">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_genes_expression_matrix()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_genes_fold_matrix">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_genes_fold_matrix()
 </span>
 </code>
 </a>
@@ -382,12 +418,18 @@
 <code class="docutils literal notranslate">
 <span class="pre">X
 </span>
-</code> holds the fraction of the UMIs of each metacell in
-each gene. The data they write into the 
+</code> holds the expression level of each gene in each
+metacell. In a metacells 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> this is typically a geometric mean of the fractions of the cells, rather than a
+linear fraction. It is used as it is stored. The data they write into the 
 <code class="docutils literal notranslate">
 <span class="pre">somegraphspy
 </span>
-</code> graph is the same as their 
+</code> graph is the same as their
+
 <code class="docutils literal notranslate">
 <span class="pre">Daf
 </span>
@@ -573,12 +615,18 @@ the entries its
 <code class="docutils literal notranslate">
 <span class="pre">gene
 </span>
-</code> expression level (linear fraction) per each of the 
+</code> expression level (see 
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_gene_expression_vector" title="metacellsgraphspy.anndata_data_sources.ad_get_gene_expression_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_get_gene_expression_vector()
+</span>
+</code>
+</a>) per each of the
+
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
-</code> of the
-
+</code> of the 
 <code class="docutils literal notranslate">
 <span class="pre">adata
 </span>
@@ -586,12 +634,12 @@ the entries its
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
-</code>. The default 
+</code>. The default
+
 <code class="docutils literal notranslate">
 <span class="pre">title
 </span>
-</code> is
-
+</code> is 
 <code class="docutils literal notranslate">
 <span class="pre">&lt;gene&gt;
 </span> 
@@ -824,6 +872,951 @@ the entries its
 <li>
 <p>
 <strong>gene_fraction_regularization
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_fill_genes_expression_matrix">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_fill_genes_expression_matrix
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">genes
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">gene_fraction_regularization
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_fill_genes_expression_matrix">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_fill_genes_expression_matrix" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the expression level of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code> (the rows) in each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> (the
+columns) of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>, shown as an expression level, and name the rows and the columns. The default 
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code>
+is 
+<code class="docutils literal notranslate">
+<span class="pre">fraction
+</span>
+</code>. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.fill_genes_expression_matrix" title="metacellsgraphspy.data_sources.fill_genes_expression_matrix">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">fill_genes_expression_matrix()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>genes
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>gene_fraction_regularization
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>log_base
+</strong> (
+<em>LogBase
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_fill_genes_fold_matrix">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_fill_genes_fold_matrix
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">genes
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">max_fold
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_fill_genes_fold_matrix">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_fill_genes_fold_matrix" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the fold of the expression of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code> (the rows) from its median, in each of
+the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> (the columns) of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>, shown as a fold, and name the rows and the columns. The default
+
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code> is 
+<code class="docutils literal notranslate">
+<span class="pre">fold
+</span> 
+<span class="pre">from
+</span> 
+<span class="pre">median
+</span>
+</code>. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.fill_genes_fold_matrix" title="metacellsgraphspy.data_sources.fill_genes_fold_matrix">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">fill_genes_fold_matrix()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>genes
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>max_fold
 </strong> (
 <em>float
 </em>
@@ -3317,7 +4310,7 @@ name the entities after the
 <code class="docutils literal notranslate">
 <span class="pre">gene
 </span>
-</code> expression level (linear fraction) per each of the 
+</code> expression level per each of the 
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
@@ -3325,12 +4318,22 @@ name the entities after the
 <code class="docutils literal notranslate">
 <span class="pre">adata
 </span>
-</code>. This
-is the 
+</code>, from 
+<code class="docutils literal notranslate">
+<span class="pre">X
+</span>
+</code> as it is
+stored. In a metacells 
 <code class="docutils literal notranslate">
 <span class="pre">AnnData
 </span>
-</code> counterpart of 
+</code> this is typically a geometric mean of the fractions of the cells, rather than a
+linear fraction. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
 <a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_gene_expression_vector" title="metacellsgraphspy.data_sources.get_gene_expression_vector">
 <code class="xref py py-func docutils literal notranslate">
 <span class="pre">get_gene_expression_vector()
@@ -3363,6 +4366,479 @@ is the
 <strong>gene
 </strong> (
 <em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_genes_expression_matrix">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_genes_expression_matrix
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">genes
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_genes_expression_matrix">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_genes_expression_matrix" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the expression level of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code> (the rows) in each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> (the columns) of the
+
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>, from 
+<code class="docutils literal notranslate">
+<span class="pre">X
+</span>
+</code> as it is stored. In a metacells 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> this is typically a geometric mean of the
+fractions of the cells, rather than a linear fraction. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_genes_expression_matrix" title="metacellsgraphspy.data_sources.get_genes_expression_matrix">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_genes_expression_matrix()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>genes
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_genes_fold_matrix">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_genes_fold_matrix
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">genes
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_genes_fold_matrix">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_genes_fold_matrix" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the fold of the expression of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code> (the rows) from its median across the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> (the
+columns) of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>. This is the log base 2 of the expression level (see
+
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_genes_expression_matrix" title="metacellsgraphspy.anndata_data_sources.ad_get_genes_expression_matrix">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_get_genes_expression_matrix()
+</span>
+</code>
+</a>), regularized as 
+<code class="docutils literal notranslate">
+<span class="pre">Metacells
+</span>
+</code> does
+(
+<code class="docutils literal notranslate">
+<span class="pre">GENE_FRACTION_REGULARIZATION_FOR_METACELLS
+</span>
+</code>), minus its median. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_genes_fold_matrix" title="metacellsgraphspy.data_sources.get_genes_fold_matrix">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_genes_fold_matrix()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>genes
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
 </em>)
 </p>
 </li>

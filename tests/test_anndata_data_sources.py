@@ -235,3 +235,40 @@ def test_ad_gene_flags() -> None:
     assert heatmap.data.rows.annotations[0].colors.title == "lateral"
     assert heatmap.data.rows.annotations[1].colors.title == "excluded"
     assert heatmap.data.rows.annotations[2].colors.title == "marker"
+
+
+def test_ad_genes_expression_matrix() -> None:
+    """
+    The matrix is ``X`` as stored, with a row per gene and a column per metacell, from a dense or a sparse ``X``.
+    """
+    adata = _test_adata()
+    matrix = mg.ad_get_genes_expression_matrix(adata, genes=["B"], entries=[1, 3])
+    assert matrix.shape == (1, 2)
+    assert list(matrix[0, :]) == [np.float32(0.3), np.float32(0.1)]
+
+    adata.X = sp.csr_matrix(adata.X)
+    heatmap = sg.heatmap_graph()
+    mg.ad_fill_genes_expression_matrix(heatmap.entries_matrix_fields(), adata)
+    entries_matrix = heatmap.data.entries.matrix
+    assert entries_matrix is not None
+    assert list(entries_matrix[:, 0]) == [np.float32(0.1), np.float32(0.3)]
+    assert _list(heatmap.data.rows.entities.names) == ["A", "B"]
+    assert _list(heatmap.data.columns.entities.names) == ["M1", "M2", "M3"]
+    assert heatmap.configuration.entries.colors.title == "fraction"
+
+
+def test_ad_genes_fold_matrix() -> None:
+    """
+    The fold is the log of the expression level, regularized as ``Metacells`` does, minus each gene's median.
+    """
+    adata = _test_adata()
+    folds = mg.ad_get_genes_fold_matrix(adata)
+    assert [round(float(fold), 3) for fold in folds[0, :]] == [-1.0, 0.0, 0.585]
+
+    heatmap = sg.heatmap_graph()
+    mg.ad_fill_genes_fold_matrix(heatmap.entries_matrix_fields(), adata, genes=["B"], entries=["M3", "M1"])
+    matrix = heatmap.data.entries.matrix
+    assert matrix is not None
+    assert [round(float(fold), 3) for fold in matrix[0, :]] == [-0.792, 0.792]
+    assert _list(heatmap.data.columns.entities.names) == ["M3", "M1"]
+    assert heatmap.configuration.entries.colors.palette == "BuWtRd"

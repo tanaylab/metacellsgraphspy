@@ -2,8 +2,10 @@
 Data sources of a metacells ``AnnData`` (e.g., read from an ``h5ad`` file).
 
 These are the ``AnnData`` counterparts of some of the ``Daf`` data sources. They are implemented in Python only. Each
-``obs`` entry is a metacell, each ``var`` entry is a gene, and ``X`` holds the fraction of the UMIs of each metacell in
-each gene. The data they write into the ``somegraphspy`` graph is the same as their ``Daf`` counterparts write.
+``obs`` entry is a metacell, each ``var`` entry is a gene, and ``X`` holds the expression level of each gene in each
+metacell. In a metacells ``AnnData`` this is typically a geometric mean of the fractions of the cells, rather than a
+linear fraction. It is used as it is stored. The data they write into the ``somegraphspy`` graph is the same as their
+``Daf`` counterparts write.
 
 Each data source reads a fixed column of the Python metacells layout: ``x`` and ``y`` (the UMAP), and ``total_umis``
 of the ``obs``, and ``lateral_gene``, ``excluded_gene`` and ``marker_gene`` of the ``var``. The type is the exception,
@@ -16,14 +18,19 @@ the entries its ``sinks`` are already named after, or else all of them.
 
 from typing import Mapping
 from typing import Optional
+from typing import Tuple
 
 import numpy as np
 import pandas as pd
 import scipy.sparse as sp  # type: ignore
 from anndata import AnnData  # type: ignore
 from somegraphspy import LogBase
+from somegraphspy import MatrixDataSinks
 from somegraphspy import VectorDataSinks
+from somegraphspy import get_matrix_names_data
 from somegraphspy import get_vector_names_data
+from somegraphspy import put_matrix_data
+from somegraphspy import put_matrix_names_data
 from somegraphspy import put_vector_data
 from somegraphspy import put_vector_names_data
 
@@ -33,11 +40,15 @@ from .data_sources import put_boolean_values
 from .data_sources import put_category_configuration
 from .data_sources import put_coordinates_configuration
 from .data_sources import put_expression_level_configuration
+from .data_sources import put_fold_configuration
 from .data_sources import put_size_values
 from .data_sources import put_umap_data
+from .julia_import import jl
 
 __all__ = [
     "ad_fill_gene_expression",
+    "ad_fill_genes_expression_matrix",
+    "ad_fill_genes_fold_matrix",
     "ad_fill_is_excluded",
     "ad_fill_is_lateral",
     "ad_fill_is_marker",
@@ -45,6 +56,8 @@ __all__ = [
     "ad_fill_type",
     "ad_fill_umap",
     "ad_get_gene_expression_vector",
+    "ad_get_genes_expression_matrix",
+    "ad_get_genes_fold_matrix",
     "ad_get_is_excluded_vector",
     "ad_get_is_lateral_vector",
     "ad_get_is_marker_vector",
@@ -66,9 +79,9 @@ def ad_fill_gene_expression(
     show_legend: Optional[bool] = None,
 ) -> None:
     """
-    Fill the ``sinks`` with the ``gene`` expression level (linear fraction) per each of the ``entries`` of the
-    ``adata``, shown in log base 2, and name the entities after the ``entries``. The default ``title`` is
-    ``<gene> fraction``. This is the ``AnnData`` counterpart of
+    Fill the ``sinks`` with the ``gene`` expression level (see :py:func:`ad_get_gene_expression_vector`) per each of the
+    ``entries`` of the ``adata``, shown in log base 2, and name the entities after the ``entries``. The default
+    ``title`` is ``<gene> fraction``. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.
     """
     if title is None:
@@ -83,13 +96,100 @@ def ad_fill_gene_expression(
 
 def ad_get_gene_expression_vector(adata: AnnData, *, gene: str, entries: Optional[Entries] = None) -> np.ndarray:
     """
-    Get the vector of the ``gene`` expression level (linear fraction) per each of the ``entries`` of the ``adata``. This
-    is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_gene_expression_vector`.
+    Get the vector of the ``gene`` expression level per each of the ``entries`` of the ``adata``, from ``X`` as it is
+    stored. In a metacells ``AnnData`` this is typically a geometric mean of the fractions of the cells, rather than a
+    linear fraction. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.data_sources.get_gene_expression_vector`.
     """
     column = adata.X[:, adata.var_names.get_loc(gene)]
     if sp.issparse(column):
         column = column.toarray()
     return np.asarray(column).ravel()[_entry_indices(adata.obs_names, entries)]
+
+
+def ad_fill_genes_expression_matrix(
+    sinks: MatrixDataSinks,
+    adata: AnnData,
+    *,
+    genes: Optional[Entries] = None,
+    entries: Optional[Entries] = None,
+    gene_fraction_regularization: Optional[float] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the expression level of each of the ``genes`` (the rows) in each of the ``entries`` (the
+    columns) of the ``adata``, shown as an expression level, and name the rows and the columns. The default ``title``
+    is ``fraction``. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.data_sources.fill_genes_expression_matrix`.
+    """
+    if title is None:
+        title = "fraction"
+    genes, entries = _sinks_matrix_entries(sinks, genes, entries)
+    put_matrix_data(sinks, ad_get_genes_expression_matrix(adata, genes=genes, entries=entries), title=title)
+    put_expression_level_configuration(
+        sinks,
+        gene_fraction_regularization=gene_fraction_regularization,
+        title=title,
+        show_legend=show_legend,
+        log_base=log_base,
+    )
+    put_matrix_names_data(sinks, _entry_names(adata.var_names, genes), _entry_names(adata.obs_names, entries))
+
+
+def ad_get_genes_expression_matrix(
+    adata: AnnData, *, genes: Optional[Entries] = None, entries: Optional[Entries] = None
+) -> np.ndarray:
+    """
+    Get the expression level of each of the ``genes`` (the rows) in each of the ``entries`` (the columns) of the
+    ``adata``, from ``X`` as it is stored. In a metacells ``AnnData`` this is typically a geometric mean of the
+    fractions of the cells, rather than a linear fraction. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.data_sources.get_genes_expression_matrix`.
+    """
+    matrix = adata.X[_entry_indices(adata.obs_names, entries), :][:, _entry_indices(adata.var_names, genes)]
+    if sp.issparse(matrix):
+        matrix = matrix.toarray()
+    return np.asarray(matrix, dtype="float32").T
+
+
+def ad_fill_genes_fold_matrix(
+    sinks: MatrixDataSinks,
+    adata: AnnData,
+    *,
+    genes: Optional[Entries] = None,
+    entries: Optional[Entries] = None,
+    max_fold: Optional[float] = None,
+    title: Optional[str] = None,
+    show_legend: Optional[bool] = None,
+) -> None:
+    """
+    Fill the ``sinks`` with the fold of the expression of each of the ``genes`` (the rows) from its median, in each of
+    the ``entries`` (the columns) of the ``adata``, shown as a fold, and name the rows and the columns. The default
+    ``title`` is ``fold from median``. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.data_sources.fill_genes_fold_matrix`.
+    """
+    if title is None:
+        title = "fold from median"
+    genes, entries = _sinks_matrix_entries(sinks, genes, entries)
+    put_matrix_data(sinks, ad_get_genes_fold_matrix(adata, genes=genes, entries=entries), title=title)
+    put_fold_configuration(sinks, max_fold=max_fold, title=title, show_legend=show_legend)
+    put_matrix_names_data(sinks, _entry_names(adata.var_names, genes), _entry_names(adata.obs_names, entries))
+
+
+def ad_get_genes_fold_matrix(
+    adata: AnnData, *, genes: Optional[Entries] = None, entries: Optional[Entries] = None
+) -> np.ndarray:
+    """
+    Get the fold of the expression of each of the ``genes`` (the rows) from its median across the ``entries`` (the
+    columns) of the ``adata``. This is the log base 2 of the expression level (see
+    :py:func:`ad_get_genes_expression_matrix`), regularized as ``Metacells`` does
+    (``GENE_FRACTION_REGULARIZATION_FOR_METACELLS``), minus its median. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.data_sources.get_genes_fold_matrix`.
+    """
+    regularization = float(jl.Metacells.GENE_FRACTION_REGULARIZATION_FOR_METACELLS)
+    log_matrix = np.log2(ad_get_genes_expression_matrix(adata, genes=genes, entries=entries) + regularization)
+    return log_matrix - np.median(log_matrix, axis=1, keepdims=True)
 
 
 def ad_fill_type(
@@ -319,6 +419,19 @@ def _sinks_entries(sinks: VectorDataSinks, entries: Optional[Entries]) -> Option
     if entries is None:
         return get_vector_names_data(sinks)
     return entries
+
+
+# The genes (rows) and entries (columns) a matrix fill uses, each chosen the way ``_sinks_entries`` chooses them.
+def _sinks_matrix_entries(
+    sinks: MatrixDataSinks, genes: Optional[Entries], entries: Optional[Entries]
+) -> Tuple[Optional[Entries], Optional[Entries]]:
+    if genes is None or entries is None:
+        name_per_row, name_per_column = get_matrix_names_data(sinks)
+        if genes is None:
+            genes = name_per_row
+        if entries is None:
+            entries = name_per_column
+    return (genes, entries)
 
 
 # The 0-based indices of the (1-based, named or masked) entries among the ``names`` of an axis, or of all of them.

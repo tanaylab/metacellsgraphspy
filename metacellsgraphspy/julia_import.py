@@ -20,5 +20,5 @@ __all__ = ["jl", "jl_version"]
 
 # Everything is imported rather than ``using``, so no package's exports leak into Julia's ``Main``. This keeps
 # ``Main`` clear for other Python packages that wrap Julia packages and are used in the same session.
-for package in ("MetacellsGraphs",):
+for package in ("Metacells", "MetacellsGraphs"):
     jl.seval("import " + package)
