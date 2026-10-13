@@ -80,6 +80,8 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">SeriesBarsGraph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">SeriesBarsGraphConfiguration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_to_julia</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_given</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
@@ -87,6 +89,7 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"degraded_genes_graph"</span><span class="p">,</span>
     <span class="s2">"improved_genes_graph"</span><span class="p">,</span>
+    <span class="s2">"put_changed_genes_configuration"</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -133,6 +136,19 @@
             <span class="n">daf</span><span class="o">=</span><span class="n">daf</span><span class="p">,</span> <span class="n">base_daf</span><span class="o">=</span><span class="n">base_daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">genes_count</span><span class="o">=</span><span class="n">genes_count</span><span class="p">,</span> <span class="n">regulators_count</span><span class="o">=</span><span class="n">regulators_count</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="put_changed_genes_configuration">
+<a class="viewcode-back" href="../../bar_graphs.html#metacellsgraphspy.bar_graphs.put_changed_genes_configuration">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">put_changed_genes_configuration</span><span class="p">(</span><span class="n">configuration</span><span class="p">:</span> <span class="n">SeriesBarsGraphConfiguration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Lay out a butterfly of genes, as :py:func:`improved_genes_graph` and :py:func:`degraded_genes_graph` show it. See</span>
+<span class="sd">    the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html#MetacellsGraphs.BarGraphs.put_changed_genes_configuration!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">put_changed_genes_configuration_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">configuration</span><span class="p">))</span></div>
 
 </pre></div>
 

@@ -104,6 +104,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoolsVector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">HoverFormat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegersVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">MatrixDataSinks</span>
@@ -297,6 +298,7 @@
     <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the result of the query ``@ axis query_suffix`` for each of the ``entries`` of the ``daf``</span>
@@ -309,7 +311,13 @@
         <span class="n">daf</span><span class="p">,</span>
         <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
         <span class="n">query_suffix</span><span class="o">=</span><span class="n">query_suffix</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span>
+            <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">,</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">hover_format</span><span class="o">=</span><span class="n">hover_format</span><span class="p">,</span>
+        <span class="p">),</span>
     <span class="p">)</span></div>
 
 
@@ -348,7 +356,12 @@
 <div class="viewcode-block" id="fill_column_vector_data">
 <a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.fill_column_vector_data">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">fill_column_vector_data</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
+    <span class="n">frame</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the ``column`` of a ``frame``, one value per row. See the Julia</span>
@@ -356,7 +369,7 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">fill_column_vector_data_b</span><span class="p">(</span>
-        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">),</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">_to_julia</span><span class="p">(</span><span class="n">sinks</span><span class="p">),</span> <span class="n">_to_julia_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">),</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">hover_format</span><span class="o">=</span><span class="n">hover_format</span><span class="p">)</span>
     <span class="p">)</span></div>
 
 
@@ -488,6 +501,7 @@
     <span class="n">row_entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">column_entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the result of the query ``@ rows_axis @ columns_axis query_suffix``, and name the rows and</span>
@@ -501,7 +515,12 @@
         <span class="n">rows_axis</span><span class="o">=</span><span class="n">rows_axis</span><span class="p">,</span>
         <span class="n">columns_axis</span><span class="o">=</span><span class="n">columns_axis</span><span class="p">,</span>
         <span class="n">query_suffix</span><span class="o">=</span><span class="n">query_suffix</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">row_entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">row_entries</span><span class="p">),</span> <span class="n">column_entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">column_entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">_given</span><span class="p">(</span>
+            <span class="n">row_entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">row_entries</span><span class="p">),</span>
+            <span class="n">column_entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">column_entries</span><span class="p">),</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">hover_format</span><span class="o">=</span><span class="n">hover_format</span><span class="p">,</span>
+        <span class="p">),</span>
     <span class="p">)</span></div>
 
 

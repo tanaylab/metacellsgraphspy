@@ -7,6 +7,8 @@ from typing import Optional
 
 from dafpy import DafReader
 from somegraphspy import SeriesBarsGraph
+from somegraphspy import SeriesBarsGraphConfiguration
+from somegraphspy.julia_import import _to_julia
 
 from .julia_import import _given
 from .julia_import import jl
@@ -14,6 +16,7 @@ from .julia_import import jl
 __all__ = [
     "degraded_genes_graph",
     "improved_genes_graph",
+    "put_changed_genes_configuration",
 ]
 
 
@@ -55,3 +58,13 @@ def degraded_genes_graph(
             daf=daf, base_daf=base_daf, **_given(genes_count=genes_count, regulators_count=regulators_count)
         )
     )
+
+
+def put_changed_genes_configuration(configuration: SeriesBarsGraphConfiguration) -> None:
+    """
+    Lay out a butterfly of genes, as :py:func:`improved_genes_graph` and :py:func:`degraded_genes_graph` show it. See
+    the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html#MetacellsGraphs.BarGraphs.put_changed_genes_configuration!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.put_changed_genes_configuration_b(_to_julia(configuration))

@@ -11,6 +11,7 @@ something the notebook can display - which is a ``somegraphspy`` graph rather th
 
 import dafpy as dp
 import numpy as np
+import somegraphspy as sg
 from somegraphspy import SeriesBarsGraph
 
 import metacellsgraphspy as mg
@@ -98,3 +99,15 @@ def test_genes_count() -> None:
     bars_names = graph.data.bars.names
     assert bars_names is not None
     assert list(bars_names) == ["A"]
+
+
+def test_put_changed_genes_configuration() -> None:
+    """
+    The layout of the butterfly serves any series bars graph.
+    """
+    graph = sg.series_bars_graph()
+    mg.put_changed_genes_configuration(graph.configuration)
+    assert graph.configuration.mirrored
+    assert graph.configuration.value_axis.title == "Base neighborhoods"
+    assert graph.configuration.value_axis.scale.percent
+    assert graph.configuration.bar_axis.title == "Genes"
