@@ -144,6 +144,15 @@
 </a>
 </li>
 
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_genes_heatmap_graph">
+<code class="docutils literal notranslate">
+<span class="pre">ad_genes_heatmap_graph()
+</span>
+</code>
+</a>
+</li>
+
 </ul>
 
 </li>
@@ -261,7 +270,7 @@
 <code class="docutils literal notranslate">
 <span class="pre">X
 </span>
-</code> holds the fraction of the UMIs of each metacell in each gene.
+</code> holds the expression level of each gene in each metacell (typically a geometric mean, used as it is stored).
 </p>
 
 <dl class="py function">
@@ -480,6 +489,318 @@ This is the
 <dd class="field-even">
 <p>
 <em>PointsGraph
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_graphs.ad_genes_heatmap_graph">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_genes_heatmap_graph
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">genes
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">rows_axis_title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">columns_axis_title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">max_fold
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_graphs.html#ad_genes_heatmap_graph">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_graphs.ad_genes_heatmap_graph" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The expression of the 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code> (by default, all of them) in each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> (by default,
+all the metacells), as the fold factor of the gene from its median across the entries. For a markers heatmap, pick
+the genes with 
+<a class="reference internal" href="anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices" title="metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_get_top_marker_gene_indices()
+</span>
+</code>
+</a>. This is the
+
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.genes_heatmap_graph" title="metacellsgraphspy.heatmap_graphs.genes_heatmap_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">genes_heatmap_graph()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>genes
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>rows_axis_title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>columns_axis_title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>max_fold
+</strong> (
+<em>float
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>HeatmapGraph
 </em>
 </p>
 

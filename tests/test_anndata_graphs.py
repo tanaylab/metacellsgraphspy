@@ -8,7 +8,9 @@ from typing import List
 
 import numpy as np
 import pandas as pd
+import somegraphspy as sg
 from anndata import AnnData  # type: ignore
+from somegraphspy import HeatmapGraph
 from somegraphspy import PointsGraph
 
 import metacellsgraphspy as mg
@@ -68,3 +70,32 @@ def test_ad_gene_gene_graph_by_type(tmp_path: Path) -> None:
     )
     graph.validate()
     assert graph.figure is not None
+
+
+def test_ad_genes_heatmap_graph() -> None:
+    """
+    The genes heatmap is a heatmap with a row per gene and a column per metacell, laid out as the ``Daf`` graph is.
+    """
+    graph = mg.ad_genes_heatmap_graph(_test_adata())
+    assert isinstance(graph, HeatmapGraph)
+    assert _list(graph.data.rows.entities.names) == ["A", "B"]
+    assert _list(graph.data.columns.entities.names) == ["M1", "M2", "M3"]
+    assert graph.configuration.rows.title == "Genes"
+    assert graph.configuration.columns.title == "Metacells"
+    assert not graph.configuration.columns.show_ticks
+    assert graph.figure is not None
+
+
+def test_ad_markers_heatmap_graph() -> None:
+    """
+    A markers heatmap picks its genes by the marker rank, computed when the ``AnnData`` has none.
+    """
+    adata = _test_adata()
+    adata.var["marker_gene"] = [True, True]
+    graph = mg.ad_genes_heatmap_graph(
+        adata, genes=mg.ad_get_top_marker_gene_indices(adata, markers_count=1), rows_axis_title="Markers"
+    )
+    assert _list(graph.data.rows.entities.names) == ["B"]
+    assert graph.configuration.rows.title == "Markers"
+    assert graph.configuration.rows.order_source is None
+    assert graph.configuration.columns.order_source == sg.OrderSource.OptimalTreeReorder
