@@ -142,6 +142,42 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_is_excluded">
+<code class="docutils literal notranslate">
+<span class="pre">ad_fill_is_excluded()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_is_lateral">
+<code class="docutils literal notranslate">
+<span class="pre">ad_fill_is_lateral()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_is_marker">
+<code class="docutils literal notranslate">
+<span class="pre">ad_fill_is_marker()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_total_UMIs">
+<code class="docutils literal notranslate">
+<span class="pre">ad_fill_total_UMIs()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_type">
 <code class="docutils literal notranslate">
 <span class="pre">ad_fill_type()
@@ -151,9 +187,54 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_fill_umap">
+<code class="docutils literal notranslate">
+<span class="pre">ad_fill_umap()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_gene_expression_vector">
 <code class="docutils literal notranslate">
 <span class="pre">ad_get_gene_expression_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_excluded_vector">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_is_excluded_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_lateral_vector">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_is_lateral_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_marker_vector">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_is_marker_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_total_UMIs_vector">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_total_UMIs_vector()
 </span>
 </code>
 </a>
@@ -172,6 +253,15 @@
 <a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_type_vector">
 <code class="docutils literal notranslate">
 <span class="pre">ad_get_type_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_umap_vector">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_umap_vector()
 </span>
 </code>
 </a>
@@ -304,25 +394,66 @@ each gene. The data they write into the
 </code> counterparts write.
 </p>
 
+<p>Each data source reads a fixed column of the Python metacells layout: 
+<code class="docutils literal notranslate">
+<span class="pre">x
+</span>
+</code> and 
+<code class="docutils literal notranslate">
+<span class="pre">y
+</span>
+</code> (the UMAP), and 
+<code class="docutils literal notranslate">
+<span class="pre">total_umis
+</span>
+</code>
+of the 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code>, and 
+<code class="docutils literal notranslate">
+<span class="pre">lateral_gene
+</span>
+</code>, 
+<code class="docutils literal notranslate">
+<span class="pre">excluded_gene
+</span>
+</code> and 
+<code class="docutils literal notranslate">
+<span class="pre">marker_gene
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code>. The type is the exception,
+since its column is named differently in many data sets, so it is given as the 
+<code class="docutils literal notranslate">
+<span class="pre">type_property
+</span>
+</code>.
+</p>
+
 <p>The 
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
-</code> are the names, the (1-based) indices, or a Boolean mask of the used metacells, as in the 
+</code> are the names, the (1-based) indices, or a Boolean mask of the used metacells (or, for a property of
+the genes, of the used genes), as in the 
 <code class="docutils literal notranslate">
 <span class="pre">Daf
 </span>
-</code> data
-sources. As there, a fill which isn’t given its 
+</code> data sources. As there, a fill which isn’t given its 
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
-</code> fills the entries its 
+</code> fills
+the entries its 
 <code class="docutils literal notranslate">
 <span class="pre">sinks
 </span>
-</code> are already named after, or
-else all of them.
+</code> are already named after, or else all of them.
 </p>
 
 <dl class="py function">
@@ -721,6 +852,1539 @@ else all of them.
 <strong>show_legend
 </strong> (
 <em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_fill_is_excluded">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_fill_is_excluded
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_fill_is_excluded">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_fill_is_excluded" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with whether each of the gene 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> is excluded, and name the entities
+after the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code>. The default 
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code> is 
+<code class="docutils literal notranslate">
+<span class="pre">excluded
+</span>
+</code>. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.fill_is_excluded" title="metacellsgraphspy.data_sources.fill_is_excluded">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">fill_is_excluded()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_fill_is_lateral">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_fill_is_lateral
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_fill_is_lateral">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_fill_is_lateral" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with whether each of the gene 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> is lateral, and name the entities after
+the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code>. The default 
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code> is 
+<code class="docutils literal notranslate">
+<span class="pre">lateral
+</span>
+</code>. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.fill_is_lateral" title="metacellsgraphspy.data_sources.fill_is_lateral">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">fill_is_lateral()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_fill_is_marker">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_fill_is_marker
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_fill_is_marker">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_fill_is_marker" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with whether each of the gene 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> is a marker gene, and name the
+entities after the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code>. The default 
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code> is 
+<code class="docutils literal notranslate">
+<span class="pre">marker
+</span>
+</code>. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.fill_is_marker" title="metacellsgraphspy.data_sources.fill_is_marker">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">fill_is_marker()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_fill_total_UMIs">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_fill_total_UMIs
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_fill_total_UMIs">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_fill_total_UMIs" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the total UMIs of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>, shown as a size, and name the
+entities after the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code>. The default 
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code> is 
+<code class="docutils literal notranslate">
+<span class="pre">total
+</span> 
+<span class="pre">UMIs
+</span>
+</code>. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.fill_total_UMIs" title="metacellsgraphspy.data_sources.fill_total_UMIs">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">fill_total_UMIs()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>show_legend
+</strong> (
+<em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>log_base
+</strong> (
+<em>LogBase
 </em>
 <em> | 
 </em>
@@ -1206,6 +2870,390 @@ else all of them.
 
 <dl class="py function">
 
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_fill_umap">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_fill_umap
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">sinks
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">coordinate
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">title
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_fill_umap">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_fill_umap" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Fill the 
+<code class="docutils literal notranslate">
+<span class="pre">sinks
+</span>
+</code> with the UMAP 
+<code class="docutils literal notranslate">
+<span class="pre">coordinate
+</span>
+</code> (
+<code class="docutils literal notranslate">
+<span class="pre">x
+</span>
+</code> or 
+<code class="docutils literal notranslate">
+<span class="pre">y
+</span>
+</code>) of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>, and
+name the entities after the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code>. The default 
+<code class="docutils literal notranslate">
+<span class="pre">title
+</span>
+</code> is 
+<code class="docutils literal notranslate">
+<span class="pre">UMAP
+</span> 
+<span class="pre">X
+</span>
+</code> (or 
+<code class="docutils literal notranslate">
+<span class="pre">UMAP
+</span> 
+<span class="pre">Y
+</span>
+</code>). This is the
+
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.fill_umap" title="metacellsgraphspy.data_sources.fill_umap">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">fill_umap()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>sinks
+</strong> (
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>VectorFields
+</em>
+<em> | 
+</em>
+<em>MatrixFields
+</em>
+<em> | 
+</em>
+<em>VectorDataFields
+</em>
+<em> | 
+</em>
+<em>MatrixDataFields
+</em>
+<em> | 
+</em>
+<em>HeatmapSide
+</em>
+<em> | 
+</em>
+<em>AxisConfigurationFields
+</em>
+<em> | 
+</em>
+<em>ColorsConfigurationFields
+</em>
+<em> | 
+</em>
+<em>SizesConfigurationFields
+</em>
+<em> | 
+</em>
+<em>VectorValuesData
+</em>
+<em> | 
+</em>
+<em>VectorEntitiesData
+</em>
+<em> | 
+</em>
+<em>ArrangementData
+</em>
+<em> | 
+</em>
+<em>MatrixValuesData
+</em>
+<em> | 
+</em>
+<em>MatrixEntitiesData
+</em>
+<em> | 
+</em>
+<em>AxisConfiguration
+</em>
+<em> | 
+</em>
+<em>ScaleConfiguration
+</em>
+<em> | 
+</em>
+<em>ColorsConfiguration
+</em>
+<em> | 
+</em>
+<em>SizesConfiguration
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>coordinate
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>title
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
 <dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_gene_expression_vector">
 
 <span class="sig-prename descclassname">
@@ -1315,6 +3363,686 @@ is the
 <strong>gene
 </strong> (
 <em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_is_excluded_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_is_excluded_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_is_excluded_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_excluded_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get whether each of the gene 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> is excluded (the 
+<code class="docutils literal notranslate">
+<span class="pre">excluded_gene
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code>). This
+is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_is_excluded_vector" title="metacellsgraphspy.data_sources.get_is_excluded_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_is_excluded_vector()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_is_lateral_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_is_lateral_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_is_lateral_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_lateral_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get whether each of the gene 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> is lateral (the 
+<code class="docutils literal notranslate">
+<span class="pre">lateral_gene
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code>). This is
+the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_is_lateral_vector" title="metacellsgraphspy.data_sources.get_is_lateral_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_is_lateral_vector()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_is_marker_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_is_marker_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_is_marker_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_marker_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get whether each of the gene 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> is a marker gene (the 
+<code class="docutils literal notranslate">
+<span class="pre">marker_gene
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code>).
+This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_is_marker_vector" title="metacellsgraphspy.data_sources.get_is_marker_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_is_marker_vector()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_total_UMIs_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_total_UMIs_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_total_UMIs_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_total_UMIs_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the total UMIs (the 
+<code class="docutils literal notranslate">
+<span class="pre">total_umis
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code>) of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>. This is the
+
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_total_UMIs_vector" title="metacellsgraphspy.data_sources.get_total_UMIs_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_total_UMIs_vector()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
 </em>)
 </p>
 </li>
@@ -1639,6 +4367,199 @@ the empty string. This is the
 <li>
 <p>
 <strong>type_property
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_umap_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_umap_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">coordinate
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_umap_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_umap_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the UMAP 
+<code class="docutils literal notranslate">
+<span class="pre">coordinate
+</span>
+</code> (the 
+<code class="docutils literal notranslate">
+<span class="pre">x
+</span>
+</code> or 
+<code class="docutils literal notranslate">
+<span class="pre">y
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code>) of each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>. This is
+the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_umap_vector" title="metacellsgraphspy.data_sources.get_umap_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_umap_vector()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>coordinate
 </strong> (
 <em>str
 </em>)

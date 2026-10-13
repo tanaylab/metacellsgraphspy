@@ -27,12 +27,23 @@ def _list(values: Any) -> List[Any]:
 
 def _test_adata() -> AnnData:
     """
-    Metacells with fractions of two genes, and a type for all but one of them.
+    Metacells with fractions of two genes, a type for all but one of them, a UMAP and total UMIs, and the gene flags.
     """
     adata = AnnData(
         X=np.array([[0.1, 0.3], [0.2, 0.2], [0.3, 0.1]], dtype="float32"),
-        obs=pd.DataFrame({"cell_type": pd.Categorical(["T1", None, "T2"])}, index=["M1", "M2", "M3"]),
-        var=pd.DataFrame(index=["A", "B"]),
+        obs=pd.DataFrame(
+            {
+                "cell_type": pd.Categorical(["T1", None, "T2"]),
+                "x": [0.0, 1.0, 2.0],
+                "y": [5.0, 4.0, 3.0],
+                "total_umis": [100.0, 200.0, 300.0],
+            },
+            index=["M1", "M2", "M3"],
+        ),
+        var=pd.DataFrame(
+            {"lateral_gene": [True, False], "excluded_gene": [False, False], "marker_gene": [True, True]},
+            index=["A", "B"],
+        ),
     )
     return adata
 
@@ -175,3 +186,52 @@ def test_ad_fill_named_entries(tmp_path: Path) -> None:
     )
     assert _list(graph.data.points.colors.vector) == ["T2", "T1"]
     assert _list(graph.data.points.entities.names) == ["M3", "M1"]
+
+
+def test_ad_umap() -> None:
+    """
+    The UMAP coordinates are the ``x`` and ``y`` of the ``obs``, shown without ticks.
+    """
+    adata = _test_adata()
+    assert _list(mg.ad_get_umap_vector(adata, coordinate="y", entries=[3])) == [3.0]
+    graph = sg.points_graph()
+    mg.ad_fill_umap(graph.x_axis_vector_fields(), adata, coordinate="x")
+    mg.ad_fill_umap(graph.y_axis_vector_fields(), adata, coordinate="y")
+    assert _list(graph.data.x.vector) == [0.0, 1.0, 2.0]
+    assert graph.configuration.x_axis.title == "UMAP X"
+    assert not graph.configuration.x_axis.show_ticks
+    assert not graph.configuration.y_axis.show_grid
+    assert _list(graph.data.points.entities.names) == ["M1", "M2", "M3"]
+
+
+def test_ad_total_UMIs() -> None:  # pylint: disable=invalid-name
+    """
+    The total UMIs are the ``total_umis`` of the ``obs``, shown as a size.
+    """
+    adata = _test_adata()
+    assert _list(mg.ad_get_total_UMIs_vector(adata, entries=["M2"])) == [200.0]
+    graph = sg.points_graph()
+    mg.ad_fill_total_UMIs(graph.points_colors_vector_fields(), adata, log_base=sg.LogBase.Log2Base)
+    assert _list(graph.data.points.colors.vector) == [100.0, 200.0, 300.0]
+    assert graph.configuration.points.colors.title == "total UMIs"
+    assert graph.configuration.points.colors.scale.log_base == sg.LogBase.Log2Base
+
+
+def test_ad_gene_flags() -> None:
+    """
+    The gene flags are Boolean columns of the ``var``, whose entries are genes, and any of them serves as a mask.
+    """
+    adata = _test_adata()
+    assert _list(mg.ad_get_is_lateral_vector(adata)) == [True, False]
+    assert _list(mg.ad_get_is_excluded_vector(adata, entries=["B"])) == [False]
+    assert _list(mg.ad_get_is_marker_vector(adata, entries=mg.ad_get_is_lateral_vector(adata))) == [True]
+
+    heatmap = sg.heatmap_graph()
+    mg.ad_fill_is_lateral(heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()), adata)
+    mg.ad_fill_is_excluded(heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()), adata)
+    mg.ad_fill_is_marker(heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()), adata)
+    assert _list(heatmap.data.rows.entities.names) == ["A", "B"]
+    assert _list(heatmap.data.rows.annotations[0].values.vector) == ["true", "false"]
+    assert heatmap.data.rows.annotations[0].colors.title == "lateral"
+    assert heatmap.data.rows.annotations[1].colors.title == "excluded"
+    assert heatmap.data.rows.annotations[2].colors.title == "marker"
