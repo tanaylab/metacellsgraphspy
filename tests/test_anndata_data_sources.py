@@ -274,6 +274,21 @@ def test_ad_genes_fold_matrix() -> None:
     assert heatmap.configuration.entries.colors.palette == "BuWtRd"
 
 
+def test_ad_is_in_categories() -> None:
+    """
+    The categories mask reads an ``obs`` column, with a missing value as the empty string, and rejects a category which
+    occurs nowhere.
+    """
+    adata = _test_adata()
+    assert list(mg.ad_get_is_in_categories_vector(adata, property="cell_type", categories=["T2", ""])) == [
+        False,
+        True,
+        True,
+    ]
+    with pytest.raises(KeyError, match="unknown cell_type: T3"):
+        mg.ad_get_is_in_categories_vector(adata, property="cell_type", categories=["T3"])
+
+
 def test_ad_marker_rank() -> None:
     """
     A missing marker rank is computed as ``Metacells`` does, and stored, and non-markers get the maximal rank.

@@ -314,3 +314,21 @@ def test_put_data_and_configuration() -> None:
     mg.put_correlation_configuration(graph.points_colors_vector_fields(), np.array([0.2, 0.6]))
     assert graph.configuration.points.colors.scale.minimum == 0
     assert graph.configuration.points.colors.scale.maximum == 0.6
+
+
+def test_entry_masks() -> None:
+    """
+    The entry masks cover the whole axis, and combine to pick the entries of another data source.
+    """
+    daf = _test_daf()
+    daf.set_matrix("block", "block", "is_in_neighborhood", np.array([[True, True], [False, True]], order="F"))
+    daf.set_matrix(
+        "metacell", "block", "is_in_environment", np.array([[True, False], [True, True], [False, True]], order="F")
+    )
+    is_t2 = mg.get_is_in_categories_vector(daf, axis="metacell", property="type", categories=["T2"])
+    assert list(is_t2) == [False, True, False]
+    assert list(mg.get_is_in_neighborhood_vector(daf, block="B1")) == [True, True, False]
+    assert list(mg.get_is_in_neighborhood_vector(daf, axis="block", block="B2")) == [True, True]
+    is_in_environment = mg.get_is_in_environment_vector(daf, block="B2")
+    assert list(is_in_environment) == [False, True, True]
+    assert list(mg.get_axis_entries_vector(daf, axis="metacell", entries=is_t2 & is_in_environment)) == ["M2"]

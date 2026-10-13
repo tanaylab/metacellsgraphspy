@@ -18,6 +18,7 @@ the entries its ``sinks`` are already named after, or else all of them.
 
 from typing import Mapping
 from typing import Optional
+from typing import Sequence
 from typing import Tuple
 
 import numpy as np
@@ -60,6 +61,7 @@ __all__ = [
     "ad_get_genes_expression_matrix",
     "ad_get_genes_fold_matrix",
     "ad_get_is_excluded_vector",
+    "ad_get_is_in_categories_vector",
     "ad_get_is_lateral_vector",
     "ad_get_is_marker_vector",
     "ad_get_marker_rank_vector",
@@ -279,6 +281,26 @@ def ad_get_type_colors(type_colors_csv: str, *, empty_type_color: Optional[str] 
     color_per_type = dict(zip(frame.iloc[:, 0], frame.iloc[:, 1]))
     color_per_type[""] = EMPTY_CATEGORY_COLOR if empty_type_color is None else empty_type_color
     return color_per_type
+
+
+def ad_get_is_in_categories_vector(
+    adata: AnnData,
+    *,
+    property: str,  # pylint: disable=redefined-builtin
+    categories: Sequence[str],
+) -> np.ndarray:
+    """
+    Get whether the category ``property`` of the ``obs`` of each metacell of the ``adata`` (e.g., its type) is one of
+    the ``categories``, as a mask to pass as the ``entries`` of another data source. A missing value is the empty
+    string. Each of the ``categories`` must occur in the column. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.data_sources.get_is_in_categories_vector`.
+    """
+    category_per_metacell = np.array(["" if pd.isna(value) else str(value) for value in adata.obs[property]], dtype=str)
+    known_categories = set(category_per_metacell)
+    for category in categories:
+        if category not in known_categories:
+            raise KeyError(f"unknown {property}: {category}")
+    return np.isin(category_per_metacell, list(categories))
 
 
 def ad_fill_umap(

@@ -250,6 +250,15 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_in_categories_vector">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_is_in_categories_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_lateral_vector">
 <code class="docutils literal notranslate">
 <span class="pre">ad_get_is_lateral_vector()
@@ -5070,6 +5079,165 @@ is the
 <em>| 
 </em>
 <em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_is_in_categories_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_is_in_categories_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">property
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">categories
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_is_in_categories_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_is_in_categories_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get whether the category 
+<code class="docutils literal notranslate">
+<span class="pre">property
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code> of each metacell of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> (e.g., its type) is one of
+the 
+<code class="docutils literal notranslate">
+<span class="pre">categories
+</span>
+</code>, as a mask to pass as the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of another data source. A missing value is the empty
+string. Each of the 
+<code class="docutils literal notranslate">
+<span class="pre">categories
+</span>
+</code> must occur in the column. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_is_in_categories_vector" title="metacellsgraphspy.data_sources.get_is_in_categories_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_is_in_categories_vector()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>property
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>categories
+</strong> (
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>]
 </em>)
 </p>
 </li>

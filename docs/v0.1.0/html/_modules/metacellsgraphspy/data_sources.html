@@ -190,6 +190,9 @@
     <span class="s2">"get_is_correlated_with_skeleton_vector"</span><span class="p">,</span>
     <span class="s2">"get_is_excluded_vector"</span><span class="p">,</span>
     <span class="s2">"get_is_forbidden_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_in_categories_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_in_environment_vector"</span><span class="p">,</span>
+    <span class="s2">"get_is_in_neighborhood_vector"</span><span class="p">,</span>
     <span class="s2">"get_is_lateral_vector"</span><span class="p">,</span>
     <span class="s2">"get_is_marker_vector"</span><span class="p">,</span>
     <span class="s2">"get_is_mitochondrial_vector"</span><span class="p">,</span>
@@ -1244,6 +1247,74 @@
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
     <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_skeleton_gene_indices</span><span class="p">(</span><span class="n">daf</span><span class="p">))</span></div>
+
+
+
+<span class="c1"># Entry masks.</span>
+
+
+<div class="viewcode-block" id="get_is_in_categories_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_in_categories_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_in_categories_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>  <span class="c1"># pylint: disable=redefined-builtin</span>
+    <span class="n">categories</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">empty_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether the category ``property`` of each entry of the ``daf`` ``axis`` is one of the ``categories``, as a mask</span>
+<span class="sd">    to pass as the ``entries`` of another data source. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_in_categories_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_in_categories_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span>
+            <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="nb">property</span><span class="p">,</span>
+            <span class="n">categories</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">categories</span><span class="p">),</span>
+            <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">),</span> <span class="n">empty_value</span><span class="o">=</span><span class="n">empty_value</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_in_neighborhood_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_in_neighborhood_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_in_neighborhood_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each entry of the ``daf`` ``axis`` (by default, the metacells) is in the neighborhood of the ``block``,</span>
+<span class="sd">    as a mask to pass as the ``entries`` of another data source. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_in_neighborhood_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_in_neighborhood_vector</span><span class="p">(</span>
+            <span class="n">daf</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">))</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_is_in_environment_vector">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.get_is_in_environment_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_is_in_environment_vector</span><span class="p">(</span>
+    <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">block</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Via</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get whether each entry of the ``daf`` ``axis`` (by default, the metacells) is in the environment of the ``block``,</span>
+<span class="sd">    as a mask to pass as the ``entries`` of another data source. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_in_environment_vector&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">get_is_in_environment_vector</span><span class="p">(</span><span class="n">daf</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="n">block</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">via</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">via</span><span class="p">)))</span>
+    <span class="p">)</span></div>
 
 
 

@@ -117,6 +117,9 @@ __all__ = [
     "get_is_correlated_with_skeleton_vector",
     "get_is_excluded_vector",
     "get_is_forbidden_vector",
+    "get_is_in_categories_vector",
+    "get_is_in_environment_vector",
+    "get_is_in_neighborhood_vector",
     "get_is_lateral_vector",
     "get_is_marker_vector",
     "get_is_mitochondrial_vector",
@@ -1046,6 +1049,65 @@ def get_skeleton_gene_indices(daf: DafReader) -> np.ndarray:
     for details.
     """
     return _from_julia_array(jl.MetacellsGraphs.get_skeleton_gene_indices(daf))
+
+
+# Entry masks.
+
+
+def get_is_in_categories_vector(
+    daf: DafReader,
+    *,
+    axis: str,
+    property: str,  # pylint: disable=redefined-builtin
+    categories: Sequence[str],
+    via: Optional[Via] = None,
+    empty_value: Optional[str] = None,
+) -> np.ndarray:
+    """
+    Get whether the category ``property`` of each entry of the ``daf`` ``axis`` is one of the ``categories``, as a mask
+    to pass as the ``entries`` of another data source. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_in_categories_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_in_categories_vector(
+            daf,
+            axis=axis,
+            property=property,
+            categories=_to_julia_array(categories),
+            **_given(via=_to_julia_array(via), empty_value=empty_value),
+        )
+    )
+
+
+def get_is_in_neighborhood_vector(
+    daf: DafReader, *, axis: Optional[str] = None, block: str, via: Optional[Via] = None
+) -> np.ndarray:
+    """
+    Get whether each entry of the ``daf`` ``axis`` (by default, the metacells) is in the neighborhood of the ``block``,
+    as a mask to pass as the ``entries`` of another data source. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_in_neighborhood_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_in_neighborhood_vector(
+            daf, block=block, **_given(axis=axis, via=_to_julia_array(via))
+        )
+    )
+
+
+def get_is_in_environment_vector(
+    daf: DafReader, *, axis: Optional[str] = None, block: str, via: Optional[Via] = None
+) -> np.ndarray:
+    """
+    Get whether each entry of the ``daf`` ``axis`` (by default, the metacells) is in the environment of the ``block``,
+    as a mask to pass as the ``entries`` of another data source. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_is_in_environment_vector>`__
+    for details.
+    """
+    return _from_julia_array(
+        jl.MetacellsGraphs.get_is_in_environment_vector(daf, block=block, **_given(axis=axis, via=_to_julia_array(via)))
+    )
 
 
 # Counts.
