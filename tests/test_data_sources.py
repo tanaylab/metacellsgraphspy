@@ -247,6 +247,48 @@ def test_frame_sources() -> None:
     assert list(mg.get_column_vector(frame, column="score")) == [0.5, 1.5]
 
 
+def test_hover_format() -> None:
+    """
+    A generic fill passes its ``hover_format`` to the hover line, leaving the values as they are.
+    """
+    frame = pd.DataFrame({"share": [0.25, 1.0]})
+    graph = sg.bars_graph()
+    mg.fill_column_vector_data(
+        graph.values_axis_vector_fields(),
+        frame,
+        column="share",
+        title="Share",
+        hover_format=sg.percent_format(digits=1),
+    )
+    assert _list(graph.data.values.vector) == [0.25, 1.0]
+    assert _list(graph.data.bars.hovers) == ["Share: 25.0%", "Share: 100.0%"]
+
+    daf = _test_daf()
+    points = sg.points_graph()
+    mg.fill_axis_vector_data(
+        points.x_axis_vector_fields(),
+        daf,
+        axis="metacell",
+        query_suffix=": n_cells",
+        title="Cells",
+        hover_format=sg.scientific_format(digits=1),
+    )
+    assert _list(points.data.points.entities.hovers) == ["Cells: 1.0e+01", "Cells: 2.0e+01", "Cells: 3.0e+01"]
+
+    heatmap = sg.heatmap_graph()
+    mg.fill_axes_matrix_data(
+        heatmap.entries_matrix_fields(),
+        daf,
+        rows_axis="gene",
+        columns_axis="metacell",
+        query_suffix=":: linear_fraction",
+        hover_format=sg.fixed_format(digits=2),
+    )
+    cells_hovers = heatmap.data.cells.hovers
+    assert cells_hovers is not None
+    assert cells_hovers[0, 0] == "0.10"
+
+
 def test_put_data_and_configuration() -> None:
     """
     Data and configuration already in hand are written by the ``put_`` functions.

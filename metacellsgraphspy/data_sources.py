@@ -31,6 +31,7 @@ import numpy as np
 import pandas as pd
 from dafpy import DafReader
 from somegraphspy import BoolsVector
+from somegraphspy import HoverFormat
 from somegraphspy import IntegersVector
 from somegraphspy import LogBase
 from somegraphspy import MatrixDataSinks
@@ -216,6 +217,7 @@ def fill_axis_vector_data(
     empty_value: Optional[Union[str, float, bool]] = None,
     entries: Optional[Entries] = None,
     title: Optional[str] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the result of the query ``@ axis query_suffix`` for each of the ``entries`` of the ``daf``
@@ -228,7 +230,13 @@ def fill_axis_vector_data(
         daf,
         axis=axis,
         query_suffix=query_suffix,
-        **_given(via=_to_julia_array(via), empty_value=empty_value, entries=_to_julia_array(entries), title=title),
+        **_given(
+            via=_to_julia_array(via),
+            empty_value=empty_value,
+            entries=_to_julia_array(entries),
+            title=title,
+            hover_format=hover_format,
+        ),
     )
 
 
@@ -261,7 +269,12 @@ def get_axis_vector(
 
 
 def fill_column_vector_data(
-    sinks: VectorDataSinks, frame: pd.DataFrame, *, column: str, title: Optional[str] = None
+    sinks: VectorDataSinks,
+    frame: pd.DataFrame,
+    *,
+    column: str,
+    title: Optional[str] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``column`` of a ``frame``, one value per row. See the Julia
@@ -269,7 +282,7 @@ def fill_column_vector_data(
     for details.
     """
     jl.MetacellsGraphs.fill_column_vector_data_b(
-        _to_julia(sinks), _to_julia_frame(frame), column=column, **_given(title=title)
+        _to_julia(sinks), _to_julia_frame(frame), column=column, **_given(title=title, hover_format=hover_format)
     )
 
 
@@ -380,6 +393,7 @@ def fill_axes_matrix_data(
     row_entries: Optional[Entries] = None,
     column_entries: Optional[Entries] = None,
     title: Optional[str] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the result of the query ``@ rows_axis @ columns_axis query_suffix``, and name the rows and
@@ -393,7 +407,12 @@ def fill_axes_matrix_data(
         rows_axis=rows_axis,
         columns_axis=columns_axis,
         query_suffix=query_suffix,
-        **_given(row_entries=_to_julia_array(row_entries), column_entries=_to_julia_array(column_entries), title=title),
+        **_given(
+            row_entries=_to_julia_array(row_entries),
+            column_entries=_to_julia_array(column_entries),
+            title=title,
+            hover_format=hover_format,
+        ),
     )
 
 
