@@ -268,6 +268,24 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_marker_rank_vector">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_marker_rank_vector()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices">
+<code class="docutils literal notranslate">
+<span class="pre">ad_get_top_marker_gene_indices()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_total_UMIs_vector">
 <code class="docutils literal notranslate">
 <span class="pre">ad_get_total_UMIs_vector()
@@ -5392,6 +5410,345 @@ This is the
 <em>| 
 </em>
 <em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_marker_rank_vector">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_marker_rank_vector
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">entries
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_marker_rank_vector">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_marker_rank_vector" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the rank of each of the gene 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> as a marker (the 
+<code class="docutils literal notranslate">
+<span class="pre">marker_rank
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code>), where
+1 is the strongest marker. A gene which is not a marker has the maximal 
+<code class="docutils literal notranslate">
+<span class="pre">uint32
+</span>
+</code> rank.
+</p>
+
+<p>Most metacells 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> don’t have this column. If it is missing, this computes it the way 
+<code class="docutils literal notranslate">
+<span class="pre">Metacells
+</span>
+</code> does:
+the markers (the 
+<code class="docutils literal notranslate">
+<span class="pre">marker_gene
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code>) are ranked by the absolute fold of their expression from its median
+(see 
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_genes_fold_matrix" title="metacellsgraphspy.anndata_data_sources.ad_get_genes_fold_matrix">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_get_genes_fold_matrix()
+</span>
+</code>
+</a>), using 
+<code class="docutils literal notranslate">
+<span class="pre">Metacells
+</span>
+</code>’ 
+<code class="docutils literal notranslate">
+<span class="pre">rank_variables
+</span>
+</code>. Unlike other gets, this then
+stores the result in the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>, so it is computed only once.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>entries
+</strong> (
+<em>ndarray
+</em>
+<em> | 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>str
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>int
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>Sequence
+</em>
+<em>[
+</em>
+<em>bool
+</em>
+<em>] 
+</em>
+<em>| 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>ndarray
+</em>
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_get_top_marker_gene_indices
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">markers_count
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_data_sources.html#ad_get_top_marker_gene_indices">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Get the (1-based) indices of the 
+<code class="docutils literal notranslate">
+<span class="pre">markers_count
+</span>
+</code> strongest marker genes of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> (see
+
+<a class="reference internal" href="#metacellsgraphspy.anndata_data_sources.ad_get_marker_rank_vector" title="metacellsgraphspy.anndata_data_sources.ad_get_marker_rank_vector">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_get_marker_rank_vector()
+</span>
+</code>
+</a>), to pass as the 
+<code class="docutils literal notranslate">
+<span class="pre">genes
+</span>
+</code> of another data source. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code>
+counterpart of 
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.get_top_marker_gene_indices" title="metacellsgraphspy.data_sources.get_top_marker_gene_indices">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">get_top_marker_gene_indices()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>markers_count
+</strong> (
+<em>int
 </em>)
 </p>
 </li>

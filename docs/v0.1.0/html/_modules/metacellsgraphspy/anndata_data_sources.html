@@ -116,6 +116,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_fold_configuration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_size_values</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_umap_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_from_julia_array</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
@@ -134,6 +135,8 @@
     <span class="s2">"ad_get_is_excluded_vector"</span><span class="p">,</span>
     <span class="s2">"ad_get_is_lateral_vector"</span><span class="p">,</span>
     <span class="s2">"ad_get_is_marker_vector"</span><span class="p">,</span>
+    <span class="s2">"ad_get_marker_rank_vector"</span><span class="p">,</span>
+    <span class="s2">"ad_get_top_marker_gene_indices"</span><span class="p">,</span>
     <span class="s2">"ad_get_total_UMIs_vector"</span><span class="p">,</span>
     <span class="s2">"ad_get_type_colors"</span><span class="p">,</span>
     <span class="s2">"ad_get_type_vector"</span><span class="p">,</span>
@@ -280,6 +283,45 @@
     <span class="n">regularization</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">Metacells</span><span class="o">.</span><span class="n">GENE_FRACTION_REGULARIZATION_FOR_METACELLS</span><span class="p">)</span>
     <span class="n">log_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">ad_get_genes_expression_matrix</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">genes</span><span class="o">=</span><span class="n">genes</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">)</span> <span class="o">+</span> <span class="n">regularization</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">log_matrix</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">log_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ad_get_marker_rank_vector">
+<a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_marker_rank_vector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_marker_rank_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the rank of each of the gene ``entries`` of the ``adata`` as a marker (the ``marker_rank`` of the ``var``), where</span>
+<span class="sd">    1 is the strongest marker. A gene which is not a marker has the maximal ``uint32`` rank.</span>
+
+<span class="sd">    Most metacells ``AnnData`` don't have this column. If it is missing, this computes it the way ``Metacells`` does:</span>
+<span class="sd">    the markers (the ``marker_gene`` of the ``var``) are ranked by the absolute fold of their expression from its median</span>
+<span class="sd">    (see :py:func:`ad_get_genes_fold_matrix`), using ``Metacells``' ``rank_variables``. Unlike other gets, this then</span>
+<span class="sd">    stores the result in the ``var`` of the ``adata``, so it is computed only once.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s2">"marker_rank"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">:</span>
+        <span class="n">is_marker_per_gene</span> <span class="o">=</span> <span class="n">_var_flag_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">"marker_gene"</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">abs_fold_per_marker_per_metacell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ad_get_genes_fold_matrix</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">genes</span><span class="o">=</span><span class="n">is_marker_per_gene</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"float32"</span>
+        <span class="p">)</span>
+        <span class="n">marker_rank_per_gene</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">n_vars</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"uint32"</span><span class="p">)</span>
+        <span class="n">marker_rank_per_gene</span><span class="p">[</span><span class="n">is_marker_per_gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">_from_julia_array</span><span class="p">(</span>
+            <span class="n">jl</span><span class="o">.</span><span class="n">Metacells</span><span class="o">.</span><span class="n">rank_variables</span><span class="p">(</span><span class="n">abs_fold_per_marker_per_metacell</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">"marker_rank"</span><span class="p">]</span> <span class="o">=</span> <span class="n">marker_rank_per_gene</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s2">"marker_rank"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"uint32"</span><span class="p">)[</span><span class="n">_entry_indices</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">,</span> <span class="n">entries</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="ad_get_top_marker_gene_indices">
+<a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_top_marker_gene_indices</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">markers_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Get the (1-based) indices of the ``markers_count`` strongest marker genes of the ``adata`` (see</span>
+<span class="sd">    :py:func:`ad_get_marker_rank_vector`), to pass as the ``genes`` of another data source. This is the ``AnnData``</span>
+<span class="sd">    counterpart of :py:func:`~metacellsgraphspy.data_sources.get_top_marker_gene_indices`.</span>
+<span class="sd">    """</span>
+    <span class="k">assert</span> <span class="n">markers_count</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">ad_get_marker_rank_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">markers_count</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span></div>
 
 
 

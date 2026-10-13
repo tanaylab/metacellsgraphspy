@@ -43,6 +43,7 @@ from .data_sources import put_expression_level_configuration
 from .data_sources import put_fold_configuration
 from .data_sources import put_size_values
 from .data_sources import put_umap_data
+from .julia_import import _from_julia_array
 from .julia_import import jl
 
 __all__ = [
@@ -61,6 +62,8 @@ __all__ = [
     "ad_get_is_excluded_vector",
     "ad_get_is_lateral_vector",
     "ad_get_is_marker_vector",
+    "ad_get_marker_rank_vector",
+    "ad_get_top_marker_gene_indices",
     "ad_get_total_UMIs_vector",
     "ad_get_type_colors",
     "ad_get_type_vector",
@@ -190,6 +193,39 @@ def ad_get_genes_fold_matrix(
     regularization = float(jl.Metacells.GENE_FRACTION_REGULARIZATION_FOR_METACELLS)
     log_matrix = np.log2(ad_get_genes_expression_matrix(adata, genes=genes, entries=entries) + regularization)
     return log_matrix - np.median(log_matrix, axis=1, keepdims=True)
+
+
+def ad_get_marker_rank_vector(adata: AnnData, *, entries: Optional[Entries] = None) -> np.ndarray:
+    """
+    Get the rank of each of the gene ``entries`` of the ``adata`` as a marker (the ``marker_rank`` of the ``var``), where
+    1 is the strongest marker. A gene which is not a marker has the maximal ``uint32`` rank.
+
+    Most metacells ``AnnData`` don't have this column. If it is missing, this computes it the way ``Metacells`` does:
+    the markers (the ``marker_gene`` of the ``var``) are ranked by the absolute fold of their expression from its median
+    (see :py:func:`ad_get_genes_fold_matrix`), using ``Metacells``' ``rank_variables``. Unlike other gets, this then
+    stores the result in the ``var`` of the ``adata``, so it is computed only once.
+    """
+    if "marker_rank" not in adata.var:
+        is_marker_per_gene = _var_flag_vector(adata, column="marker_gene", entries=None)
+        abs_fold_per_marker_per_metacell = np.asfortranarray(
+            np.abs(ad_get_genes_fold_matrix(adata, genes=is_marker_per_gene)), dtype="float32"
+        )
+        marker_rank_per_gene = np.full(adata.n_vars, np.iinfo(np.uint32).max, dtype="uint32")
+        marker_rank_per_gene[is_marker_per_gene] = _from_julia_array(
+            jl.Metacells.rank_variables(abs_fold_per_marker_per_metacell)
+        )
+        adata.var["marker_rank"] = marker_rank_per_gene
+    return np.asarray(adata.var["marker_rank"], dtype="uint32")[_entry_indices(adata.var_names, entries)]
+
+
+def ad_get_top_marker_gene_indices(adata: AnnData, *, markers_count: int) -> np.ndarray:
+    """
+    Get the (1-based) indices of the ``markers_count`` strongest marker genes of the ``adata`` (see
+    :py:func:`ad_get_marker_rank_vector`), to pass as the ``genes`` of another data source. This is the ``AnnData``
+    counterpart of :py:func:`~metacellsgraphspy.data_sources.get_top_marker_gene_indices`.
+    """
+    assert markers_count > 0
+    return np.flatnonzero(ad_get_marker_rank_vector(adata) <= markers_count) + 1
 
 
 def ad_fill_type(

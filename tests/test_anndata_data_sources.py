@@ -272,3 +272,19 @@ def test_ad_genes_fold_matrix() -> None:
     assert [round(float(fold), 3) for fold in matrix[0, :]] == [-0.792, 0.792]
     assert _list(heatmap.data.columns.entities.names) == ["M3", "M1"]
     assert heatmap.configuration.entries.colors.palette == "BuWtRd"
+
+
+def test_ad_marker_rank() -> None:
+    """
+    A missing marker rank is computed as ``Metacells`` does, and stored, and non-markers get the maximal rank.
+    """
+    adata = _test_adata()
+    assert "marker_rank" not in adata.var
+    assert _list(mg.ad_get_marker_rank_vector(adata)) == [2, 1]
+    assert list(adata.var["marker_rank"]) == [2, 1]
+    assert _list(mg.ad_get_top_marker_gene_indices(adata, markers_count=1)) == [2]
+
+    adata = _test_adata()
+    adata.var["marker_gene"] = [False, True]
+    assert _list(mg.ad_get_marker_rank_vector(adata, entries=["A"])) == [np.iinfo(np.uint32).max]
+    assert _list(mg.ad_get_top_marker_gene_indices(adata, markers_count=100)) == [2]
