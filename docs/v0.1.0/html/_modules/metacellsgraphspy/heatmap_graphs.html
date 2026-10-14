@@ -89,6 +89,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"add_genes_heatmap_default_columns_annotations"</span><span class="p">,</span>
+    <span class="s2">"add_genes_heatmap_default_rows_annotations"</span><span class="p">,</span>
     <span class="s2">"genes_heatmap_graph"</span><span class="p">,</span>
     <span class="s2">"put_genes_heatmap_configuration"</span><span class="p">,</span>
 <span class="p">]</span>
@@ -107,8 +109,10 @@
     <span class="n">max_fold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HeatmapGraph</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    The expression of the ``genes`` (by default, all of them) in each of the ``entries`` of the ``axis`` (by default,</span>
-<span class="sd">    the metacells), as the fold factor of the gene from its median across the entries. See the Julia</span>
+<span class="sd">    The expression of the ``genes`` (by default, the</span>
+<span class="sd">    :py:obj:`~metacellsgraphspy.data_sources.TOP_MARKERS_COUNT_FOR_GRAPHS` strongest markers) in each of the</span>
+<span class="sd">    ``entries`` of the ``axis`` (by default, the metacells), as the fold factor of the gene from its median across the</span>
+<span class="sd">    entries. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.genes_heatmap_graph&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -150,6 +154,34 @@
         <span class="n">n_entries</span><span class="o">=</span><span class="n">n_entries</span><span class="p">,</span>
         <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">rows_axis_title</span><span class="o">=</span><span class="n">rows_axis_title</span><span class="p">,</span> <span class="n">columns_axis_title</span><span class="o">=</span><span class="n">columns_axis_title</span><span class="p">),</span>
     <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="add_genes_heatmap_default_rows_annotations">
+<a class="viewcode-back" href="../../heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_rows_annotations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_genes_heatmap_default_rows_annotations</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">HeatmapGraph</span><span class="p">,</span> <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add the default annotations of the rows (the genes) of a :py:func:`genes_heatmap_graph` of the ``daf``, leaving out</span>
+<span class="sd">    those whose data the ``daf`` doesn't have. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.add_genes_heatmap_default_rows_annotations!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">add_genes_heatmap_default_rows_annotations_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">graph</span><span class="p">),</span> <span class="n">daf</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="add_genes_heatmap_default_columns_annotations">
+<a class="viewcode-back" href="../../heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_columns_annotations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_genes_heatmap_default_columns_annotations</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">HeatmapGraph</span><span class="p">,</span> <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add the default annotations of the columns (the entries of the ``axis``, by default the metacells) of a</span>
+<span class="sd">    :py:func:`genes_heatmap_graph` of the ``daf``, leaving out those whose data the ``daf`` doesn't have. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html#MetacellsGraphs.HeatmapGraphs.add_genes_heatmap_default_columns_annotations!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">add_genes_heatmap_default_columns_annotations_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">graph</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">))</span></div>
 
 </pre></div>
 

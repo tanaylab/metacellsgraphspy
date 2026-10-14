@@ -136,6 +136,24 @@
 <ul>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_add_genes_heatmap_default_columns_annotations">
+<code class="docutils literal notranslate">
+<span class="pre">ad_add_genes_heatmap_default_columns_annotations()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_add_genes_heatmap_default_rows_annotations">
+<code class="docutils literal notranslate">
+<span class="pre">ad_add_genes_heatmap_default_rows_annotations()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_gene_gene_graph">
 <code class="docutils literal notranslate">
 <span class="pre">ad_gene_gene_graph()
@@ -272,6 +290,291 @@
 </span>
 </code> holds the expression level of each gene in each metacell (typically a geometric mean, used as it is stored).
 </p>
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_graphs.ad_add_genes_heatmap_default_columns_annotations">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_add_genes_heatmap_default_columns_annotations
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">graph
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">type_property
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">type_colors_csv
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_graphs.html#ad_add_genes_heatmap_default_columns_annotations">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_graphs.ad_add_genes_heatmap_default_columns_annotations" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Add the default annotations of the columns (the metacells) of an 
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_genes_heatmap_graph" title="metacellsgraphspy.anndata_graphs.ad_genes_heatmap_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_genes_heatmap_graph()
+</span>
+</code>
+</a> of the
+
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>: the type of each metacell, in the 
+<code class="docutils literal notranslate">
+<span class="pre">type_property
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code> (if it has one), colored by the
+
+<code class="docutils literal notranslate">
+<span class="pre">type_colors_csv
+</span>
+</code> file. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_columns_annotations" title="metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_columns_annotations">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">add_genes_heatmap_default_columns_annotations()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>graph
+</strong> (
+<em>HeatmapGraph
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>type_property
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>type_colors_csv
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_graphs.ad_add_genes_heatmap_default_rows_annotations">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_add_genes_heatmap_default_rows_annotations
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">graph
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_graphs.html#ad_add_genes_heatmap_default_rows_annotations">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_graphs.ad_add_genes_heatmap_default_rows_annotations" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Add the default annotations of the rows (the genes) of an 
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_genes_heatmap_graph" title="metacellsgraphspy.anndata_graphs.ad_genes_heatmap_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_genes_heatmap_graph()
+</span>
+</code>
+</a> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>:
+whether each gene is lateral, if the 
+<code class="docutils literal notranslate">
+<span class="pre">var
+</span>
+</code> has a 
+<code class="docutils literal notranslate">
+<span class="pre">lateral_gene
+</span>
+</code> column. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="heatmap_graphs.html#metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_rows_annotations" title="metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_rows_annotations">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">add_genes_heatmap_default_rows_annotations()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>graph
+</strong> (
+<em>HeatmapGraph
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
 
 <dl class="py function">
 
@@ -615,24 +918,31 @@ This is the
 <code class="docutils literal notranslate">
 <span class="pre">genes
 </span>
-</code> (by default, all of them) in each of the 
-<code class="docutils literal notranslate">
-<span class="pre">entries
+</code> (by default, the
+
+<a class="reference internal" href="data_sources.html#metacellsgraphspy.data_sources.TOP_MARKERS_COUNT_FOR_GRAPHS" title="metacellsgraphspy.data_sources.TOP_MARKERS_COUNT_FOR_GRAPHS">
+<code class="xref py py-obj docutils literal notranslate">
+<span class="pre">TOP_MARKERS_COUNT_FOR_GRAPHS
 </span>
-</code> of the 
-<code class="docutils literal notranslate">
-<span class="pre">adata
-</span>
-</code> (by default,
-all the metacells), as the fold factor of the gene from its median across the entries. For a markers heatmap, pick
-the genes with 
+</code>
+</a> strongest markers, see
+
 <a class="reference internal" href="anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices" title="metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices">
 <code class="xref py py-func docutils literal notranslate">
 <span class="pre">ad_get_top_marker_gene_indices()
 </span>
 </code>
-</a>. This is the
+</a>) in each of the 
+<code class="docutils literal notranslate">
+<span class="pre">entries
+</span>
+</code> of the
 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code> (by default, all the metacells), as the fold factor of the gene from its median across the entries. This
+is the 
 <code class="docutils literal notranslate">
 <span class="pre">AnnData
 </span>

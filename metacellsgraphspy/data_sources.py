@@ -53,6 +53,7 @@ __all__ = [
     "Entries",
     "GENE_FRACTION_REGULARIZATION_FOR_GRAPHS",
     "MAX_FOLD_FOR_GRAPHS",
+    "TOP_MARKERS_COUNT_FOR_GRAPHS",
     "Via",
     "fill_axes_matrix_data",
     "fill_axes_names_data",
@@ -173,6 +174,11 @@ GENE_FRACTION_REGULARIZATION_FOR_GRAPHS: float = float(jl.MetacellsGraphs.GENE_F
 #: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.MAX_FOLD_FOR_GRAPHS>`__
 #: for details.
 MAX_FOLD_FOR_GRAPHS: float = float(jl.MetacellsGraphs.MAX_FOLD_FOR_GRAPHS)
+
+#: The number of the strongest marker genes a graph shows when it isn't told which genes to show. See the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.TOP_MARKERS_COUNT_FOR_GRAPHS>`__
+#: for details.
+TOP_MARKERS_COUNT_FOR_GRAPHS: int = int(jl.MetacellsGraphs.TOP_MARKERS_COUNT_FOR_GRAPHS)
 
 #: The color to give to entities without any value of a category (e.g. with no type or no block). See the Julia
 #: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_CATEGORY_COLOR>`__

@@ -53,11 +53,12 @@ def _test_daf() -> dp.DafWriter:
 
 def test_genes_heatmap_graph() -> None:
     """
-    The genes heatmap is a heatmap with a row per gene and a column per metacell, showing the fold from the median.
+    The genes heatmap is a heatmap with a row per gene (by default, the strongest markers, which leaves out ``C``) and a
+    column per metacell, showing the fold from the median.
     """
     graph = mg.genes_heatmap_graph(_test_daf())
     assert isinstance(graph, HeatmapGraph)
-    assert _list(graph.data.rows.entities.names) == ["A", "B", "C"]
+    assert _list(graph.data.rows.entities.names) == ["A", "B"]
     assert _list(graph.data.columns.entities.names) == ["M1", "M2"]
     matrix = graph.data.entries.matrix
     assert matrix is not None
@@ -100,3 +101,23 @@ def test_put_genes_heatmap_configuration() -> None:
     assert graph.configuration.rows.order_source is None
     assert graph.configuration.columns.order_source == sg.OrderSource.OptimalTreeReorder
     assert not graph.configuration.columns.show_ticks
+
+
+def test_default_annotations() -> None:
+    """
+    The default annotations of each side are added when the data has them.
+    """
+    daf = _test_daf()
+    graph = mg.genes_heatmap_graph(daf)
+    mg.add_genes_heatmap_default_rows_annotations(graph, daf)
+    mg.add_genes_heatmap_default_columns_annotations(graph, daf)
+    assert not graph.data.rows.annotations
+    assert not graph.data.columns.annotations
+
+    daf.set_vector("gene", "is_lateral", np.array([True, False, False]))
+    daf.add_axis("type", ["T1"])
+    daf.set_vector("metacell", "type", np.array(["T1", ""], dtype=str))
+    mg.add_genes_heatmap_default_rows_annotations(graph, daf)
+    mg.add_genes_heatmap_default_columns_annotations(graph, daf, axis="metacell")
+    assert _list(graph.data.rows.annotations[0].values.vector) == ["true", "false"]
+    assert _list(graph.data.columns.annotations[0].values.vector) == ["T1", ""]

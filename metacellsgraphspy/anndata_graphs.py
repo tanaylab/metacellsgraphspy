@@ -16,10 +16,16 @@ from somegraphspy import points_graph
 
 from .anndata_data_sources import ad_fill_gene_expression
 from .anndata_data_sources import ad_fill_genes_fold_matrix
+from .anndata_data_sources import ad_fill_is_lateral
+from .anndata_data_sources import ad_fill_type
+from .anndata_data_sources import ad_get_top_marker_gene_indices
+from .data_sources import TOP_MARKERS_COUNT_FOR_GRAPHS
 from .data_sources import Entries
 from .heatmap_graphs import put_genes_heatmap_configuration
 
 __all__ = [
+    "ad_add_genes_heatmap_default_columns_annotations",
+    "ad_add_genes_heatmap_default_rows_annotations",
     "ad_gene_gene_graph",
     "ad_genes_heatmap_graph",
 ]
@@ -65,11 +71,14 @@ def ad_genes_heatmap_graph(
     max_fold: Optional[float] = None,
 ) -> HeatmapGraph:
     """
-    The expression of the ``genes`` (by default, all of them) in each of the ``entries`` of the ``adata`` (by default,
-    all the metacells), as the fold factor of the gene from its median across the entries. For a markers heatmap, pick
-    the genes with :py:func:`~metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices`. This is the
-    ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.heatmap_graphs.genes_heatmap_graph`.
+    The expression of the ``genes`` (by default, the
+    :py:obj:`~metacellsgraphspy.data_sources.TOP_MARKERS_COUNT_FOR_GRAPHS` strongest markers, see
+    :py:func:`~metacellsgraphspy.anndata_data_sources.ad_get_top_marker_gene_indices`) in each of the ``entries`` of the
+    ``adata`` (by default, all the metacells), as the fold factor of the gene from its median across the entries. This
+    is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.heatmap_graphs.genes_heatmap_graph`.
     """
+    if genes is None:
+        genes = ad_get_top_marker_gene_indices(adata, markers_count=TOP_MARKERS_COUNT_FOR_GRAPHS)
     graph = heatmap_graph()
     ad_fill_genes_fold_matrix(graph.entries_matrix_fields(), adata, genes=genes, entries=entries, max_fold=max_fold)
     matrix = graph.data.entries.matrix
@@ -83,3 +92,31 @@ def ad_genes_heatmap_graph(
         columns_axis_title=columns_axis_title,
     )
     return graph
+
+
+def ad_add_genes_heatmap_default_rows_annotations(graph: HeatmapGraph, adata: AnnData) -> None:
+    """
+    Add the default annotations of the rows (the genes) of an :py:func:`ad_genes_heatmap_graph` of the ``adata``:
+    whether each gene is lateral, if the ``var`` has a ``lateral_gene`` column. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_rows_annotations`.
+    """
+    if "lateral_gene" in adata.var:
+        ad_fill_is_lateral(graph.rows_annotations_colors_vector_fields(graph.add_rows_annotation()), adata)
+
+
+def ad_add_genes_heatmap_default_columns_annotations(
+    graph: HeatmapGraph, adata: AnnData, *, type_property: str, type_colors_csv: str
+) -> None:
+    """
+    Add the default annotations of the columns (the metacells) of an :py:func:`ad_genes_heatmap_graph` of the
+    ``adata``: the type of each metacell, in the ``type_property`` of the ``obs`` (if it has one), colored by the
+    ``type_colors_csv`` file. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.heatmap_graphs.add_genes_heatmap_default_columns_annotations`.
+    """
+    if type_property in adata.obs:
+        ad_fill_type(
+            graph.columns_annotations_colors_vector_fields(graph.add_columns_annotation()),
+            adata,
+            type_property=type_property,
+            type_colors_csv=type_colors_csv,
+        )

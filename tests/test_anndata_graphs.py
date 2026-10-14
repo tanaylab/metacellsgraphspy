@@ -74,9 +74,12 @@ def test_ad_gene_gene_graph_by_type(tmp_path: Path) -> None:
 
 def test_ad_genes_heatmap_graph() -> None:
     """
-    The genes heatmap is a heatmap with a row per gene and a column per metacell, laid out as the ``Daf`` graph is.
+    The genes heatmap is a heatmap with a row per gene (by default, the strongest markers) and a column per metacell,
+    laid out as the ``Daf`` graph is.
     """
-    graph = mg.ad_genes_heatmap_graph(_test_adata())
+    adata = _test_adata()
+    adata.var["marker_gene"] = [True, True]
+    graph = mg.ad_genes_heatmap_graph(adata)
     assert isinstance(graph, HeatmapGraph)
     assert _list(graph.data.rows.entities.names) == ["A", "B"]
     assert _list(graph.data.columns.entities.names) == ["M1", "M2", "M3"]
@@ -99,3 +102,27 @@ def test_ad_markers_heatmap_graph() -> None:
     assert graph.configuration.rows.title == "Markers"
     assert graph.configuration.rows.order_source is None
     assert graph.configuration.columns.order_source == sg.OrderSource.OptimalTreeReorder
+
+
+def test_ad_default_annotations(tmp_path: Path) -> None:
+    """
+    The default annotations of each side are added when the ``AnnData`` has their columns.
+    """
+    type_colors_csv = tmp_path / "type_colors.csv"
+    type_colors_csv.write_text("type,color\nT1,#ff0000\nT2,#00ff00\n")
+    adata = _test_adata()
+    graph = mg.ad_genes_heatmap_graph(adata, genes=["A", "B"])
+    mg.ad_add_genes_heatmap_default_rows_annotations(graph, adata)
+    mg.ad_add_genes_heatmap_default_columns_annotations(
+        graph, adata, type_property="missing", type_colors_csv=str(type_colors_csv)
+    )
+    assert not graph.data.rows.annotations
+    assert not graph.data.columns.annotations
+
+    adata.var["lateral_gene"] = [False, True]
+    mg.ad_add_genes_heatmap_default_rows_annotations(graph, adata)
+    mg.ad_add_genes_heatmap_default_columns_annotations(
+        graph, adata, type_property="cell_type", type_colors_csv=str(type_colors_csv)
+    )
+    assert _list(graph.data.rows.annotations[0].values.vector) == ["false", "true"]
+    assert _list(graph.data.columns.annotations[0].values.vector) == ["T1", "", "T2"]
