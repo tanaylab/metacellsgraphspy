@@ -128,6 +128,15 @@
 <ul>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.bar_graphs.add_changed_genes_default_annotations">
+<code class="docutils literal notranslate">
+<span class="pre">add_changed_genes_default_annotations()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.bar_graphs.degraded_genes_graph">
 <code class="docutils literal notranslate">
 <span class="pre">degraded_genes_graph()
@@ -247,6 +256,142 @@
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html">documentation
 </a> for details.
 </p>
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.bar_graphs.add_changed_genes_default_annotations">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.bar_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">add_changed_genes_default_annotations
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">graph
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">base_daf
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/bar_graphs.html#add_changed_genes_default_annotations">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.bar_graphs.add_changed_genes_default_annotations" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Add the default annotations of the bars (the genes) of an 
+<a class="reference internal" href="#metacellsgraphspy.bar_graphs.improved_genes_graph" title="metacellsgraphspy.bar_graphs.improved_genes_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">improved_genes_graph()
+</span>
+</code>
+</a> or a
+
+<a class="reference internal" href="#metacellsgraphspy.bar_graphs.degraded_genes_graph" title="metacellsgraphspy.bar_graphs.degraded_genes_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">degraded_genes_graph()
+</span>
+</code>
+</a>, read from the 
+<code class="docutils literal notranslate">
+<span class="pre">base_daf
+</span>
+</code>, leaving out those whose data it doesn’t have. See the
+Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html#MetacellsGraphs.BarGraphs.add_changed_genes_default_annotations!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>graph
+</strong> (
+<em>SeriesBarsGraph
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>base_daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
 
 <dl class="py function">
 

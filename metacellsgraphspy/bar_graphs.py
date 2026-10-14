@@ -14,6 +14,7 @@ from .julia_import import _given
 from .julia_import import jl
 
 __all__ = [
+    "add_changed_genes_default_annotations",
     "degraded_genes_graph",
     "improved_genes_graph",
     "put_changed_genes_configuration",
@@ -68,3 +69,14 @@ def put_changed_genes_configuration(configuration: SeriesBarsGraphConfiguration)
     for details.
     """
     jl.MetacellsGraphs.put_changed_genes_configuration_b(_to_julia(configuration))
+
+
+def add_changed_genes_default_annotations(graph: SeriesBarsGraph, *, daf: DafReader, base_daf: DafReader) -> None:
+    """
+    Add the default annotations of the bars (the genes) of an :py:func:`improved_genes_graph` or a
+    :py:func:`degraded_genes_graph`, read from the ``base_daf``, leaving out those whose data it doesn't have. See the
+    Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html#MetacellsGraphs.BarGraphs.add_changed_genes_default_annotations!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.add_changed_genes_default_annotations_b(_to_julia(graph), daf=daf, base_daf=base_daf)

@@ -101,6 +101,18 @@ def test_genes_count() -> None:
     assert list(bars_names) == ["A"]
 
 
+def test_default_annotations() -> None:
+    """
+    The default annotations are a second call, reading the flags of the base.
+    """
+    daf, base_daf = _test_dafs()
+    graph = mg.improved_genes_graph(daf=daf, base_daf=base_daf)
+    assert not graph.data.annotations
+    base_daf.set_vector("gene", "is_lateral", np.array([False, True]))
+    mg.add_changed_genes_default_annotations(graph, daf=daf, base_daf=base_daf)
+    assert [annotation.colors.title for annotation in graph.data.annotations] == ["lateral"]
+
+
 def test_put_changed_genes_configuration() -> None:
     """
     The layout of the butterfly serves any series bars graph.
