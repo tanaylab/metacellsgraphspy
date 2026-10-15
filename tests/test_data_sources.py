@@ -289,6 +289,30 @@ def test_hover_format() -> None:
     assert cells_hovers[0, 0] == "0.10"
 
 
+def test_bucket_hover_formats() -> None:
+    """
+    The data sources of a bucket show the hovers by the bucket's hover format, unless given another one.
+    """
+    daf = _test_daf()
+    points = sg.points_graph()
+    mg.fill_n_cells(points.x_axis_vector_fields(), daf)
+    assert _list(points.data.points.entities.hovers) == ["cells: 10", "cells: 20", "cells: 30"]
+
+    points = sg.points_graph()
+    mg.put_correlation_values(points.x_axis_vector_fields(), np.array([0.1234, -0.5]), ["A", "B"], title="Correlation")
+    assert _list(points.data.points.entities.hovers) == ["Correlation: 0.123", "Correlation: -0.500"]
+
+    points = sg.points_graph()
+    mg.put_size_values(
+        points.x_axis_vector_fields(),
+        np.array([12.34, 5.0]),
+        ["A", "B"],
+        title="Mean",
+        hover_format=mg.MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS,
+    )
+    assert _list(points.data.points.entities.hovers) == ["Mean: 12.3", "Mean: 5.0"]
+
+
 def test_put_data_and_configuration() -> None:
     """
     Data and configuration already in hand are written by the ``put_`` functions.

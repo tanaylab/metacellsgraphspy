@@ -113,6 +113,15 @@
 <ul>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.CORRELATION_HOVER_FORMAT_FOR_GRAPHS">
+<code class="docutils literal notranslate">
+<span class="pre">CORRELATION_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.data_sources.EMPTY_CATEGORY_COLOR">
 <code class="docutils literal notranslate">
 <span class="pre">EMPTY_CATEGORY_COLOR
@@ -122,9 +131,27 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS">
+<code class="docutils literal notranslate">
+<span class="pre">EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.data_sources.Entries">
 <code class="docutils literal notranslate">
 <span class="pre">Entries
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.FOLD_HOVER_FORMAT_FOR_GRAPHS">
+<code class="docutils literal notranslate">
+<span class="pre">FOLD_HOVER_FORMAT_FOR_GRAPHS
 </span>
 </code>
 </a>
@@ -143,6 +170,24 @@
 <a class="reference internal" href="#metacellsgraphspy.data_sources.MAX_FOLD_FOR_GRAPHS">
 <code class="docutils literal notranslate">
 <span class="pre">MAX_FOLD_FOR_GRAPHS
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS">
+<code class="docutils literal notranslate">
+<span class="pre">MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.SIZE_HOVER_FORMAT_FOR_GRAPHS">
+<code class="docutils literal notranslate">
+<span class="pre">SIZE_HOVER_FORMAT_FOR_GRAPHS
 </span>
 </code>
 </a>
@@ -1268,6 +1313,73 @@ as the mask (e.g.,
 
 <dl class="py data">
 
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.CORRELATION_HOVER_FORMAT_FOR_GRAPHS">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">CORRELATION_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</span>
+<span class="property">
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">HoverFormat
+</span>
+</span>
+<span class="property">
+<span class="w"> 
+</span>
+<span class="p">
+<span class="pre">=
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">Julia:
+</span> 
+<span class="pre">#12
+</span> 
+<span class="pre">(generic
+</span> 
+<span class="pre">function
+</span> 
+<span class="pre">with
+</span> 
+<span class="pre">1
+</span> 
+<span class="pre">method)
+</span>
+</span>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.CORRELATION_HOVER_FORMAT_FOR_GRAPHS" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The 
+<code class="docutils literal notranslate">
+<span class="pre">hover_format
+</span>
+</code> of a correlation: three digits after the decimal point, since small correlations are common.
+See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.CORRELATION_HOVER_FORMAT_FOR_GRAPHS">documentation
+</a>
+for details.
+</p>
+
+</dd>
+</dl>
+
+
+<dl class="py data">
+
 <dt class="sig sig-object py" id="metacellsgraphspy.data_sources.EMPTY_CATEGORY_COLOR">
 
 <span class="sig-prename descclassname">
@@ -1308,6 +1420,72 @@ as the mask (e.g.,
 <p>The color to give to entities without any value of a category (e.g. with no type or no block). See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_CATEGORY_COLOR">documentation
+</a>
+for details.
+</p>
+
+</dd>
+</dl>
+
+
+<dl class="py data">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</span>
+<span class="property">
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">HoverFormat
+</span>
+</span>
+<span class="property">
+<span class="w"> 
+</span>
+<span class="p">
+<span class="pre">=
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">Julia:
+</span> 
+<span class="pre">#12
+</span> 
+<span class="pre">(generic
+</span> 
+<span class="pre">function
+</span> 
+<span class="pre">with
+</span> 
+<span class="pre">1
+</span> 
+<span class="pre">method)
+</span>
+</span>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The 
+<code class="docutils literal notranslate">
+<span class="pre">hover_format
+</span>
+</code> of an expression level: 3 significant digits. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS">documentation
 </a>
 for details.
 </p>
@@ -1365,6 +1543,72 @@ for details.
 <span class="pre">bool
 </span>
 </code>]
+</p>
+
+</dd>
+</dl>
+
+
+<dl class="py data">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.FOLD_HOVER_FORMAT_FOR_GRAPHS">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">FOLD_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</span>
+<span class="property">
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">HoverFormat
+</span>
+</span>
+<span class="property">
+<span class="w"> 
+</span>
+<span class="p">
+<span class="pre">=
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">Julia:
+</span> 
+<span class="pre">#12
+</span> 
+<span class="pre">(generic
+</span> 
+<span class="pre">function
+</span> 
+<span class="pre">with
+</span> 
+<span class="pre">1
+</span> 
+<span class="pre">method)
+</span>
+</span>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.FOLD_HOVER_FORMAT_FOR_GRAPHS" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The 
+<code class="docutils literal notranslate">
+<span class="pre">hover_format
+</span>
+</code> of a fold factor: two digits after the decimal point. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.FOLD_HOVER_FORMAT_FOR_GRAPHS">documentation
+</a>
+for details.
 </p>
 
 </dd>
@@ -1464,6 +1708,139 @@ for details.
 See the Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.MAX_FOLD_FOR_GRAPHS">documentation
+</a>
+for details.
+</p>
+
+</dd>
+</dl>
+
+
+<dl class="py data">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</span>
+<span class="property">
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">HoverFormat
+</span>
+</span>
+<span class="property">
+<span class="w"> 
+</span>
+<span class="p">
+<span class="pre">=
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">Julia:
+</span> 
+<span class="pre">#12
+</span> 
+<span class="pre">(generic
+</span> 
+<span class="pre">function
+</span> 
+<span class="pre">with
+</span> 
+<span class="pre">1
+</span> 
+<span class="pre">method)
+</span>
+</span>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The 
+<code class="docutils literal notranslate">
+<span class="pre">hover_format
+</span>
+</code> of a mean of sizes (e.g., the mean cells per metacell): one digit after the decimal point. See
+the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS">documentation
+</a>
+for details.
+</p>
+
+</dd>
+</dl>
+
+
+<dl class="py data">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.SIZE_HOVER_FORMAT_FOR_GRAPHS">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">SIZE_HOVER_FORMAT_FOR_GRAPHS
+</span>
+</span>
+<span class="property">
+<span class="p">
+<span class="pre">:
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">HoverFormat
+</span>
+</span>
+<span class="property">
+<span class="w"> 
+</span>
+<span class="p">
+<span class="pre">=
+</span>
+</span>
+<span class="w"> 
+</span>
+<span class="pre">Julia:
+</span> 
+<span class="pre">#12
+</span> 
+<span class="pre">(generic
+</span> 
+<span class="pre">function
+</span> 
+<span class="pre">with
+</span> 
+<span class="pre">1
+</span> 
+<span class="pre">method)
+</span>
+</span>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.SIZE_HOVER_FORMAT_FOR_GRAPHS" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The 
+<code class="docutils literal notranslate">
+<span class="pre">hover_format
+</span>
+</code> of a size (a count): a whole number. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.SIZE_HOVER_FORMAT_FOR_GRAPHS">documentation
 </a>
 for details.
 </p>
@@ -5722,6 +6099,20 @@ for details.
 <span class="pre">None
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -6051,6 +6442,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -6179,6 +6583,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -6487,6 +6905,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -6615,6 +7046,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -6923,6 +7368,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -7051,6 +7509,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -7358,6 +7830,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -7464,6 +7949,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -7775,6 +8274,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -7901,6 +8413,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -8224,6 +8750,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -8358,6 +8897,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -8696,6 +9249,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -8838,6 +9404,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -9201,6 +9781,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -9329,6 +9922,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">show_legend
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -9670,6 +10277,19 @@ for details.
 <strong>show_legend
 </strong> (
 <em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
 </em>
 <em> | 
 </em>
@@ -14585,6 +15205,20 @@ for details.
 <span class="pre">None
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -14899,6 +15533,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -15027,6 +15674,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -15351,6 +16012,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -15479,6 +16153,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -15795,6 +16483,19 @@ for details.
 <strong>log_base
 </strong> (
 <em>LogBase
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
 </em>
 <em> | 
 </em>
@@ -16242,6 +16943,20 @@ for details.
 <span class="pre">None
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -16569,6 +17284,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -16711,6 +17439,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -17048,6 +17790,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -17188,6 +17943,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -17540,6 +18309,19 @@ for details.
 </p>
 </li>
 
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
 </ul>
 
 </dd>
@@ -17682,6 +18464,20 @@ for details.
 <em class="sig-param">
 <span class="n">
 <span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
 </span>
 </span>
 <span class="o">
@@ -18011,6 +18807,19 @@ for details.
 <strong>log_base
 </strong> (
 <em>LogBase
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
 </em>
 <em> | 
 </em>
@@ -31265,6 +32074,20 @@ for details.
 <span class="pre">None
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -31510,6 +32333,19 @@ for details.
 <strong>show_legend
 </strong> (
 <em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
 </em>
 <em> | 
 </em>
@@ -32603,6 +33439,20 @@ for details.
 <span class="pre">None
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">hover_format
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -32861,6 +33711,19 @@ for details.
 <strong>log_base
 </strong> (
 <em>LogBase
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>hover_format
+</strong> (
+<em>HoverFormat
 </em>
 <em> | 
 </em>

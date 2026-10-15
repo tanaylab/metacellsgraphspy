@@ -25,6 +25,7 @@ import numpy as np
 import pandas as pd
 import scipy.sparse as sp  # type: ignore
 from anndata import AnnData  # type: ignore
+from somegraphspy import HoverFormat
 from somegraphspy import LogBase
 from somegraphspy import MatrixDataSinks
 from somegraphspy import VectorDataSinks
@@ -36,6 +37,8 @@ from somegraphspy import put_vector_data
 from somegraphspy import put_vector_names_data
 
 from .data_sources import EMPTY_CATEGORY_COLOR
+from .data_sources import EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
+from .data_sources import FOLD_HOVER_FORMAT_FOR_GRAPHS
 from .data_sources import Entries
 from .data_sources import put_boolean_values
 from .data_sources import put_category_configuration
@@ -82,17 +85,26 @@ def ad_fill_gene_expression(
     gene_fraction_regularization: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``gene`` expression level (see :py:func:`ad_get_gene_expression_vector`) per each of the
     ``entries`` of the ``adata``, shown in log base 2, and name the entities after the ``entries``. The default
-    ``title`` is ``<gene> fraction``. This is the ``AnnData`` counterpart of
-    :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.
+    ``title`` is ``<gene> fraction``. The default ``hover_format`` is
+    :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``
+    counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.
     """
     if title is None:
         title = f"{gene} fraction"
+    if hover_format is None:
+        hover_format = EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
     entries = _sinks_entries(sinks, entries)
-    put_vector_data(sinks, ad_get_gene_expression_vector(adata, gene=gene, entries=entries), title=title)
+    put_vector_data(
+        sinks,
+        ad_get_gene_expression_vector(adata, gene=gene, entries=entries),
+        title=title,
+        hover_format=hover_format,
+    )
     put_expression_level_configuration(
         sinks, gene_fraction_regularization=gene_fraction_regularization, title=title, show_legend=show_legend
     )
@@ -122,17 +134,26 @@ def ad_fill_genes_expression_matrix(
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the expression level of each of the ``genes`` (the rows) in each of the ``entries`` (the
     columns) of the ``adata``, shown as an expression level, and name the rows and the columns. The default ``title``
-    is ``fraction``. This is the ``AnnData`` counterpart of
-    :py:func:`~metacellsgraphspy.data_sources.fill_genes_expression_matrix`.
+    is ``fraction``. The default ``hover_format`` is
+    :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``
+    counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_genes_expression_matrix`.
     """
     if title is None:
         title = "fraction"
+    if hover_format is None:
+        hover_format = EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
     genes, entries = _sinks_matrix_entries(sinks, genes, entries)
-    put_matrix_data(sinks, ad_get_genes_expression_matrix(adata, genes=genes, entries=entries), title=title)
+    put_matrix_data(
+        sinks,
+        ad_get_genes_expression_matrix(adata, genes=genes, entries=entries),
+        title=title,
+        hover_format=hover_format,
+    )
     put_expression_level_configuration(
         sinks,
         gene_fraction_regularization=gene_fraction_regularization,
@@ -167,17 +188,26 @@ def ad_fill_genes_fold_matrix(
     max_fold: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the fold of the expression of each of the ``genes`` (the rows) from its median, in each of
     the ``entries`` (the columns) of the ``adata``, shown as a fold, and name the rows and the columns. The default
-    ``title`` is ``fold from median``. This is the ``AnnData`` counterpart of
+    ``title`` is ``fold from median``. The default ``hover_format`` is
+    :py:obj:`~metacellsgraphspy.data_sources.FOLD_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_genes_fold_matrix`.
     """
     if title is None:
         title = "fold from median"
+    if hover_format is None:
+        hover_format = FOLD_HOVER_FORMAT_FOR_GRAPHS
     genes, entries = _sinks_matrix_entries(sinks, genes, entries)
-    put_matrix_data(sinks, ad_get_genes_fold_matrix(adata, genes=genes, entries=entries), title=title)
+    put_matrix_data(
+        sinks,
+        ad_get_genes_fold_matrix(adata, genes=genes, entries=entries),
+        title=title,
+        hover_format=hover_format,
+    )
     put_fold_configuration(sinks, max_fold=max_fold, title=title, show_legend=show_legend)
     put_matrix_names_data(sinks, _entry_names(adata.var_names, genes), _entry_names(adata.obs_names, entries))
 
@@ -340,6 +370,7 @@ def ad_fill_total_UMIs(  # pylint: disable=invalid-name
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the total UMIs of each of the ``entries`` of the ``adata``, shown as a size, and name the
@@ -356,6 +387,7 @@ def ad_fill_total_UMIs(  # pylint: disable=invalid-name
         title=title,
         show_legend=show_legend,
         log_base=log_base,
+        hover_format=hover_format,
     )
 
 

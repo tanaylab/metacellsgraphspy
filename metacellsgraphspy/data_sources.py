@@ -18,8 +18,8 @@ The ``entries`` and ``genes`` can also be given by a Boolean mask over the axis.
 as the mask (e.g., ``entries=get_is_marker_vector(daf)``).
 """
 
-# A function per Julia data source, so the module is as long as the Julia one.
-# pylint: disable=too-many-lines
+# A function per Julia data source, so the module is as long as the Julia one, and its wrappers look alike.
+# pylint: disable=too-many-lines,duplicate-code
 
 from typing import Any
 from typing import Mapping
@@ -49,10 +49,15 @@ from .julia_import import _to_julia_frame
 from .julia_import import jl
 
 __all__ = [
+    "CORRELATION_HOVER_FORMAT_FOR_GRAPHS",
     "EMPTY_CATEGORY_COLOR",
+    "EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS",
     "Entries",
+    "FOLD_HOVER_FORMAT_FOR_GRAPHS",
     "GENE_FRACTION_REGULARIZATION_FOR_GRAPHS",
     "MAX_FOLD_FOR_GRAPHS",
+    "MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS",
+    "SIZE_HOVER_FORMAT_FOR_GRAPHS",
     "TOP_MARKERS_COUNT_FOR_GRAPHS",
     "Via",
     "fill_axes_matrix_data",
@@ -179,6 +184,35 @@ MAX_FOLD_FOR_GRAPHS: float = float(jl.MetacellsGraphs.MAX_FOLD_FOR_GRAPHS)
 #: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.TOP_MARKERS_COUNT_FOR_GRAPHS>`__
 #: for details.
 TOP_MARKERS_COUNT_FOR_GRAPHS: int = int(jl.MetacellsGraphs.TOP_MARKERS_COUNT_FOR_GRAPHS)
+
+#: The ``hover_format`` of a size (a count): a whole number. See the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.SIZE_HOVER_FORMAT_FOR_GRAPHS>`__
+#: for details.
+SIZE_HOVER_FORMAT_FOR_GRAPHS: HoverFormat = HoverFormat(jl.MetacellsGraphs.SIZE_HOVER_FORMAT_FOR_GRAPHS)
+
+#: The ``hover_format`` of a mean of sizes (e.g., the mean cells per metacell): one digit after the decimal point. See
+#: the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS>`__
+#: for details.
+MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS: HoverFormat = HoverFormat(jl.MetacellsGraphs.MEAN_SIZE_HOVER_FORMAT_FOR_GRAPHS)
+
+#: The ``hover_format`` of an expression level: 3 significant digits. See the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS>`__
+#: for details.
+EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS: HoverFormat = HoverFormat(
+    jl.MetacellsGraphs.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
+)
+
+#: The ``hover_format`` of a fold factor: two digits after the decimal point. See the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.FOLD_HOVER_FORMAT_FOR_GRAPHS>`__
+#: for details.
+FOLD_HOVER_FORMAT_FOR_GRAPHS: HoverFormat = HoverFormat(jl.MetacellsGraphs.FOLD_HOVER_FORMAT_FOR_GRAPHS)
+
+#: The ``hover_format`` of a correlation: three digits after the decimal point, since small correlations are common.
+#: See the Julia
+#: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.CORRELATION_HOVER_FORMAT_FOR_GRAPHS>`__
+#: for details.
+CORRELATION_HOVER_FORMAT_FOR_GRAPHS: HoverFormat = HoverFormat(jl.MetacellsGraphs.CORRELATION_HOVER_FORMAT_FOR_GRAPHS)
 
 #: The color to give to entities without any value of a category (e.g. with no type or no block). See the Julia
 #: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_CATEGORY_COLOR>`__
@@ -490,6 +524,7 @@ def fill_gene_expression(
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``gene`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
@@ -509,6 +544,7 @@ def fill_gene_expression(
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -540,6 +576,7 @@ def fill_genes_expression_matrix(
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``genes`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
@@ -558,6 +595,7 @@ def fill_genes_expression_matrix(
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -591,6 +629,7 @@ def fill_genes_fold_matrix(
     max_fold: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``genes`` fold (log base-2 minus the median) per each of the ``entries`` of some ``daf``
@@ -609,6 +648,7 @@ def fill_genes_fold_matrix(
             max_fold=max_fold,
             title=title,
             show_legend=show_legend,
+            hover_format=hover_format,
         ),
     )
 
@@ -655,6 +695,7 @@ def fill_gene_correlation(
     entries: Optional[Entries] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of the ``gene`` per each of the ``entries`` of some ``daf`` ``axis``, shown
@@ -666,7 +707,13 @@ def fill_gene_correlation(
         _to_julia(sinks),
         daf,
         gene=gene,
-        **_given(axis=axis, entries=_to_julia_array(entries), title=title, show_legend=show_legend),
+        **_given(
+            axis=axis,
+            entries=_to_julia_array(entries),
+            title=title,
+            show_legend=show_legend,
+            hover_format=hover_format,
+        ),
     )
 
 
@@ -713,6 +760,7 @@ def fill_gene_correlation_change(
     entries: Optional[Entries] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with how much the correlation of the ``gene`` changed between the ``base_daf`` and the ``daf``,
@@ -726,7 +774,12 @@ def fill_gene_correlation_change(
         base_daf,
         gene=gene,
         **_given(
-            axis=axis, base_axis=base_axis, entries=_to_julia_array(entries), title=title, show_legend=show_legend
+            axis=axis,
+            base_axis=base_axis,
+            entries=_to_julia_array(entries),
+            title=title,
+            show_legend=show_legend,
+            hover_format=hover_format,
         ),
     )
 
@@ -784,6 +837,7 @@ def fill_correlation(
     title: Optional[str] = None,
     empty_value: Optional[float] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by
@@ -802,6 +856,7 @@ def fill_correlation(
             title=title,
             empty_value=empty_value,
             show_legend=show_legend,
+            hover_format=hover_format,
         ),
     )
 
@@ -813,6 +868,7 @@ def put_correlation_values(
     *,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Put the correlation ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_correlation_configuration`, and
@@ -824,7 +880,7 @@ def put_correlation_values(
         _to_julia(sinks),
         _to_julia(value_per_entry),
         _to_julia(name_per_entry),
-        **_given(title=title, show_legend=show_legend),
+        **_given(title=title, show_legend=show_legend, hover_format=hover_format),
     )
 
 
@@ -838,6 +894,7 @@ def fill_correlation_between_cells_and_punctuated_metacells(  # pylint: disable=
     empty_value: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of each gene between the cells and their punctuated metacells. See the Julia
@@ -845,7 +902,9 @@ def fill_correlation_between_cells_and_punctuated_metacells(  # pylint: disable=
     for details.
     """
     jl.MetacellsGraphs.fill_correlation_between_cells_and_punctuated_metacells_b(
-        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks),
+        daf,
+        **_property_fill_given(axis, entries, via, empty_value, title, show_legend, hover_format=hover_format),
     )
 
 
@@ -879,6 +938,7 @@ def fill_correlation_between_cells_and_projected_punctuated_metacells(  # pylint
     empty_value: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of each gene between the cells and their projected punctuated metacells. See
@@ -887,7 +947,9 @@ def fill_correlation_between_cells_and_projected_punctuated_metacells(  # pylint
     for details.
     """
     jl.MetacellsGraphs.fill_correlation_between_cells_and_projected_punctuated_metacells_b(
-        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks),
+        daf,
+        **_property_fill_given(axis, entries, via, empty_value, title, show_legend, hover_format=hover_format),
     )
 
 
@@ -921,6 +983,7 @@ def fill_correlation_between_cells_and_projected_metacells(  # pylint: disable=i
     empty_value: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of each gene between the query cells and their projected atlas metacells.
@@ -929,7 +992,9 @@ def fill_correlation_between_cells_and_projected_metacells(  # pylint: disable=i
     for details.
     """
     jl.MetacellsGraphs.fill_correlation_between_cells_and_projected_metacells_b(
-        _to_julia(sinks), daf, **_property_fill_given(axis, entries, via, empty_value, title, show_legend)
+        _to_julia(sinks),
+        daf,
+        **_property_fill_given(axis, entries, via, empty_value, title, show_legend, hover_format=hover_format),
     )
 
 
@@ -1169,6 +1234,7 @@ def fill_size(
     empty_value: Optional[float] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the size (count) ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown
@@ -1188,6 +1254,7 @@ def fill_size(
             empty_value=empty_value,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -1200,6 +1267,7 @@ def put_size_values(
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Put the size (count) ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_size_configuration`, and name
@@ -1211,7 +1279,7 @@ def put_size_values(
         _to_julia(sinks),
         _to_julia(value_per_entry),
         _to_julia(name_per_entry),
-        **_given(title=title, show_legend=show_legend, log_base=_to_julia(log_base)),
+        **_given(title=title, show_legend=show_legend, log_base=_to_julia(log_base), hover_format=hover_format),
     )
 
 
@@ -1226,6 +1294,7 @@ def fill_total_UMIs(  # pylint: disable=invalid-name
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the total UMIs of each of the ``entries`` of the ``daf`` ``axis``, shown as a count, and
@@ -1244,6 +1313,7 @@ def fill_total_UMIs(  # pylint: disable=invalid-name
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -1280,6 +1350,7 @@ def fill_n_cells(
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the number of cells of each of the ``entries`` of the ``daf`` ``axis``, shown as a count,
@@ -1298,6 +1369,7 @@ def fill_n_cells(
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -1334,6 +1406,7 @@ def fill_n_metacells(
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the number of metacells of each of the ``entries`` of the ``daf`` ``axis`` (by default, the
@@ -1352,6 +1425,7 @@ def fill_n_metacells(
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -1388,6 +1462,7 @@ def fill_mean_cells_per_metacell(
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the mean number of cells per metacell of each of the ``entries`` of the ``daf`` ``axis``
@@ -1405,6 +1480,7 @@ def fill_mean_cells_per_metacell(
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -1435,6 +1511,7 @@ def fill_mean_total_UMIs_per_metacell(  # pylint: disable=invalid-name
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the mean total UMIs per metacell of each of the ``entries`` of the ``daf`` ``axis`` (by
@@ -1452,6 +1529,7 @@ def fill_mean_total_UMIs_per_metacell(  # pylint: disable=invalid-name
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -1482,6 +1560,7 @@ def fill_mean_total_UMIs_per_cell(  # pylint: disable=invalid-name
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
     log_base: Optional[LogBase] = None,
+    hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the mean total UMIs per cell of each of the ``entries`` of the ``daf`` ``axis``, shown as a
@@ -1499,6 +1578,7 @@ def fill_mean_total_UMIs_per_cell(  # pylint: disable=invalid-name
             title=title,
             show_legend=show_legend,
             log_base=_to_julia(log_base),
+            hover_format=hover_format,
         ),
     )
 
@@ -2331,6 +2411,8 @@ def _property_fill_given(  # pylint: disable=too-many-positional-arguments
     empty_value: Optional[Union[bool, float]],
     title: Optional[str],
     show_legend: Optional[bool],
+    *,
+    hover_format: Optional[HoverFormat] = None,
 ) -> Mapping[str, Any]:
     return _given(
         axis=axis,
@@ -2339,6 +2421,7 @@ def _property_fill_given(  # pylint: disable=too-many-positional-arguments
         empty_value=empty_value,
         title=title,
         show_legend=show_legend,
+        hover_format=hover_format,
     )
 
 
