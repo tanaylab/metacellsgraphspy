@@ -95,6 +95,7 @@
 <span class="c1"># pylint: disable=too-many-lines,duplicate-code</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
@@ -102,6 +103,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">somegraphspy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoolsVector</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">HoverFormat</span>
@@ -173,6 +175,7 @@
     <span class="s2">"fill_total_UMIs"</span><span class="p">,</span>
     <span class="s2">"fill_type"</span><span class="p">,</span>
     <span class="s2">"fill_umap"</span><span class="p">,</span>
+    <span class="s2">"function_default"</span><span class="p">,</span>
     <span class="s2">"get_axes_matrix"</span><span class="p">,</span>
     <span class="s2">"get_axis_entries_vector"</span><span class="p">,</span>
     <span class="s2">"get_axis_vector"</span><span class="p">,</span>
@@ -291,6 +294,31 @@
 <span class="c1">#: `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_CATEGORY_COLOR&gt;`__</span>
 <span class="c1">#: for details.</span>
 <span class="n">EMPTY_CATEGORY_COLOR</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">EMPTY_CATEGORY_COLOR</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="function_default">
+<a class="viewcode-back" href="../../data_sources.html#metacellsgraphspy.data_sources.function_default">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">function_default</span><span class="p">(</span><span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">parameter</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    The default of the ``parameter`` of the Julia function which a ``function`` of this package wraps (e.g.</span>
+<span class="sd">    ``function_default(fill_n_cells, "log_base")``), as the Julia function declares it. A default which is a Julia</span>
+<span class="sd">    enum is given as its ``somegraphspy`` enum (e.g. :py:class:`~somegraphspy.LogBase`). A default which depends on</span>
+<span class="sd">    other parameters (e.g. a title made of the gene's name) is an error. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/TanayLabUtilities.jl/v0.1.0/documentation.html#TanayLabUtilities.Documentation.function_default&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">julia_name</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">if</span> <span class="n">jl</span><span class="o">.</span><span class="n">isdefined</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="p">,</span> <span class="n">jl</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">julia_name</span> <span class="o">+</span> <span class="s2">"!"</span><span class="p">)):</span>
+        <span class="n">julia_name</span> <span class="o">+=</span> <span class="s2">"!"</span>
+    <span class="c1"># ``TanayLabUtilities`` is reached through ``MetacellsGraphs``, which uses it.</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">DataSources</span><span class="o">.</span><span class="n">TanayLabUtilities</span><span class="o">.</span><span class="n">function_default</span><span class="p">(</span>
+        <span class="n">jl</span><span class="o">.</span><span class="n">getproperty</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="p">,</span> <span class="n">jl</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">julia_name</span><span class="p">)),</span> <span class="n">jl</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">jl</span><span class="o">.</span><span class="n">isa</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">jl</span><span class="o">.</span><span class="n">Base</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+        <span class="n">enum_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">somegraphspy</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">nameof</span><span class="p">(</span><span class="n">jl</span><span class="o">.</span><span class="n">typeof</span><span class="p">(</span><span class="n">value</span><span class="p">))))</span>
+        <span class="k">return</span> <span class="n">enum_class</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">value</span></div>
+
 
 
 <span class="c1"># Generic axis names.</span>

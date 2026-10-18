@@ -572,6 +572,15 @@
 </li>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.data_sources.function_default">
+<code class="docutils literal notranslate">
+<span class="pre">function_default()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.data_sources.get_axes_matrix">
 <code class="docutils literal notranslate">
 <span class="pre">get_axes_matrix()
@@ -19737,6 +19746,142 @@ for details.
 
 <dd class="field-even">
 <p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.data_sources.function_default">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.data_sources.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">function_default
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">function
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">parameter
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/data_sources.html#function_default">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.data_sources.function_default" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>The default of the 
+<code class="docutils literal notranslate">
+<span class="pre">parameter
+</span>
+</code> of the Julia function which a 
+<code class="docutils literal notranslate">
+<span class="pre">function
+</span>
+</code> of this package wraps (e.g.
+
+<code class="docutils literal notranslate">
+<span class="pre">function_default(fill_n_cells,
+</span> 
+<span class="pre">&quot;log_base&quot;)
+</span>
+</code>), as the Julia function declares it. A default which is a Julia
+enum is given as its 
+<code class="docutils literal notranslate">
+<span class="pre">somegraphspy
+</span>
+</code> enum (e.g. 
+<code class="xref py py-class docutils literal notranslate">
+<span class="pre">LogBase
+</span>
+</code>). A default which depends on
+other parameters (e.g. a title made of the gene’s name) is an error. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/TanayLabUtilities.jl/v0.1.0/documentation.html#TanayLabUtilities.Documentation.function_default">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>function
+</strong> (
+<em>Callable
+</em>
+<em>[
+</em>
+<em>[
+</em>
+<em>...
+</em>
+<em>]
+</em>
+<em>, 
+</em>
+<em>Any
+</em>
+<em>]
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>parameter
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>
+<em>Any
+</em>
 </p>
 
 </dd>

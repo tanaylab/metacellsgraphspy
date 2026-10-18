@@ -11,6 +11,7 @@ from typing import List
 import dafpy as dp
 import numpy as np
 import pandas as pd
+import pytest
 import somegraphspy as sg
 
 import metacellsgraphspy as mg
@@ -58,6 +59,19 @@ def test_constants() -> None:
     assert mg.GENE_FRACTION_REGULARIZATION_FOR_GRAPHS == 1e-5
     assert mg.MAX_FOLD_FOR_GRAPHS == 3.0
     assert mg.EMPTY_CATEGORY_COLOR == "grey"
+
+
+def test_function_default() -> None:
+    """
+    The defaults of the data sources are read from their Julia functions, with enums as their Python enums. A default
+    which depends on other parameters is an error.
+    """
+    assert mg.function_default(mg.fill_n_cells, "show_legend") is True
+    assert mg.function_default(mg.fill_n_cells, "log_base") == sg.LogBase.Log10Base
+    assert mg.function_default(mg.fill_is_lateral, "show_legend") is False
+    assert mg.function_default(mg.fill_gene_expression, "log_base") == sg.LogBase.Log2Base
+    with pytest.raises(Exception, match="no parameter"):
+        mg.function_default(mg.fill_gene_expression, "title")
 
 
 def test_fill_a_points_graph() -> None:

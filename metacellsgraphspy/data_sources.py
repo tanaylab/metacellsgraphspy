@@ -22,6 +22,7 @@ as the mask (e.g., ``entries=get_is_marker_vector(daf)``).
 # pylint: disable=too-many-lines,duplicate-code
 
 from typing import Any
+from typing import Callable
 from typing import Mapping
 from typing import Optional
 from typing import Sequence
@@ -29,6 +30,7 @@ from typing import Union
 
 import numpy as np
 import pandas as pd
+import somegraphspy
 from dafpy import DafReader
 from somegraphspy import BoolsVector
 from somegraphspy import HoverFormat
@@ -100,6 +102,7 @@ __all__ = [
     "fill_total_UMIs",
     "fill_type",
     "fill_umap",
+    "function_default",
     "get_axes_matrix",
     "get_axis_entries_vector",
     "get_axis_vector",
@@ -218,6 +221,28 @@ CORRELATION_HOVER_FORMAT_FOR_GRAPHS: HoverFormat = HoverFormat(jl.MetacellsGraph
 #: `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.EMPTY_CATEGORY_COLOR>`__
 #: for details.
 EMPTY_CATEGORY_COLOR: str = str(jl.MetacellsGraphs.EMPTY_CATEGORY_COLOR)
+
+
+def function_default(function: Callable[..., Any], parameter: str) -> Any:
+    """
+    The default of the ``parameter`` of the Julia function which a ``function`` of this package wraps (e.g.
+    ``function_default(fill_n_cells, "log_base")``), as the Julia function declares it. A default which is a Julia
+    enum is given as its ``somegraphspy`` enum (e.g. :py:class:`~somegraphspy.LogBase`). A default which depends on
+    other parameters (e.g. a title made of the gene's name) is an error. See the Julia
+    `documentation <https://tanaylab.github.io/TanayLabUtilities.jl/v0.1.0/documentation.html#TanayLabUtilities.Documentation.function_default>`__
+    for details.
+    """
+    julia_name = function.__name__
+    if jl.isdefined(jl.MetacellsGraphs, jl.Symbol(julia_name + "!")):
+        julia_name += "!"
+    # ``TanayLabUtilities`` is reached through ``MetacellsGraphs``, which uses it.
+    value = jl.MetacellsGraphs.DataSources.TanayLabUtilities.function_default(
+        jl.getproperty(jl.MetacellsGraphs, jl.Symbol(julia_name)), jl.Symbol(parameter)
+    )
+    if jl.isa(value, jl.Base.Enum):
+        enum_class = getattr(somegraphspy, str(jl.nameof(jl.typeof(value))))
+        return enum_class(str(value))
+    return value
 
 
 # Generic axis names.
