@@ -160,12 +160,13 @@
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the ``gene`` expression level (see :py:func:`ad_get_gene_expression_vector`) per each of the</span>
-<span class="sd">    ``entries`` of the ``adata``, shown in log base 2, and name the entities after the ``entries``. The default</span>
-<span class="sd">    ``title`` is ``&lt;gene&gt; fraction``. The default ``hover_format`` is</span>
+<span class="sd">    ``entries`` of the ``adata``, shown on a log scale of the ``log_base`` (2 by default), and name the entities after</span>
+<span class="sd">    the ``entries``. The default ``title`` is ``&lt;gene&gt; fraction``. The default ``hover_format`` is</span>
 <span class="sd">    :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``</span>
 <span class="sd">    counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.</span>
 <span class="sd">    """</span>
@@ -181,7 +182,11 @@
         <span class="n">hover_format</span><span class="o">=</span><span class="n">hover_format</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">put_expression_level_configuration</span><span class="p">(</span>
-        <span class="n">sinks</span><span class="p">,</span> <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span>
+        <span class="n">sinks</span><span class="p">,</span>
+        <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">,</span>
+        <span class="n">log_base</span><span class="o">=</span><span class="n">log_base</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">put_vector_names_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">_entry_names</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs_names</span><span class="p">,</span> <span class="n">entries</span><span class="p">))</span></div>
 

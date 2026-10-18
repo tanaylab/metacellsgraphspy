@@ -623,6 +623,20 @@ the entries its
 </em>, 
 <em class="sig-param">
 <span class="n">
+<span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">None
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
 <span class="pre">hover_format
 </span>
 </span>
@@ -671,12 +685,16 @@ the entries its
 <code class="docutils literal notranslate">
 <span class="pre">adata
 </span>
-</code>, shown in log base 2, and name the entities after the 
+</code>, shown on a log scale of the 
+<code class="docutils literal notranslate">
+<span class="pre">log_base
+</span>
+</code> (2 by default), and name the entities after
+the 
 <code class="docutils literal notranslate">
 <span class="pre">entries
 </span>
-</code>. The default
-
+</code>. The default 
 <code class="docutils literal notranslate">
 <span class="pre">title
 </span>
@@ -952,6 +970,19 @@ counterpart of
 <strong>show_legend
 </strong> (
 <em>bool
+</em>
+<em> | 
+</em>
+<em>None
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>log_base
+</strong> (
+<em>LogBase
 </em>
 <em> | 
 </em>

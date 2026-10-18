@@ -121,6 +121,10 @@ def test_ad_fill_gene_expression() -> None:
     assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log2Base
     assert graph.configuration.x_axis.scale.log_regularization == mg.GENE_FRACTION_REGULARIZATION_FOR_GRAPHS
 
+    graph = sg.points_graph()
+    mg.ad_fill_gene_expression(graph.x_axis_vector_fields(), _test_adata(), gene="A", log_base=sg.LogBase.Log10Base)
+    assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log10Base
+
 
 def test_ad_get_type_vector() -> None:
     """

@@ -85,12 +85,13 @@ def ad_fill_gene_expression(
     gene_fraction_regularization: Optional[float] = None,
     title: Optional[str] = None,
     show_legend: Optional[bool] = None,
+    log_base: Optional[LogBase] = None,
     hover_format: Optional[HoverFormat] = None,
 ) -> None:
     """
     Fill the ``sinks`` with the ``gene`` expression level (see :py:func:`ad_get_gene_expression_vector`) per each of the
-    ``entries`` of the ``adata``, shown in log base 2, and name the entities after the ``entries``. The default
-    ``title`` is ``<gene> fraction``. The default ``hover_format`` is
+    ``entries`` of the ``adata``, shown on a log scale of the ``log_base`` (2 by default), and name the entities after
+    the ``entries``. The default ``title`` is ``<gene> fraction``. The default ``hover_format`` is
     :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``
     counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.
     """
@@ -106,7 +107,11 @@ def ad_fill_gene_expression(
         hover_format=hover_format,
     )
     put_expression_level_configuration(
-        sinks, gene_fraction_regularization=gene_fraction_regularization, title=title, show_legend=show_legend
+        sinks,
+        gene_fraction_regularization=gene_fraction_regularization,
+        title=title,
+        show_legend=show_legend,
+        log_base=log_base,
     )
     put_vector_names_data(sinks, _entry_names(adata.obs_names, entries))
 
