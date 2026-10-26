@@ -3,13 +3,13 @@ Bar graphs of a metacells repository. See the Julia
 `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/bar_graphs.html>`__ for details.
 """
 
-from typing import Optional
-
 from dafpy import DafReader
 from somegraphspy import SeriesBarsGraph
 from somegraphspy import SeriesBarsGraphConfiguration
 from somegraphspy.julia_import import _to_julia
 
+from .julia_import import DEFAULT
+from .julia_import import DefaultValue
 from .julia_import import _given
 from .julia_import import jl
 
@@ -25,8 +25,8 @@ def improved_genes_graph(
     *,
     daf: DafReader,
     base_daf: DafReader,
-    genes_count: Optional[int] = None,
-    regulators_count: Optional[int] = None,
+    genes_count: int | DefaultValue = DEFAULT,
+    regulators_count: int | DefaultValue = DEFAULT,
 ) -> SeriesBarsGraph:
     """
     The genes whose correlation with their cells the metacells improved in the most of the base neighborhoods. See the
@@ -45,8 +45,8 @@ def degraded_genes_graph(
     *,
     daf: DafReader,
     base_daf: DafReader,
-    genes_count: Optional[int] = None,
-    regulators_count: Optional[int] = None,
+    genes_count: int | DefaultValue = DEFAULT,
+    regulators_count: int | DefaultValue = DEFAULT,
 ) -> SeriesBarsGraph:
     """
     The genes whose correlation with their cells the metacells degraded in the most of the base neighborhoods. See the

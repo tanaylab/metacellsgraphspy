@@ -90,7 +90,6 @@
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
 
@@ -120,6 +119,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_fold_configuration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_size_values</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_umap_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultValue</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_from_julia_array</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
@@ -156,12 +157,12 @@
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">gene</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the ``gene`` expression level (see :py:func:`ad_get_gene_expression_vector`) per each of the</span>
@@ -170,9 +171,9 @@
 <span class="sd">    :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``</span>
 <span class="sd">    counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">gene</span><span class="si">}</span><span class="s2"> fraction"</span>
-    <span class="k">if</span> <span class="n">hover_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hover_format</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">hover_format</span> <span class="o">=</span> <span class="n">EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS</span>
     <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_vector_data</span><span class="p">(</span>
@@ -194,7 +195,9 @@
 
 <div class="viewcode-block" id="ad_get_gene_expression_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_gene_expression_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_gene_expression_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">gene</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_gene_expression_vector</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">gene</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the vector of the ``gene`` expression level per each of the ``entries`` of the ``adata``, from ``X`` as it is</span>
 <span class="sd">    stored. In a metacells ``AnnData`` this is typically a geometric mean of the fractions of the cells, rather than a</span>
@@ -214,13 +217,13 @@
     <span class="n">sinks</span><span class="p">:</span> <span class="n">MatrixDataSinks</span><span class="p">,</span>
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">genes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the expression level of each of the ``genes`` (the rows) in each of the ``entries`` (the</span>
@@ -229,9 +232,9 @@
 <span class="sd">    :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``</span>
 <span class="sd">    counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_genes_expression_matrix`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"fraction"</span>
-    <span class="k">if</span> <span class="n">hover_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hover_format</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">hover_format</span> <span class="o">=</span> <span class="n">EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS</span>
     <span class="n">genes</span><span class="p">,</span> <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_matrix_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">genes</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_matrix_data</span><span class="p">(</span>
@@ -254,7 +257,10 @@
 <div class="viewcode-block" id="ad_get_genes_expression_matrix">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_genes_expression_matrix">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ad_get_genes_expression_matrix</span><span class="p">(</span>
-    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">genes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the expression level of each of the ``genes`` (the rows) in each of the ``entries`` (the columns) of the</span>
@@ -275,12 +281,12 @@
     <span class="n">sinks</span><span class="p">:</span> <span class="n">MatrixDataSinks</span><span class="p">,</span>
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">genes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">max_fold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">max_fold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the fold of the expression of each of the ``genes`` (the rows) from its median, in each of</span>
@@ -289,9 +295,9 @@
 <span class="sd">    :py:obj:`~metacellsgraphspy.data_sources.FOLD_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.fill_genes_fold_matrix`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"fold from median"</span>
-    <span class="k">if</span> <span class="n">hover_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hover_format</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">hover_format</span> <span class="o">=</span> <span class="n">FOLD_HOVER_FORMAT_FOR_GRAPHS</span>
     <span class="n">genes</span><span class="p">,</span> <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_matrix_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">genes</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_matrix_data</span><span class="p">(</span>
@@ -308,7 +314,10 @@
 <div class="viewcode-block" id="ad_get_genes_fold_matrix">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_genes_fold_matrix">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ad_get_genes_fold_matrix</span><span class="p">(</span>
-    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">genes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the fold of the expression of each of the ``genes`` (the rows) from its median across the ``entries`` (the</span>
@@ -325,7 +334,7 @@
 
 <div class="viewcode-block" id="ad_get_marker_rank_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_marker_rank_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_marker_rank_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_marker_rank_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the rank of each of the gene ``entries`` of the ``adata`` as a marker (the ``marker_rank`` of the ``var``), where</span>
 <span class="sd">    1 is the strongest marker. A gene which is not a marker has the maximal ``uint32`` rank.</span>
@@ -370,10 +379,10 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">type_property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">type_colors_csv</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">empty_type_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">empty_type_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the ``type_property`` of each of the ``entries`` of the ``adata``, colored by the</span>
@@ -381,7 +390,7 @@
 <span class="sd">    :py:func:`ad_get_type_vector` and :py:func:`ad_get_type_colors` for details. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.fill_type`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"type"</span>
     <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_vector_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">ad_get_type_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">type_property</span><span class="o">=</span><span class="n">type_property</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
@@ -397,7 +406,9 @@
 
 <div class="viewcode-block" id="ad_get_type_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_type_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_type_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">type_property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_type_vector</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">type_property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the ``type_property`` of the ``obs`` of each of the ``entries`` of the ``adata``. A missing type is returned as</span>
 <span class="sd">    the empty string. This is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_type_vector`.</span>
@@ -409,17 +420,22 @@
 
 <div class="viewcode-block" id="ad_get_type_colors">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_type_colors">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_type_colors</span><span class="p">(</span><span class="n">type_colors_csv</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">empty_type_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_type_colors</span><span class="p">(</span>
+    <span class="n">type_colors_csv</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">empty_type_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the palette mapping each type to its color from the ``type_colors_csv`` file, with an additional</span>
 <span class="sd">    ``empty_type_color`` (by default, :py:obj:`~metacellsgraphspy.data_sources.EMPTY_CATEGORY_COLOR`) for entries with no</span>
-<span class="sd">    type (the empty string). The file has a header line. Its first column is the type and its second column is the</span>
-<span class="sd">    color. The names of the columns don't matter. This is the ``AnnData`` counterpart of</span>
+<span class="sd">    type (the empty string), unless it is ``None``. The file has a header line. Its first column is the type and its</span>
+<span class="sd">    second column is the color. The names of the columns don't matter. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.get_type_colors`.</span>
 <span class="sd">    """</span>
     <span class="n">frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">type_colors_csv</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">keep_default_na</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">color_per_type</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]))</span>
-    <span class="n">color_per_type</span><span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">=</span> <span class="n">EMPTY_CATEGORY_COLOR</span> <span class="k">if</span> <span class="n">empty_type_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">empty_type_color</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">empty_type_color</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
+        <span class="n">empty_type_color</span> <span class="o">=</span> <span class="n">EMPTY_CATEGORY_COLOR</span>
+    <span class="k">if</span> <span class="n">empty_type_color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">color_per_type</span><span class="p">[</span><span class="s2">""</span><span class="p">]</span> <span class="o">=</span> <span class="n">empty_type_color</span>
     <span class="k">return</span> <span class="n">color_per_type</span></div>
 
 
@@ -454,15 +470,15 @@
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">coordinate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the UMAP ``coordinate`` (``x`` or ``y``) of each of the ``entries`` of the ``adata``, and</span>
 <span class="sd">    name the entities after the ``entries``. The default ``title`` is ``UMAP X`` (or ``UMAP Y``). This is the</span>
 <span class="sd">    ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_umap`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"UMAP </span><span class="si">{</span><span class="n">coordinate</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
     <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_umap_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">ad_get_umap_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">coordinate</span><span class="o">=</span><span class="n">coordinate</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
@@ -473,7 +489,9 @@
 
 <div class="viewcode-block" id="ad_get_umap_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_umap_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_umap_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_umap_vector</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the UMAP ``coordinate`` (the ``x`` or ``y`` of the ``obs``) of each of the ``entries`` of the ``adata``. This is</span>
 <span class="sd">    the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_umap_vector`.</span>
@@ -488,18 +506,18 @@
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LogBase</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">hover_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HoverFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with the total UMIs of each of the ``entries`` of the ``adata``, shown as a size, and name the</span>
 <span class="sd">    entities after the ``entries``. The default ``title`` is ``total UMIs``. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.fill_total_UMIs`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"total UMIs"</span>
     <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_size_values</span><span class="p">(</span>
@@ -517,7 +535,7 @@
 <div class="viewcode-block" id="ad_get_total_UMIs_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_total_UMIs_vector">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ad_get_total_UMIs_vector</span><span class="p">(</span>  <span class="c1"># pylint: disable=invalid-name</span>
-    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get the total UMIs (the ``total_umis`` of the ``obs``) of each of the ``entries`` of the ``adata``. This is the</span>
@@ -533,16 +551,16 @@
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with whether each of the gene ``entries`` of the ``adata`` is lateral, and name the entities after</span>
 <span class="sd">    the ``entries``. The default ``title`` is ``lateral``. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.fill_is_lateral`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"lateral"</span>
     <span class="n">_fill_var_flag</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">"lateral_gene"</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span></div>
 
@@ -550,7 +568,7 @@
 
 <div class="viewcode-block" id="ad_get_is_lateral_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_is_lateral_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_is_lateral_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_is_lateral_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get whether each of the gene ``entries`` of the ``adata`` is lateral (the ``lateral_gene`` of the ``var``). This is</span>
 <span class="sd">    the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_is_lateral_vector`.</span>
@@ -565,16 +583,16 @@
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with whether each of the gene ``entries`` of the ``adata`` is excluded, and name the entities</span>
 <span class="sd">    after the ``entries``. The default ``title`` is ``excluded``. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.fill_is_excluded`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"excluded"</span>
     <span class="n">_fill_var_flag</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">"excluded_gene"</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span></div>
 
@@ -582,7 +600,7 @@
 
 <div class="viewcode-block" id="ad_get_is_excluded_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_is_excluded_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_is_excluded_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_is_excluded_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get whether each of the gene ``entries`` of the ``adata`` is excluded (the ``excluded_gene`` of the ``var``). This</span>
 <span class="sd">    is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_is_excluded_vector`.</span>
@@ -597,16 +615,16 @@
     <span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span>
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Fill the ``sinks`` with whether each of the gene ``entries`` of the ``adata`` is a marker gene, and name the</span>
 <span class="sd">    entities after the ``entries``. The default ``title`` is ``marker``. This is the ``AnnData`` counterpart of</span>
 <span class="sd">    :py:func:`~metacellsgraphspy.data_sources.fill_is_marker`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">title</span> <span class="o">=</span> <span class="s2">"marker"</span>
     <span class="n">_fill_var_flag</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">"marker_gene"</span><span class="p">,</span> <span class="n">entries</span><span class="o">=</span><span class="n">entries</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">show_legend</span><span class="o">=</span><span class="n">show_legend</span><span class="p">)</span></div>
 
@@ -614,7 +632,7 @@
 
 <div class="viewcode-block" id="ad_get_is_marker_vector">
 <a class="viewcode-back" href="../../anndata_data_sources.html#metacellsgraphspy.anndata_data_sources.ad_get_is_marker_vector">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_is_marker_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_get_is_marker_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get whether each of the gene ``entries`` of the ``adata`` is a marker gene (the ``marker_gene`` of the ``var``).</span>
 <span class="sd">    This is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_is_marker_vector`.</span>
@@ -629,9 +647,9 @@
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span>
-    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">show_legend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span>
+    <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">entries</span> <span class="o">=</span> <span class="n">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
     <span class="n">put_boolean_values</span><span class="p">(</span>
@@ -644,33 +662,34 @@
 
 
 <span class="c1"># A Boolean ``column`` of the ``var`` for each of the gene ``entries``.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_var_flag_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_var_flag_vector</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)[</span><span class="n">_entry_indices</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">,</span> <span class="n">entries</span><span class="p">)]</span>
 
 
-<span class="c1"># The entries a fill uses: the given ones, or else the names its sinks already hold. A ``None`` means all of them.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]:</span>
-    <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="c1"># The entries a fill uses: the given ones, or else the names its sinks already hold. Both ``None`` and ``DEFAULT``</span>
+<span class="c1"># mean they weren't given; ``None`` is then all of them.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_sinks_entries</span><span class="p">(</span><span class="n">sinks</span><span class="p">:</span> <span class="n">VectorDataSinks</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">get_vector_names_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">entries</span>
 
 
 <span class="c1"># The genes (rows) and entries (columns) a matrix fill uses, each chosen the way ``_sinks_entries`` chooses them.</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_sinks_matrix_entries</span><span class="p">(</span>
-    <span class="n">sinks</span><span class="p">:</span> <span class="n">MatrixDataSinks</span><span class="p">,</span> <span class="n">genes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">]]:</span>
-    <span class="k">if</span> <span class="n">genes</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">sinks</span><span class="p">:</span> <span class="n">MatrixDataSinks</span><span class="p">,</span> <span class="n">genes</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">genes</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">genes</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">)</span> <span class="ow">or</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="n">name_per_row</span><span class="p">,</span> <span class="n">name_per_column</span> <span class="o">=</span> <span class="n">get_matrix_names_data</span><span class="p">(</span><span class="n">sinks</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">genes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">genes</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">genes</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
             <span class="n">genes</span> <span class="o">=</span> <span class="n">name_per_row</span>
-        <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
             <span class="n">entries</span> <span class="o">=</span> <span class="n">name_per_column</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">genes</span><span class="p">,</span> <span class="n">entries</span><span class="p">)</span>
 
 
 <span class="c1"># The 0-based indices of the (1-based, named or masked) entries among the ``names`` of an axis, or of all of them.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_entry_indices</span><span class="p">(</span><span class="n">names</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_entry_indices</span><span class="p">(</span><span class="n">names</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entries</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">DefaultValue</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))</span>
     <span class="n">entries_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">entries_array</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">"b"</span><span class="p">:</span>
@@ -686,7 +705,7 @@
 
 
 <span class="c1"># The names of the entries among the ``names`` of an axis.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_entry_names</span><span class="p">(</span><span class="n">names</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Entries</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_entry_names</span><span class="p">(</span><span class="n">names</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">_entry_indices</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">entries</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
 </pre></div>
 

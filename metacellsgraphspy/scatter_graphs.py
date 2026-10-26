@@ -3,14 +3,14 @@ Scatter graphs of a metacells repository. See the Julia
 `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html>`__ for details.
 """
 
-from typing import Optional
-
 from dafpy import DafReader
 from somegraphspy import PointsGraph
 from somegraphspy import PointsGraphConfiguration
 from somegraphspy.julia_import import _to_julia
 
 from .data_sources import Entries
+from .julia_import import DEFAULT
+from .julia_import import DefaultValue
 from .julia_import import _given
 from .julia_import import _to_julia_array
 from .julia_import import jl
@@ -26,11 +26,11 @@ __all__ = [
 def gene_gene_graph(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
+    axis: str | DefaultValue = DEFAULT,
     x_gene: str,
     y_gene: str,
-    entries: Optional[Entries] = None,
-    gene_fraction_regularization: Optional[float] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
 ) -> PointsGraph:
     """
     The expression of ``x_gene`` against ``y_gene``, a point per each of the ``entries`` of the ``axis`` (by default,
@@ -52,7 +52,9 @@ def gene_gene_graph(
     )
 
 
-def umap_graph(daf: DafReader, *, axis: Optional[str] = None, entries: Optional[Entries] = None) -> PointsGraph:
+def umap_graph(
+    daf: DafReader, *, axis: str | DefaultValue = DEFAULT, entries: Entries | None | DefaultValue = DEFAULT
+) -> PointsGraph:
     """
     The 2D UMAP embedding, a point per each of the ``entries`` of the ``axis`` (by default, the metacells). See the
     Julia
@@ -69,10 +71,10 @@ def gene_base_delta_correlations_graph(
     daf: DafReader,
     base_daf: DafReader,
     gene: str,
-    axis: Optional[str] = None,
-    base_axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    gene_fraction_regularization: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    base_axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
 ) -> PointsGraph:
     """
     What the metacells did to one gene, a point per each of the ``entries`` of the ``axis`` (by default, the base

@@ -44,6 +44,8 @@ from somegraphspy import StringsVector
 from somegraphspy import VectorDataSinks
 from somegraphspy.julia_import import _to_julia
 
+from .julia_import import DEFAULT
+from .julia_import import DefaultValue
 from .julia_import import _from_julia_array
 from .julia_import import _given
 from .julia_import import _to_julia_array
@@ -249,7 +251,7 @@ def function_default(function: Callable[..., Any], parameter: str) -> Any:
 
 
 def fill_axis_names_data(
-    sinks: VectorDataSinks, daf: DafReader, *, axis: str, entries: Optional[Entries] = None
+    sinks: VectorDataSinks, daf: DafReader, *, axis: str, entries: Entries | None | DefaultValue = DEFAULT
 ) -> None:
     """
     Name the entities of the ``sinks`` after each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -261,7 +263,9 @@ def fill_axis_names_data(
     )
 
 
-def get_axis_entries_vector(daf: DafReader, *, axis: str, entries: Optional[Entries] = None) -> np.ndarray:
+def get_axis_entries_vector(
+    daf: DafReader, *, axis: str, entries: Entries | None | DefaultValue = DEFAULT
+) -> np.ndarray:
     """
     Get the name for each of the ``entries`` of the ``daf`` ``axis`` (by default, all of them). See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.get_axis_entries_vector>`__
@@ -281,11 +285,11 @@ def fill_axis_vector_data(
     *,
     axis: str,
     query_suffix: str,
-    via: Optional[Via] = None,
-    empty_value: Optional[Union[str, float, bool]] = None,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    hover_format: Optional[HoverFormat] = None,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: Union[str, float, bool, None, DefaultValue] = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the result of the query ``@ axis query_suffix`` for each of the ``entries`` of the ``daf``
@@ -313,9 +317,9 @@ def get_axis_vector(
     *,
     axis: str,
     query_suffix: str,
-    via: Optional[Via] = None,
-    empty_value: Optional[Union[str, float, bool]] = None,
-    entries: Optional[Entries] = None,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: Union[str, float, bool, None, DefaultValue] = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the result of the query ``@ axis via query_suffix`` for each of the ``entries`` of the ``daf`` ``axis``. See the
@@ -341,8 +345,8 @@ def fill_column_vector_data(
     frame: pd.DataFrame,
     *,
     column: str,
-    title: Optional[str] = None,
-    hover_format: Optional[HoverFormat] = None,
+    title: str | None | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the ``column`` of a ``frame``, one value per row. See the Julia
@@ -368,8 +372,8 @@ def fill_column_boolean_annotation(
     frame: pd.DataFrame,
     *,
     column: str,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the Boolean ``column`` of a ``frame``, shown as ``true`` in black and ``false`` in light
@@ -433,8 +437,8 @@ def fill_axes_names_data(
     *,
     rows_axis: str,
     columns_axis: str,
-    row_entries: Optional[Entries] = None,
-    column_entries: Optional[Entries] = None,
+    row_entries: Entries | None | DefaultValue = DEFAULT,
+    column_entries: Entries | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Name the rows of the ``sinks`` after the ``row_entries`` of the ``daf`` ``rows_axis``, and their columns after the
@@ -458,10 +462,10 @@ def fill_axes_matrix_data(
     rows_axis: str,
     columns_axis: str,
     query_suffix: str,
-    row_entries: Optional[Entries] = None,
-    column_entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    hover_format: Optional[HoverFormat] = None,
+    row_entries: Entries | None | DefaultValue = DEFAULT,
+    column_entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the result of the query ``@ rows_axis @ columns_axis query_suffix``, and name the rows and
@@ -490,8 +494,8 @@ def get_axes_matrix(
     rows_axis: str,
     columns_axis: str,
     query_suffix: str,
-    row_entries: Optional[Entries] = None,
-    column_entries: Optional[Entries] = None,
+    row_entries: Entries | None | DefaultValue = DEFAULT,
+    column_entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the result of the query ``@ rows_axis @ columns_axis query_suffix`` for each of the ``row_entries`` and
@@ -516,10 +520,10 @@ def get_axes_matrix(
 def put_expression_level_configuration(
     sinks: Sinks,
     *,
-    gene_fraction_regularization: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
 ) -> None:
     """
     Show an expression level (of a gene, or of a gene module) on a log scale of the ``log_base`` (2 by default),
@@ -543,13 +547,13 @@ def fill_gene_expression(
     daf: DafReader,
     *,
     gene: str,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    gene_fraction_regularization: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the ``gene`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
@@ -575,7 +579,7 @@ def fill_gene_expression(
 
 
 def get_gene_expression_vector(
-    daf: DafReader, *, gene: str, axis: Optional[str] = None, entries: Optional[Entries] = None
+    daf: DafReader, *, gene: str, axis: str | DefaultValue = DEFAULT, entries: Entries | None | DefaultValue = DEFAULT
 ) -> np.ndarray:
     """
     Get the vector of the ``gene`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
@@ -594,14 +598,14 @@ def fill_genes_expression_matrix(
     sinks: MatrixDataSinks,
     daf: DafReader,
     *,
-    genes: Optional[Entries] = None,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    gene_fraction_regularization: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the ``genes`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
@@ -626,7 +630,11 @@ def fill_genes_expression_matrix(
 
 
 def get_genes_expression_matrix(
-    daf: DafReader, *, genes: Optional[Entries] = None, axis: Optional[str] = None, entries: Optional[Entries] = None
+    daf: DafReader,
+    *,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the matrix of the ``genes`` expression level (linear fraction) per each of the ``entries`` of some ``daf``
@@ -648,13 +656,13 @@ def fill_genes_fold_matrix(
     sinks: MatrixDataSinks,
     daf: DafReader,
     *,
-    genes: Optional[Entries] = None,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    max_fold: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    max_fold: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the ``genes`` fold (log base-2 minus the median) per each of the ``entries`` of some ``daf``
@@ -679,7 +687,11 @@ def fill_genes_fold_matrix(
 
 
 def put_fold_configuration(
-    sinks: Sinks, *, max_fold: Optional[float] = None, title: Optional[str] = None, show_legend: Optional[bool] = None
+    sinks: Sinks,
+    *,
+    max_fold: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Show a fold (the log base 2 of a ratio) in the range -``max_fold`` (blue) to 0 (white) to +``max_fold`` (red),
@@ -693,7 +705,11 @@ def put_fold_configuration(
 
 
 def get_genes_fold_matrix(
-    daf: DafReader, *, genes: Optional[Entries] = None, axis: Optional[str] = None, entries: Optional[Entries] = None
+    daf: DafReader,
+    *,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the matrix of the ``genes`` fold (log base-2 minus the median) per each of the ``entries`` of some ``daf``
@@ -716,11 +732,11 @@ def fill_gene_correlation(
     daf: DafReader,
     *,
     gene: str,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of the ``gene`` per each of the ``entries`` of some ``daf`` ``axis``, shown
@@ -743,7 +759,7 @@ def fill_gene_correlation(
 
 
 def get_gene_correlation_vector(
-    daf: DafReader, *, gene: str, axis: Optional[str] = None, entries: Optional[Entries] = None
+    daf: DafReader, *, gene: str, axis: str | DefaultValue = DEFAULT, entries: Entries | None | DefaultValue = DEFAULT
 ) -> np.ndarray:
     """
     Get the correlation of the ``gene`` between the cells of the neighborhood of each of the ``entries`` of some
@@ -759,7 +775,7 @@ def get_gene_correlation_vector(
 
 
 def get_gene_is_correlated_vector(
-    daf: DafReader, *, gene: str, axis: Optional[str] = None, entries: Optional[Entries] = None
+    daf: DafReader, *, gene: str, axis: str | DefaultValue = DEFAULT, entries: Entries | None | DefaultValue = DEFAULT
 ) -> np.ndarray:
     """
     Get whether the :py:func:`get_gene_correlation_vector` of the ``gene`` is not zero for each of the ``entries`` of
@@ -780,12 +796,12 @@ def fill_gene_correlation_change(
     base_daf: DafReader,
     *,
     gene: str,
-    axis: Optional[str] = None,
-    base_axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    base_axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with how much the correlation of the ``gene`` changed between the ``base_daf`` and the ``daf``,
@@ -813,8 +829,8 @@ def put_correlation_configuration(
     sinks: Sinks,
     values: Union[NumbersVector, NumbersMatrix],
     *,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Show a correlation (or a difference of correlations) on a linear scale, named by the ``title``. As colors, zero is
@@ -832,9 +848,9 @@ def get_correlation_vector(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the correlation ``property`` of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -857,12 +873,12 @@ def fill_correlation(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    title: Optional[str] = None,
-    empty_value: Optional[float] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by
@@ -891,9 +907,9 @@ def put_correlation_values(
     value_per_entry: NumbersVector,
     name_per_entry: StringsVector,
     *,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Put the correlation ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_correlation_configuration`, and
@@ -913,13 +929,13 @@ def fill_correlation_between_cells_and_punctuated_metacells(  # pylint: disable=
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of each gene between the cells and their punctuated metacells. See the Julia
@@ -936,10 +952,10 @@ def fill_correlation_between_cells_and_punctuated_metacells(  # pylint: disable=
 def get_correlation_between_cells_and_punctuated_metacells_vector(  # pylint: disable=invalid-name
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the correlation of each gene between the cells and their punctuated metacells. See the Julia
@@ -957,13 +973,13 @@ def fill_correlation_between_cells_and_projected_punctuated_metacells(  # pylint
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of each gene between the cells and their projected punctuated metacells. See
@@ -981,10 +997,10 @@ def fill_correlation_between_cells_and_projected_punctuated_metacells(  # pylint
 def get_correlation_between_cells_and_projected_punctuated_metacells_vector(  # pylint: disable=invalid-name
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the correlation of each gene between the cells and their projected punctuated metacells. See the Julia
@@ -1002,13 +1018,13 @@ def fill_correlation_between_cells_and_projected_metacells(  # pylint: disable=i
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the correlation of each gene between the query cells and their projected atlas metacells.
@@ -1026,10 +1042,10 @@ def fill_correlation_between_cells_and_projected_metacells(  # pylint: disable=i
 def get_correlation_between_cells_and_projected_metacells_vector(  # pylint: disable=invalid-name
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the correlation of each gene between the query cells and their projected atlas metacells. See the Julia
@@ -1048,9 +1064,9 @@ def get_gene_correlation_change_vector(
     base_daf: DafReader,
     *,
     gene: str,
-    axis: Optional[str] = None,
-    base_axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
+    axis: str | DefaultValue = DEFAULT,
+    base_axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get how much the correlation of the ``gene`` changed between the ``base_daf`` and the ``daf``, per each of the
@@ -1073,9 +1089,9 @@ def fill_umap(
     daf: DafReader,
     *,
     coordinate: str,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the UMAP ``coordinate`` per each of the ``entries`` of some ``daf`` ``axis``, shown without
@@ -1091,7 +1107,9 @@ def fill_umap(
     )
 
 
-def put_umap_data(sinks: VectorDataSinks, coordinate_per_entry: NumbersVector, *, title: Optional[str] = None) -> None:
+def put_umap_data(
+    sinks: VectorDataSinks, coordinate_per_entry: NumbersVector, *, title: str | None | DefaultValue = DEFAULT
+) -> None:
     """
     Put a UMAP ``coordinate_per_entry`` into the ``sinks``, as the values of a role. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_umap_data!>`__
@@ -1100,7 +1118,7 @@ def put_umap_data(sinks: VectorDataSinks, coordinate_per_entry: NumbersVector, *
     jl.MetacellsGraphs.put_umap_data_b(_to_julia(sinks), _to_julia_array(coordinate_per_entry), **_given(title=title))
 
 
-def put_coordinates_configuration(sinks: Sinks, *, title: Optional[str] = None) -> None:
+def put_coordinates_configuration(sinks: Sinks, *, title: str | None | DefaultValue = DEFAULT) -> None:
     """
     Show the coordinates of an embedding (e.g. a UMAP) without ticks or a grid, named by the ``title``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_coordinates_configuration!>`__
@@ -1110,7 +1128,11 @@ def put_coordinates_configuration(sinks: Sinks, *, title: Optional[str] = None) 
 
 
 def get_umap_vector(
-    daf: DafReader, *, coordinate: str, axis: Optional[str] = None, entries: Optional[Entries] = None
+    daf: DafReader,
+    *,
+    coordinate: str,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the vector of the UMAP ``coordinate`` per each of the ``entries`` of some ``daf`` ``axis``. See the Julia
@@ -1156,8 +1178,8 @@ def get_is_in_categories_vector(
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
     categories: Sequence[str],
-    via: Optional[Via] = None,
-    empty_value: Optional[str] = None,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: str | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether the category ``property`` of each entry of the ``daf`` ``axis`` is one of the ``categories``, as a mask
@@ -1177,7 +1199,7 @@ def get_is_in_categories_vector(
 
 
 def get_is_in_neighborhood_vector(
-    daf: DafReader, *, axis: Optional[str] = None, block: str, via: Optional[Via] = None
+    daf: DafReader, *, axis: str | DefaultValue = DEFAULT, block: str, via: Via | None | DefaultValue = DEFAULT
 ) -> np.ndarray:
     """
     Get whether each entry of the ``daf`` ``axis`` (by default, the metacells) is in the neighborhood of the ``block``,
@@ -1193,7 +1215,7 @@ def get_is_in_neighborhood_vector(
 
 
 def get_is_in_environment_vector(
-    daf: DafReader, *, axis: Optional[str] = None, block: str, via: Optional[Via] = None
+    daf: DafReader, *, axis: str | DefaultValue = DEFAULT, block: str, via: Via | None | DefaultValue = DEFAULT
 ) -> np.ndarray:
     """
     Get whether each entry of the ``daf`` ``axis`` (by default, the metacells) is in the environment of the ``block``,
@@ -1210,7 +1232,11 @@ def get_is_in_environment_vector(
 
 
 def put_size_configuration(
-    sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None, log_base: Optional[LogBase] = None
+    sinks: Sinks,
+    *,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
 ) -> None:
     """
     Show a size (a count) on a log scale of the ``log_base`` (10 by default), regularized by 1, in the ``YlOrRd`` color
@@ -1228,9 +1254,9 @@ def get_size_vector(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the size (count) ``property`` of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1253,13 +1279,13 @@ def fill_size(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    title: Optional[str] = None,
-    empty_value: Optional[float] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the size (count) ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown
@@ -1289,10 +1315,10 @@ def put_size_values(
     value_per_entry: NumbersVector,
     name_per_entry: StringsVector,
     *,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Put the size (count) ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_size_configuration`, and name
@@ -1312,14 +1338,14 @@ def fill_total_UMIs(  # pylint: disable=invalid-name
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the total UMIs of each of the ``entries`` of the ``daf`` ``axis``, shown as a count, and
@@ -1346,10 +1372,10 @@ def fill_total_UMIs(  # pylint: disable=invalid-name
 def get_total_UMIs_vector(  # pylint: disable=invalid-name
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the total UMIs of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1368,14 +1394,14 @@ def fill_n_cells(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the number of cells of each of the ``entries`` of the ``daf`` ``axis``, shown as a count,
@@ -1402,10 +1428,10 @@ def fill_n_cells(
 def get_n_cells_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the number of cells of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1424,14 +1450,14 @@ def fill_n_metacells(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the number of metacells of each of the ``entries`` of the ``daf`` ``axis`` (by default, the
@@ -1458,10 +1484,10 @@ def fill_n_metacells(
 def get_n_metacells_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the number of metacells of each of the ``entries`` of the ``daf`` ``axis`` (by default, the blocks). See the
@@ -1481,13 +1507,13 @@ def fill_mean_cells_per_metacell(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the mean number of cells per metacell of each of the ``entries`` of the ``daf`` ``axis``
@@ -1511,7 +1537,11 @@ def fill_mean_cells_per_metacell(
 
 
 def get_mean_cells_per_metacell_vector(
-    daf: DafReader, *, axis: Optional[str] = None, entries: Optional[Entries] = None, via: Optional[Via] = None
+    daf: DafReader,
+    *,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the mean number of cells per metacell of each of the ``entries`` of the ``daf`` ``axis`` (by default, the
@@ -1530,13 +1560,13 @@ def fill_mean_total_UMIs_per_metacell(  # pylint: disable=invalid-name
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the mean total UMIs per metacell of each of the ``entries`` of the ``daf`` ``axis`` (by
@@ -1560,7 +1590,11 @@ def fill_mean_total_UMIs_per_metacell(  # pylint: disable=invalid-name
 
 
 def get_mean_total_UMIs_per_metacell_vector(  # pylint: disable=invalid-name
-    daf: DafReader, *, axis: Optional[str] = None, entries: Optional[Entries] = None, via: Optional[Via] = None
+    daf: DafReader,
+    *,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the mean total UMIs per metacell of each of the ``entries`` of the ``daf`` ``axis`` (by default, the blocks).
@@ -1579,13 +1613,13 @@ def fill_mean_total_UMIs_per_cell(  # pylint: disable=invalid-name
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the mean total UMIs per cell of each of the ``entries`` of the ``daf`` ``axis``, shown as a
@@ -1609,7 +1643,11 @@ def fill_mean_total_UMIs_per_cell(  # pylint: disable=invalid-name
 
 
 def get_mean_total_UMIs_per_cell_vector(  # pylint: disable=invalid-name
-    daf: DafReader, *, axis: Optional[str] = None, entries: Optional[Entries] = None, via: Optional[Via] = None
+    daf: DafReader,
+    *,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the mean total UMIs per cell of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1630,14 +1668,14 @@ def fill_block(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[str] = None,
-    title: Optional[str] = None,
-    colors_axis: Optional[str] = None,
-    empty_color: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: str | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    colors_axis: str | DefaultValue = DEFAULT,
+    empty_color: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the block of each of the ``entries`` of the ``daf`` ``axis``, each block in its own color,
@@ -1664,10 +1702,10 @@ def fill_block(
 def get_block_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[str] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: str | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the block of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1683,7 +1721,7 @@ def get_block_vector(
 
 
 def get_block_colors(
-    daf: DafReader, *, empty_value: Optional[str] = None, empty_color: Optional[str] = None
+    daf: DafReader, *, empty_value: str | DefaultValue = DEFAULT, empty_color: str | None | DefaultValue = DEFAULT
 ) -> Mapping[str, str]:
     """
     Get the palette of the ``daf`` ``block`` axis, with an additional ``empty_color`` for the ``empty_value`` of entries
@@ -1702,11 +1740,11 @@ def fill_global_flow_order(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    type_property: Optional[str] = None,
-    empty_value: Optional[float] = None,
-    title: Optional[str] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    type_property: str | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the global flow order of the type of each of the ``entries`` of the ``daf`` ``axis``, and
@@ -1730,10 +1768,10 @@ def fill_global_flow_order(
 def get_global_flow_order_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    type_property: Optional[str] = None,
-    empty_value: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    type_property: str | DefaultValue = DEFAULT,
+    empty_value: float | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the global flow order of the type of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1755,14 +1793,14 @@ def fill_type(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[str] = None,
-    title: Optional[str] = None,
-    colors_axis: Optional[str] = None,
-    empty_color: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: str | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    colors_axis: str | DefaultValue = DEFAULT,
+    empty_color: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the type of each of the ``entries`` of the ``daf`` ``axis``, colored by the palette of the
@@ -1789,10 +1827,10 @@ def fill_type(
 def get_type_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[str] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: str | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the type of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1808,7 +1846,7 @@ def get_type_vector(
 
 
 def get_type_colors(
-    daf: DafReader, *, empty_value: Optional[str] = None, empty_color: Optional[str] = None
+    daf: DafReader, *, empty_value: str | DefaultValue = DEFAULT, empty_color: str | None | DefaultValue = DEFAULT
 ) -> Mapping[str, str]:
     """
     Get the palette of the ``daf`` ``type`` axis (the ``color`` of each type), with an additional ``empty_color`` for the
@@ -1824,7 +1862,11 @@ def get_type_colors(
 
 
 def put_category_configuration(
-    sinks: Sinks, color_per_value: Mapping[str, str], *, title: Optional[str] = None, show_legend: Optional[bool] = None
+    sinks: Sinks,
+    color_per_value: Mapping[str, str],
+    *,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Show the values of a category (e.g. types or blocks) of the ``sinks`` using the ``color_per_value`` palette, named
@@ -1838,7 +1880,11 @@ def put_category_configuration(
 
 
 def get_category_colors(
-    daf: DafReader, *, axis: str, empty_value: Optional[str] = None, empty_color: Optional[str] = None
+    daf: DafReader,
+    *,
+    axis: str,
+    empty_value: str | DefaultValue = DEFAULT,
+    empty_color: str | None | DefaultValue = DEFAULT,
 ) -> Mapping[str, str]:
     """
     Get the palette mapping each entry of the ``daf`` ``axis`` of a category to its color (its ``color`` if the axis
@@ -1858,9 +1904,9 @@ def get_category_vector(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[str] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: str | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the category ``property`` (e.g. the type) of each of the ``entries`` of the ``daf`` ``axis``. See the Julia
@@ -1883,13 +1929,13 @@ def fill_category(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    title: Optional[str] = None,
-    empty_value: Optional[str] = None,
-    colors_axis: Optional[str] = None,
-    empty_color: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    empty_value: str | DefaultValue = DEFAULT,
+    colors_axis: str | DefaultValue = DEFAULT,
+    empty_color: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the category ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by
@@ -1921,8 +1967,8 @@ def put_category_values(
     name_per_entry: StringsVector,
     color_per_value: Mapping[str, str],
     *,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Put the category ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_category_configuration` using the
@@ -1942,7 +1988,9 @@ def put_category_values(
 # Booleans.
 
 
-def put_boolean_configuration(sinks: Sinks, *, title: Optional[str] = None, show_legend: Optional[bool] = None) -> None:
+def put_boolean_configuration(
+    sinks: Sinks, *, title: str | None | DefaultValue = DEFAULT, show_legend: bool | DefaultValue = DEFAULT
+) -> None:
     """
     Show Boolean *string* values: ``true`` in black and ``false`` in light grey, named by the ``title``. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_boolean_configuration!>`__
@@ -1956,9 +2004,9 @@ def get_boolean_vector(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``. This can be shown as colors, or
@@ -1982,11 +2030,11 @@ def fill_boolean(
     *,
     axis: str,
     property: str,  # pylint: disable=redefined-builtin
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    title: Optional[str] = None,
-    empty_value: Optional[bool] = None,
-    show_legend: Optional[bool] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the Boolean ``property`` of each of the ``entries`` of the ``daf`` ``axis``, shown by
@@ -2014,8 +2062,8 @@ def put_boolean_values(
     value_per_entry: BoolsVector,
     name_per_entry: Optional[StringsVector],
     *,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Put the Boolean ``value_per_entry`` into the ``sinks``, shown by :py:func:`put_boolean_configuration`, and name the
@@ -2038,12 +2086,12 @@ def fill_is_lateral(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is lateral. See the Julia
@@ -2058,10 +2106,10 @@ def fill_is_lateral(
 def get_is_lateral_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is lateral. See the Julia
@@ -2077,12 +2125,12 @@ def fill_is_marker(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is a marker gene. See the Julia
@@ -2097,10 +2145,10 @@ def fill_is_marker(
 def get_is_marker_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is a marker gene. See the Julia
@@ -2116,12 +2164,12 @@ def fill_is_transcription_factor(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is a transcription factor (binds to DNA). See the Julia
@@ -2136,10 +2184,10 @@ def fill_is_transcription_factor(
 def get_is_transcription_factor_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is a transcription factor. See the Julia
@@ -2157,12 +2205,12 @@ def fill_is_regulator(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene regulates the expression of other genes. See the Julia
@@ -2177,10 +2225,10 @@ def fill_is_regulator(
 def get_is_regulator_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene regulates the expression of other genes. See the Julia
@@ -2196,12 +2244,12 @@ def fill_is_forbidden(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is forbidden. See the Julia
@@ -2216,10 +2264,10 @@ def fill_is_forbidden(
 def get_is_forbidden_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is forbidden. See the Julia
@@ -2235,12 +2283,12 @@ def fill_is_skeleton(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is a skeleton gene. See the Julia
@@ -2255,10 +2303,10 @@ def fill_is_skeleton(
 def get_is_skeleton_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is a skeleton gene. See the Julia
@@ -2274,12 +2322,12 @@ def fill_is_correlated_with_skeleton(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is correlated with some skeleton gene. See the Julia
@@ -2294,10 +2342,10 @@ def fill_is_correlated_with_skeleton(
 def get_is_correlated_with_skeleton_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is correlated with some skeleton gene. See the Julia
@@ -2315,12 +2363,12 @@ def fill_is_mitochondrial(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is mitochondrial. See the Julia
@@ -2335,10 +2383,10 @@ def fill_is_mitochondrial(
 def get_is_mitochondrial_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is mitochondrial. See the Julia
@@ -2354,12 +2402,12 @@ def fill_is_ribosomal(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is ribosomal. See the Julia
@@ -2374,10 +2422,10 @@ def fill_is_ribosomal(
 def get_is_ribosomal_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is ribosomal. See the Julia
@@ -2393,12 +2441,12 @@ def fill_is_excluded(
     sinks: VectorDataSinks,
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each gene is excluded. See the Julia
@@ -2413,10 +2461,10 @@ def fill_is_excluded(
 def get_is_excluded_vector(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    entries: Optional[Entries] = None,
-    via: Optional[Via] = None,
-    empty_value: Optional[bool] = None,
+    axis: str | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    via: Via | None | DefaultValue = DEFAULT,
+    empty_value: bool | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get whether each gene is excluded. See the Julia
@@ -2430,14 +2478,14 @@ def get_is_excluded_vector(
 
 # The keywords given to a per-property fill, as passed to Julia.
 def _property_fill_given(  # pylint: disable=too-many-positional-arguments
-    axis: Optional[str],
-    entries: Optional[Entries],
-    via: Optional[Via],
-    empty_value: Optional[Union[bool, float]],
-    title: Optional[str],
-    show_legend: Optional[bool],
+    axis: str | DefaultValue,
+    entries: Entries | None | DefaultValue,
+    via: Via | None | DefaultValue,
+    empty_value: Union[bool, float, DefaultValue],
+    title: str | None | DefaultValue,
+    show_legend: bool | DefaultValue,
     *,
-    hover_format: Optional[HoverFormat] = None,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> Mapping[str, Any]:
     return _given(
         axis=axis,
@@ -2452,7 +2500,10 @@ def _property_fill_given(  # pylint: disable=too-many-positional-arguments
 
 # The keywords given to a per-property get, as passed to Julia.
 def _property_get_given(
-    axis: Optional[str], entries: Optional[Entries], via: Optional[Via], empty_value: Optional[Union[bool, float]]
+    axis: str | DefaultValue,
+    entries: Entries | None | DefaultValue,
+    via: Via | None | DefaultValue,
+    empty_value: Union[bool, float, DefaultValue],
 ) -> Mapping[str, Any]:
     return _given(axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value)
 
@@ -2460,7 +2511,9 @@ def _property_get_given(
 # Low level queries.
 
 
-def get_vector_query(daf: DafReader, *, query: str, indices: Optional[Sequence[int]] = None) -> np.ndarray:
+def get_vector_query(
+    daf: DafReader, *, query: str, indices: Sequence[int] | None | DefaultValue = DEFAULT
+) -> np.ndarray:
     """
     Execute a vector ``query`` on a ``daf`` repository and optionally access specific (1-based) ``indices`` in it. See
     the Julia
@@ -2476,8 +2529,8 @@ def get_matrix_query(
     daf: DafReader,
     *,
     query: str,
-    row_indices: Optional[Sequence[int]] = None,
-    column_indices: Optional[Sequence[int]] = None,
+    row_indices: Sequence[int] | None | DefaultValue = DEFAULT,
+    column_indices: Sequence[int] | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Execute a matrix ``query`` on a ``daf`` repository and optionally access specific (1-based) ``row_indices`` and/or

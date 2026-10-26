@@ -17,7 +17,6 @@ the entries its ``sinks`` are already named after, or else all of them.
 """
 
 from typing import Mapping
-from typing import Optional
 from typing import Sequence
 from typing import Tuple
 
@@ -47,6 +46,8 @@ from .data_sources import put_expression_level_configuration
 from .data_sources import put_fold_configuration
 from .data_sources import put_size_values
 from .data_sources import put_umap_data
+from .julia_import import DEFAULT
+from .julia_import import DefaultValue
 from .julia_import import _from_julia_array
 from .julia_import import jl
 
@@ -81,12 +82,12 @@ def ad_fill_gene_expression(
     adata: AnnData,
     *,
     gene: str,
-    entries: Optional[Entries] = None,
-    gene_fraction_regularization: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the ``gene`` expression level (see :py:func:`ad_get_gene_expression_vector`) per each of the
@@ -95,9 +96,9 @@ def ad_fill_gene_expression(
     :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``
     counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = f"{gene} fraction"
-    if hover_format is None:
+    if isinstance(hover_format, DefaultValue):
         hover_format = EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
     entries = _sinks_entries(sinks, entries)
     put_vector_data(
@@ -116,7 +117,9 @@ def ad_fill_gene_expression(
     put_vector_names_data(sinks, _entry_names(adata.obs_names, entries))
 
 
-def ad_get_gene_expression_vector(adata: AnnData, *, gene: str, entries: Optional[Entries] = None) -> np.ndarray:
+def ad_get_gene_expression_vector(
+    adata: AnnData, *, gene: str, entries: Entries | None | DefaultValue = DEFAULT
+) -> np.ndarray:
     """
     Get the vector of the ``gene`` expression level per each of the ``entries`` of the ``adata``, from ``X`` as it is
     stored. In a metacells ``AnnData`` this is typically a geometric mean of the fractions of the cells, rather than a
@@ -133,13 +136,13 @@ def ad_fill_genes_expression_matrix(
     sinks: MatrixDataSinks,
     adata: AnnData,
     *,
-    genes: Optional[Entries] = None,
-    entries: Optional[Entries] = None,
-    gene_fraction_regularization: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the expression level of each of the ``genes`` (the rows) in each of the ``entries`` (the
@@ -148,9 +151,9 @@ def ad_fill_genes_expression_matrix(
     :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``
     counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_genes_expression_matrix`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = "fraction"
-    if hover_format is None:
+    if isinstance(hover_format, DefaultValue):
         hover_format = EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS
     genes, entries = _sinks_matrix_entries(sinks, genes, entries)
     put_matrix_data(
@@ -170,7 +173,10 @@ def ad_fill_genes_expression_matrix(
 
 
 def ad_get_genes_expression_matrix(
-    adata: AnnData, *, genes: Optional[Entries] = None, entries: Optional[Entries] = None
+    adata: AnnData,
+    *,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the expression level of each of the ``genes`` (the rows) in each of the ``entries`` (the columns) of the
@@ -188,12 +194,12 @@ def ad_fill_genes_fold_matrix(
     sinks: MatrixDataSinks,
     adata: AnnData,
     *,
-    genes: Optional[Entries] = None,
-    entries: Optional[Entries] = None,
-    max_fold: Optional[float] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    hover_format: Optional[HoverFormat] = None,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    max_fold: float | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the fold of the expression of each of the ``genes`` (the rows) from its median, in each of
@@ -202,9 +208,9 @@ def ad_fill_genes_fold_matrix(
     :py:obj:`~metacellsgraphspy.data_sources.FOLD_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_genes_fold_matrix`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = "fold from median"
-    if hover_format is None:
+    if isinstance(hover_format, DefaultValue):
         hover_format = FOLD_HOVER_FORMAT_FOR_GRAPHS
     genes, entries = _sinks_matrix_entries(sinks, genes, entries)
     put_matrix_data(
@@ -218,7 +224,10 @@ def ad_fill_genes_fold_matrix(
 
 
 def ad_get_genes_fold_matrix(
-    adata: AnnData, *, genes: Optional[Entries] = None, entries: Optional[Entries] = None
+    adata: AnnData,
+    *,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
     Get the fold of the expression of each of the ``genes`` (the rows) from its median across the ``entries`` (the
@@ -232,7 +241,7 @@ def ad_get_genes_fold_matrix(
     return log_matrix - np.median(log_matrix, axis=1, keepdims=True)
 
 
-def ad_get_marker_rank_vector(adata: AnnData, *, entries: Optional[Entries] = None) -> np.ndarray:
+def ad_get_marker_rank_vector(adata: AnnData, *, entries: Entries | None | DefaultValue = DEFAULT) -> np.ndarray:
     """
     Get the rank of each of the gene ``entries`` of the ``adata`` as a marker (the ``marker_rank`` of the ``var``), where
     1 is the strongest marker. A gene which is not a marker has the maximal ``uint32`` rank.
@@ -271,10 +280,10 @@ def ad_fill_type(
     *,
     type_property: str,
     type_colors_csv: str,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    empty_type_color: Optional[str] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    empty_type_color: str | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the ``type_property`` of each of the ``entries`` of the ``adata``, colored by the
@@ -282,7 +291,7 @@ def ad_fill_type(
     :py:func:`ad_get_type_vector` and :py:func:`ad_get_type_colors` for details. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_type`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = "type"
     entries = _sinks_entries(sinks, entries)
     put_vector_data(sinks, ad_get_type_vector(adata, type_property=type_property, entries=entries), title=title)
@@ -295,7 +304,9 @@ def ad_fill_type(
     put_vector_names_data(sinks, _entry_names(adata.obs_names, entries))
 
 
-def ad_get_type_vector(adata: AnnData, *, type_property: str, entries: Optional[Entries] = None) -> np.ndarray:
+def ad_get_type_vector(
+    adata: AnnData, *, type_property: str, entries: Entries | None | DefaultValue = DEFAULT
+) -> np.ndarray:
     """
     Get the ``type_property`` of the ``obs`` of each of the ``entries`` of the ``adata``. A missing type is returned as
     the empty string. This is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_type_vector`.
@@ -304,17 +315,22 @@ def ad_get_type_vector(adata: AnnData, *, type_property: str, entries: Optional[
     return np.array(["" if pd.isna(type_name) else str(type_name) for type_name in types], dtype=str)
 
 
-def ad_get_type_colors(type_colors_csv: str, *, empty_type_color: Optional[str] = None) -> Mapping[str, str]:
+def ad_get_type_colors(
+    type_colors_csv: str, *, empty_type_color: str | None | DefaultValue = DEFAULT
+) -> Mapping[str, str]:
     """
     Get the palette mapping each type to its color from the ``type_colors_csv`` file, with an additional
     ``empty_type_color`` (by default, :py:obj:`~metacellsgraphspy.data_sources.EMPTY_CATEGORY_COLOR`) for entries with no
-    type (the empty string). The file has a header line. Its first column is the type and its second column is the
-    color. The names of the columns don't matter. This is the ``AnnData`` counterpart of
+    type (the empty string), unless it is ``None``. The file has a header line. Its first column is the type and its
+    second column is the color. The names of the columns don't matter. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.get_type_colors`.
     """
     frame = pd.read_csv(type_colors_csv, dtype=str, keep_default_na=False)
     color_per_type = dict(zip(frame.iloc[:, 0], frame.iloc[:, 1]))
-    color_per_type[""] = EMPTY_CATEGORY_COLOR if empty_type_color is None else empty_type_color
+    if isinstance(empty_type_color, DefaultValue):
+        empty_type_color = EMPTY_CATEGORY_COLOR
+    if empty_type_color is not None:
+        color_per_type[""] = empty_type_color
     return color_per_type
 
 
@@ -343,15 +359,15 @@ def ad_fill_umap(
     adata: AnnData,
     *,
     coordinate: str,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the UMAP ``coordinate`` (``x`` or ``y``) of each of the ``entries`` of the ``adata``, and
     name the entities after the ``entries``. The default ``title`` is ``UMAP X`` (or ``UMAP Y``). This is the
     ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_umap`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = f"UMAP {coordinate.upper()}"
     entries = _sinks_entries(sinks, entries)
     put_umap_data(sinks, ad_get_umap_vector(adata, coordinate=coordinate, entries=entries), title=title)
@@ -359,7 +375,9 @@ def ad_fill_umap(
     put_vector_names_data(sinks, _entry_names(adata.obs_names, entries))
 
 
-def ad_get_umap_vector(adata: AnnData, *, coordinate: str, entries: Optional[Entries] = None) -> np.ndarray:
+def ad_get_umap_vector(
+    adata: AnnData, *, coordinate: str, entries: Entries | None | DefaultValue = DEFAULT
+) -> np.ndarray:
     """
     Get the UMAP ``coordinate`` (the ``x`` or ``y`` of the ``obs``) of each of the ``entries`` of the ``adata``. This is
     the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_umap_vector`.
@@ -371,18 +389,18 @@ def ad_fill_total_UMIs(  # pylint: disable=invalid-name
     sinks: VectorDataSinks,
     adata: AnnData,
     *,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
-    log_base: Optional[LogBase] = None,
-    hover_format: Optional[HoverFormat] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the total UMIs of each of the ``entries`` of the ``adata``, shown as a size, and name the
     entities after the ``entries``. The default ``title`` is ``total UMIs``. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_total_UMIs`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = "total UMIs"
     entries = _sinks_entries(sinks, entries)
     put_size_values(
@@ -397,7 +415,7 @@ def ad_fill_total_UMIs(  # pylint: disable=invalid-name
 
 
 def ad_get_total_UMIs_vector(  # pylint: disable=invalid-name
-    adata: AnnData, *, entries: Optional[Entries] = None
+    adata: AnnData, *, entries: Entries | None | DefaultValue = DEFAULT
 ) -> np.ndarray:
     """
     Get the total UMIs (the ``total_umis`` of the ``obs``) of each of the ``entries`` of the ``adata``. This is the
@@ -410,21 +428,21 @@ def ad_fill_is_lateral(
     sinks: VectorDataSinks,
     adata: AnnData,
     *,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each of the gene ``entries`` of the ``adata`` is lateral, and name the entities after
     the ``entries``. The default ``title`` is ``lateral``. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_is_lateral`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = "lateral"
     _fill_var_flag(sinks, adata, column="lateral_gene", entries=entries, title=title, show_legend=show_legend)
 
 
-def ad_get_is_lateral_vector(adata: AnnData, *, entries: Optional[Entries] = None) -> np.ndarray:
+def ad_get_is_lateral_vector(adata: AnnData, *, entries: Entries | None | DefaultValue = DEFAULT) -> np.ndarray:
     """
     Get whether each of the gene ``entries`` of the ``adata`` is lateral (the ``lateral_gene`` of the ``var``). This is
     the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_is_lateral_vector`.
@@ -436,21 +454,21 @@ def ad_fill_is_excluded(
     sinks: VectorDataSinks,
     adata: AnnData,
     *,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each of the gene ``entries`` of the ``adata`` is excluded, and name the entities
     after the ``entries``. The default ``title`` is ``excluded``. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_is_excluded`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = "excluded"
     _fill_var_flag(sinks, adata, column="excluded_gene", entries=entries, title=title, show_legend=show_legend)
 
 
-def ad_get_is_excluded_vector(adata: AnnData, *, entries: Optional[Entries] = None) -> np.ndarray:
+def ad_get_is_excluded_vector(adata: AnnData, *, entries: Entries | None | DefaultValue = DEFAULT) -> np.ndarray:
     """
     Get whether each of the gene ``entries`` of the ``adata`` is excluded (the ``excluded_gene`` of the ``var``). This
     is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_is_excluded_vector`.
@@ -462,21 +480,21 @@ def ad_fill_is_marker(
     sinks: VectorDataSinks,
     adata: AnnData,
     *,
-    entries: Optional[Entries] = None,
-    title: Optional[str] = None,
-    show_legend: Optional[bool] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with whether each of the gene ``entries`` of the ``adata`` is a marker gene, and name the
     entities after the ``entries``. The default ``title`` is ``marker``. This is the ``AnnData`` counterpart of
     :py:func:`~metacellsgraphspy.data_sources.fill_is_marker`.
     """
-    if title is None:
+    if isinstance(title, DefaultValue):
         title = "marker"
     _fill_var_flag(sinks, adata, column="marker_gene", entries=entries, title=title, show_legend=show_legend)
 
 
-def ad_get_is_marker_vector(adata: AnnData, *, entries: Optional[Entries] = None) -> np.ndarray:
+def ad_get_is_marker_vector(adata: AnnData, *, entries: Entries | None | DefaultValue = DEFAULT) -> np.ndarray:
     """
     Get whether each of the gene ``entries`` of the ``adata`` is a marker gene (the ``marker_gene`` of the ``var``).
     This is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_is_marker_vector`.
@@ -490,9 +508,9 @@ def _fill_var_flag(
     adata: AnnData,
     *,
     column: str,
-    entries: Optional[Entries],
-    title: str,
-    show_legend: Optional[bool],
+    entries: Entries | None | DefaultValue,
+    title: str | None,
+    show_legend: bool | DefaultValue,
 ) -> None:
     entries = _sinks_entries(sinks, entries)
     put_boolean_values(
@@ -505,33 +523,34 @@ def _fill_var_flag(
 
 
 # A Boolean ``column`` of the ``var`` for each of the gene ``entries``.
-def _var_flag_vector(adata: AnnData, *, column: str, entries: Optional[Entries]) -> np.ndarray:
+def _var_flag_vector(adata: AnnData, *, column: str, entries: Entries | None | DefaultValue) -> np.ndarray:
     return np.asarray(adata.var[column], dtype=bool)[_entry_indices(adata.var_names, entries)]
 
 
-# The entries a fill uses: the given ones, or else the names its sinks already hold. A ``None`` means all of them.
-def _sinks_entries(sinks: VectorDataSinks, entries: Optional[Entries]) -> Optional[Entries]:
-    if entries is None:
+# The entries a fill uses: the given ones, or else the names its sinks already hold. Both ``None`` and ``DEFAULT``
+# mean they weren't given; ``None`` is then all of them.
+def _sinks_entries(sinks: VectorDataSinks, entries: Entries | None | DefaultValue) -> Entries | None:
+    if entries is None or isinstance(entries, DefaultValue):
         return get_vector_names_data(sinks)
     return entries
 
 
 # The genes (rows) and entries (columns) a matrix fill uses, each chosen the way ``_sinks_entries`` chooses them.
 def _sinks_matrix_entries(
-    sinks: MatrixDataSinks, genes: Optional[Entries], entries: Optional[Entries]
-) -> Tuple[Optional[Entries], Optional[Entries]]:
-    if genes is None or entries is None:
+    sinks: MatrixDataSinks, genes: Entries | None | DefaultValue, entries: Entries | None | DefaultValue
+) -> Tuple[Entries | None, Entries | None]:
+    if genes is None or isinstance(genes, DefaultValue) or entries is None or isinstance(entries, DefaultValue):
         name_per_row, name_per_column = get_matrix_names_data(sinks)
-        if genes is None:
+        if genes is None or isinstance(genes, DefaultValue):
             genes = name_per_row
-        if entries is None:
+        if entries is None or isinstance(entries, DefaultValue):
             entries = name_per_column
     return (genes, entries)
 
 
 # The 0-based indices of the (1-based, named or masked) entries among the ``names`` of an axis, or of all of them.
-def _entry_indices(names: pd.Index, entries: Optional[Entries]) -> np.ndarray:
-    if entries is None:
+def _entry_indices(names: pd.Index, entries: Entries | None | DefaultValue) -> np.ndarray:
+    if entries is None or isinstance(entries, DefaultValue):
         return np.arange(len(names))
     entries_array = np.asarray(entries)
     if entries_array.dtype.kind == "b":
@@ -547,5 +566,5 @@ def _entry_indices(names: pd.Index, entries: Optional[Entries]) -> np.ndarray:
 
 
 # The names of the entries among the ``names`` of an axis.
-def _entry_names(names: pd.Index, entries: Optional[Entries]) -> np.ndarray:
+def _entry_names(names: pd.Index, entries: Entries | None | DefaultValue) -> np.ndarray:
     return np.asarray(names[_entry_indices(names, entries)], dtype=str)

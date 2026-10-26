@@ -6,8 +6,6 @@ These are the ``AnnData`` counterparts of some of the ``Daf`` graphs. They are i
 ``X`` holds the expression level of each gene in each metacell (typically a geometric mean, used as it is stored).
 """
 
-from typing import Optional
-
 from anndata import AnnData  # type: ignore
 from somegraphspy import HeatmapGraph
 from somegraphspy import PointsGraph
@@ -22,6 +20,8 @@ from .anndata_data_sources import ad_get_top_marker_gene_indices
 from .data_sources import TOP_MARKERS_COUNT_FOR_GRAPHS
 from .data_sources import Entries
 from .heatmap_graphs import put_genes_heatmap_configuration
+from .julia_import import DEFAULT
+from .julia_import import DefaultValue
 
 __all__ = [
     "ad_add_genes_heatmap_default_columns_annotations",
@@ -36,8 +36,8 @@ def ad_gene_gene_graph(
     *,
     x_gene: str,
     y_gene: str,
-    entries: Optional[Entries] = None,
-    gene_fraction_regularization: Optional[float] = None,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    gene_fraction_regularization: float | DefaultValue = DEFAULT,
 ) -> PointsGraph:
     """
     The expression of ``x_gene`` against ``y_gene``, a point per each of the ``entries`` of the ``adata``, on log scale.
@@ -64,11 +64,11 @@ def ad_gene_gene_graph(
 def ad_genes_heatmap_graph(
     adata: AnnData,
     *,
-    genes: Optional[Entries] = None,
-    entries: Optional[Entries] = None,
-    rows_axis_title: Optional[str] = None,
-    columns_axis_title: Optional[str] = None,
-    max_fold: Optional[float] = None,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    rows_axis_title: str | None | DefaultValue = DEFAULT,
+    columns_axis_title: str | None | DefaultValue = DEFAULT,
+    max_fold: float | DefaultValue = DEFAULT,
 ) -> HeatmapGraph:
     """
     The expression of the ``genes`` (by default, the
@@ -77,7 +77,7 @@ def ad_genes_heatmap_graph(
     ``adata`` (by default, all the metacells), as the fold factor of the gene from its median across the entries. This
     is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.heatmap_graphs.genes_heatmap_graph`.
     """
-    if genes is None:
+    if genes is None or isinstance(genes, DefaultValue):
         genes = ad_get_top_marker_gene_indices(adata, markers_count=TOP_MARKERS_COUNT_FOR_GRAPHS)
     graph = heatmap_graph()
     ad_fill_genes_fold_matrix(graph.entries_matrix_fields(), adata, genes=genes, entries=entries, max_fold=max_fold)

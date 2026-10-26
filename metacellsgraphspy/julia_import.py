@@ -7,6 +7,8 @@ own environment variables, plus the ``@default`` value those variables accept he
 importing this package, since importing it imports ``dafpy``, which starts Julia.
 """
 
+from dafpy.julia_import import DEFAULT  # pylint: disable=unused-import
+from dafpy.julia_import import DefaultValue  # pylint: disable=unused-import
 from dafpy.julia_import import _from_julia_array  # pylint: disable=unused-import
 from dafpy.julia_import import _from_julia_frame  # pylint: disable=unused-import
 from dafpy.julia_import import _given  # pylint: disable=unused-import

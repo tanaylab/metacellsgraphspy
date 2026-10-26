@@ -3,14 +3,14 @@ Heatmap graphs of a metacells repository. See the Julia
 `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/heatmap_graphs.html>`__ for details.
 """
 
-from typing import Optional
-
 from dafpy import DafReader
 from somegraphspy import HeatmapGraph
 from somegraphspy import HeatmapGraphConfiguration
 from somegraphspy.julia_import import _to_julia
 
 from .data_sources import Entries
+from .julia_import import DEFAULT
+from .julia_import import DefaultValue
 from .julia_import import _given
 from .julia_import import _to_julia_array
 from .julia_import import jl
@@ -26,12 +26,12 @@ __all__ = [
 def genes_heatmap_graph(
     daf: DafReader,
     *,
-    axis: Optional[str] = None,
-    genes: Optional[Entries] = None,
-    entries: Optional[Entries] = None,
-    rows_axis_title: Optional[str] = None,
-    columns_axis_title: Optional[str] = None,
-    max_fold: Optional[float] = None,
+    axis: str | DefaultValue = DEFAULT,
+    genes: Entries | None | DefaultValue = DEFAULT,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    rows_axis_title: str | None | DefaultValue = DEFAULT,
+    columns_axis_title: str | None | DefaultValue = DEFAULT,
+    max_fold: float | DefaultValue = DEFAULT,
 ) -> HeatmapGraph:
     """
     The expression of the ``genes`` (by default, the
@@ -61,8 +61,8 @@ def put_genes_heatmap_configuration(
     *,
     n_genes: int,
     n_entries: int,
-    rows_axis_title: Optional[str] = None,
-    columns_axis_title: Optional[str] = None,
+    rows_axis_title: str | None | DefaultValue = DEFAULT,
+    columns_axis_title: str | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Lay out a heatmap of ``n_genes`` genes (the rows) by ``n_entries`` entries (the columns), as
@@ -89,7 +89,7 @@ def add_genes_heatmap_default_rows_annotations(graph: HeatmapGraph, daf: DafRead
 
 
 def add_genes_heatmap_default_columns_annotations(
-    graph: HeatmapGraph, daf: DafReader, *, axis: Optional[str] = None
+    graph: HeatmapGraph, daf: DafReader, *, axis: str | DefaultValue = DEFAULT
 ) -> None:
     """
     Add the default annotations of the columns (the entries of the ``axis``, by default the metacells) of a
