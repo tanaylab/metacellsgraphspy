@@ -15,6 +15,8 @@ __version__ = "0.1.0"
 
 # pylint: disable=wildcard-import,unused-wildcard-import
 
+import os as _os
+
 from .anndata_data_sources import *
 from .anndata_graphs import *
 from .bar_graphs import *
@@ -22,3 +24,10 @@ from .data_sources import *
 from .heatmap_graphs import *
 from .julia_import import *
 from .scatter_graphs import *
+
+# If ``METACELLS_TRACE_COMPILE`` is set, each public function records what Julia compiles while it runs (see
+# ``dafpy.compile_tracing``).
+if _os.environ.get("METACELLS_TRACE_COMPILE"):
+    from dafpy.compile_tracing import wrap_package as _wrap_package
+
+    _wrap_package(__name__)

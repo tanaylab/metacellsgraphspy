@@ -1,6 +1,6 @@
 {
     "packages": {
-        "Metacells":       { "uuid": "2c3fbd22-7937-42a8-a46e-a575a65e83f1", "url": "https://github.com/tanaylab/Metacells.jl.git" },
-        "MetacellsGraphs": { "uuid": "b78c44d1-95b4-453a-bb1d-4e115706a256", "url": "https://github.com/tanaylab/MetacellsGraphs.jl.git" }
+        "MetacellsGraphsPy": { "uuid": "0cbf8efa-c77c-4855-bfa4-b49cd2a173fd", "url": "https://github.com/tanaylab/metacellsgraphspy.git", "subdir": "metacellsgraphspy/julia/MetacellsGraphsPy" },
+        "MetacellsGraphs":   { "uuid": "b78c44d1-95b4-453a-bb1d-4e115706a256", "url": "https://github.com/tanaylab/MetacellsGraphs.jl.git" }
     }
 }

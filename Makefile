@@ -73,7 +73,7 @@ staged:  ## check everything is staged for git commit
 	else true; \
 	fi
 
-format: trailingspaces linebreaks backticks fstrings isort black flake8 ## check code format
+format: trailingspaces linebreaks backticks fstrings isort black flake8 juliaformat ## check code format
 
 trailingspaces: .make.trailingspaces  ## check for trailing spaces
 
@@ -166,7 +166,23 @@ flake8: .make.flake8  ## check format with flake8
 	flake8 --max-line-length $(MAX_LINE_LENGTH) --ignore F401,E402,F403,W503,E704,E722,E501 $(NAME) tests
 	touch $@
 
-reformat: stripspaces isortify blackify  ## reformat code
+JL_SOURCE_FILES = $(filter %.jl, $(ALL_SOURCE_FILES))
+
+JULIA_FORMAT = julia --project=$(NAME)/julia/format_env -e 'using Pkg; Pkg.resolve(); Pkg.instantiate()' \
+    && julia --project=$(NAME)/julia/format_env -e
+
+juliaformat: .make.juliaformat  ## check format of Julia code with JuliaFormatter
+
+.make.juliaformat: $(JL_SOURCE_FILES) $(NAME)/julia/.JuliaFormatter.toml
+	@echo "juliaformat"
+	@if ! $(JULIA_FORMAT) 'using JuliaFormatter; exit(format("$(NAME)/julia"; overwrite = false) ? 0 : 1)'; \
+	then \
+	    echo 'Julia files are not formatted (run `make reformat` or `make juliaformatify`).'; \
+	    false; \
+	fi
+	touch $@
+
+reformat: stripspaces isortify blackify juliaformatify  ## reformat code
 
 stripspaces:  # strip trailing spaces
 	@echo stripspaces
@@ -179,6 +195,9 @@ isortify:  ## sort imports with isort
 
 blackify:  ## reformat with black
 	black --line-length $(MAX_LINE_LENGTH) --target-version py311 $(NAME) tests
+
+juliaformatify:  ## reformat Julia code with JuliaFormatter
+	$(JULIA_FORMAT) 'using JuliaFormatter; format("$(NAME)/julia")'
 
 smells: mypy pylint  ## check for code smells
 

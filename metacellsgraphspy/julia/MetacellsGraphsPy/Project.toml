@@ -1,0 +1,23 @@
+name = "MetacellsGraphsPy"
+uuid = "0cbf8efa-c77c-4855-bfa4-b49cd2a173fd"
+version = "0.1.0"
+authors = ["Oren Ben-Kiki <oren@ben-kiki.org>"]
+
+[deps]
+DafPy = "bce8d41a-ca8b-4b7d-9a87-596a50b60218"
+Metacells = "2c3fbd22-7937-42a8-a46e-a575a65e83f1"
+MetacellsGraphs = "b78c44d1-95b4-453a-bb1d-4e115706a256"
+MetacellsPy = "edb2c08b-4fb6-4156-829c-ebd69ab6a04f"
+PrecompileTools = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
+PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
+SomeGraphsPy = "1b9d24fc-7519-4524-8b65-2a7a0e1ba715"
+
+[compat]
+DafPy = "0.3.0"
+Metacells = "0.1.0"
+MetacellsGraphs = "0.1.0"
+MetacellsPy = "0.1.0"
+PrecompileTools = "1"
+PythonCall = "0.9"
+SomeGraphsPy = "0.2.0"
+julia = "1.12"
