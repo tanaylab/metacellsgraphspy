@@ -24,9 +24,7 @@ as the mask (e.g., ``entries=get_is_marker_vector(daf)``).
 from typing import Any
 from typing import Callable
 from typing import Mapping
-from typing import Optional
 from typing import Sequence
-from typing import Union
 
 import numpy as np
 import pandas as pd
@@ -168,7 +166,7 @@ __all__ = [
 ]
 
 #: Which entries of an axis a data source uses: their names, their (1-based) indices, or a Boolean mask over the axis.
-Entries = Union[StringsVector, IntegersVector, BoolsVector]
+Entries = StringsVector | IntegersVector | BoolsVector
 
 #: A chain of axes to walk before asking for a property (e.g., ``["metacell"]`` to ask for the block of the metacell of
 #: each cell).
@@ -286,7 +284,7 @@ def fill_axis_vector_data(
     axis: str,
     query_suffix: str,
     via: Via | None | DefaultValue = DEFAULT,
-    empty_value: Union[str, float, bool, None, DefaultValue] = DEFAULT,
+    empty_value: str | float | bool | None | DefaultValue = DEFAULT,
     entries: Entries | None | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
@@ -318,7 +316,7 @@ def get_axis_vector(
     axis: str,
     query_suffix: str,
     via: Via | None | DefaultValue = DEFAULT,
-    empty_value: Union[str, float, bool, None, DefaultValue] = DEFAULT,
+    empty_value: str | float | bool | None | DefaultValue = DEFAULT,
     entries: Entries | None | DefaultValue = DEFAULT,
 ) -> np.ndarray:
     """
@@ -827,7 +825,7 @@ def fill_gene_correlation_change(
 
 def put_correlation_configuration(
     sinks: Sinks,
-    values: Union[NumbersVector, NumbersMatrix],
+    values: NumbersVector | NumbersMatrix,
     *,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
@@ -2060,7 +2058,7 @@ def fill_boolean(
 def put_boolean_values(
     sinks: VectorDataSinks,
     value_per_entry: BoolsVector,
-    name_per_entry: Optional[StringsVector],
+    name_per_entry: StringsVector | None,
     *,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
@@ -2481,7 +2479,7 @@ def _property_fill_given(  # pylint: disable=too-many-positional-arguments
     axis: str | DefaultValue,
     entries: Entries | None | DefaultValue,
     via: Via | None | DefaultValue,
-    empty_value: Union[bool, float, DefaultValue],
+    empty_value: bool | float | DefaultValue,
     title: str | None | DefaultValue,
     show_legend: bool | DefaultValue,
     *,
@@ -2503,7 +2501,7 @@ def _property_get_given(
     axis: str | DefaultValue,
     entries: Entries | None | DefaultValue,
     via: Via | None | DefaultValue,
-    empty_value: Union[bool, float, DefaultValue],
+    empty_value: bool | float | DefaultValue,
 ) -> Mapping[str, Any]:
     return _given(axis=axis, entries=_to_julia_array(entries), via=_to_julia_array(via), empty_value=empty_value)
 
