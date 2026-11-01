@@ -74,7 +74,7 @@ def _run_daf_workload(directory: str) -> None:
         fill_mean_total_UMIs_per_cell(points.points_entities(), daf, axis=axis)
         fill_gene_expression(points.points_entities(), daf, axis=axis, gene="C")
         fill_global_flow_order(points.points_entities(), daf, axis=axis)
-        _ = points.figure
+        _ = points.fig
 
         for heatmap in (
             genes_heatmap_graph(daf, axis=axis),
@@ -89,7 +89,7 @@ def _run_daf_workload(directory: str) -> None:
             add_genes_heatmap_default_rows_annotations(heatmap, daf)
             add_genes_heatmap_default_columns_annotations(heatmap, daf, axis=axis)
             fill_is_marker(heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation()), daf)
-            _ = heatmap.figure
+            _ = heatmap.fig
 
     points = gene_gene_graph(daf, axis="metacell", x_gene="A", y_gene="B")
     fill_block(points.points_colors_vector_fields(), daf, axis="metacell")
@@ -97,13 +97,13 @@ def _run_daf_workload(directory: str) -> None:
     fill_umap(points.points_entities(), daf, axis="metacell", coordinate="x")
     get_is_in_environment_vector(daf, axis="metacell", block="B1")
     get_skeleton_gene_indices(daf)
-    _ = points.figure
+    _ = points.fig
 
     points = gene_gene_graph(daf, axis="block", x_gene="A", y_gene="B")
     fill_n_metacells(points.points_sizes_vector_fields(), daf, axis="block")
     fill_mean_cells_per_metacell(points.points_entities(), daf, axis="block")
     fill_mean_total_UMIs_per_metacell(points.points_entities(), daf, axis="block")
-    _ = points.figure
+    _ = points.fig
 
 
 def _run_anndata_workload(directory: str) -> None:
@@ -141,7 +141,7 @@ def _run_anndata_workload(directory: str) -> None:
     ad_fill_total_UMIs(points.points_sizes_vector_fields(), adata)
     ad_fill_gene_expression(points.points_entities(), adata, gene="C")
     ad_fill_umap(points.points_entities(), adata, coordinate="x")
-    _ = points.figure
+    _ = points.fig
 
     for heatmap in (
         ad_genes_heatmap_graph(adata),
@@ -155,4 +155,4 @@ def _run_anndata_workload(directory: str) -> None:
         ad_fill_is_marker(annotation, adata)
         annotation = heatmap.rows_annotations_colors_vector_fields(heatmap.add_rows_annotation())
         ad_fill_is_excluded(annotation, adata)
-        _ = heatmap.figure
+        _ = heatmap.fig

@@ -75,7 +75,7 @@ def test_improved_genes_graph() -> None:
     assert bars_names is not None
     assert list(bars_names) == ["B", "A"]
     assert graph.configuration.mirrored
-    assert graph.figure is not None
+    assert graph.fig is not None
 
 
 def test_degraded_genes_graph() -> None:

@@ -63,7 +63,7 @@ def test_genes_heatmap_graph() -> None:
     matrix = graph.data.entries.matrix
     assert matrix is not None
     assert list(matrix[0, :]) == [-1.0, 1.0]
-    assert graph.figure is not None
+    assert graph.fig is not None
 
 
 def test_genes_selection() -> None:

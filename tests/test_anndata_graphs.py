@@ -45,7 +45,7 @@ def test_ad_gene_gene_graph() -> None:
     assert _list(graph.data.y.vector) == [np.float32(0.3), np.float32(0.2), np.float32(0.1)]
     assert _list(graph.data.points.entities.names) == ["M1", "M2", "M3"]
     assert graph.configuration.y_axis.title == "B fraction"
-    assert graph.figure is not None
+    assert graph.fig is not None
 
 
 def test_ad_gene_gene_graph_of_entries() -> None:
@@ -69,7 +69,7 @@ def test_ad_gene_gene_graph_by_type(tmp_path: Path) -> None:
         graph.points_colors_vector_fields(), adata, type_property="cell_type", type_colors_csv=str(type_colors_csv)
     )
     graph.validate()
-    assert graph.figure is not None
+    assert graph.fig is not None
 
 
 def test_ad_genes_heatmap_graph() -> None:
@@ -86,7 +86,7 @@ def test_ad_genes_heatmap_graph() -> None:
     assert graph.configuration.rows.title == "Genes"
     assert graph.configuration.columns.title == "Metacells"
     assert not graph.configuration.columns.show_ticks
-    assert graph.figure is not None
+    assert graph.fig is not None
 
 
 def test_ad_markers_heatmap_graph() -> None:

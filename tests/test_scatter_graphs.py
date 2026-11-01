@@ -58,7 +58,7 @@ def test_gene_gene_graph() -> None:
     assert isinstance(graph, PointsGraph)
     assert _list(graph.data.x.vector) == [np.float32(0.1), np.float32(0.2), np.float32(0.3)]
     assert _list(graph.data.points.entities.names) == ["M1", "M2", "M3"]
-    assert graph.figure is not None
+    assert graph.fig is not None
 
 
 def test_gene_gene_graph_of_blocks() -> None:
@@ -82,7 +82,7 @@ def test_umap_graph() -> None:
     assert isinstance(graph, PointsGraph)
     assert _list(graph.data.x.vector) == [0.0, 1.0, 2.0]
     assert _list(graph.data.y.vector) == [2.0, 1.0, 0.0]
-    assert graph.figure is not None
+    assert graph.fig is not None
 
     graph = mg.umap_graph(_test_daf(), axis="block", entries=[2])
     assert _list(graph.data.x.vector) == [1.5]
@@ -115,7 +115,7 @@ def test_gene_base_delta_correlations_graph() -> None:
     assert isinstance(graph, PointsGraph)
     assert [round(float(x), 3) for x in _list(graph.data.x.vector)] == [0.1, -0.1]
     assert [round(float(y), 3) for y in _list(graph.data.y.vector)] == [0.1, 0.2]
-    assert graph.figure is not None
+    assert graph.fig is not None
     assert list(mg.get_gene_is_correlated_vector(base_daf, gene="A")) == [True, True]
 
 
