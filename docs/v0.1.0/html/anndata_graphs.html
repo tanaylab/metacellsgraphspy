@@ -643,6 +643,20 @@ whether each gene is lateral, if the
 <span class="pre">Ellipsis
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">Ellipsis
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -674,11 +688,20 @@ whether each gene is lateral, if the
 <span class="pre">adata
 </span>
 </code>, on log scale.
-This is the 
+Both axes use the same 
+<code class="docutils literal notranslate">
+<span class="pre">log_base
+</span>
+</code> (2 by default, or linear for 
+<code class="docutils literal notranslate">
+<span class="pre">None
+</span>
+</code>). This is the 
 <code class="docutils literal notranslate">
 <span class="pre">AnnData
 </span>
-</code> counterpart of 
+</code> counterpart of
+
 <a class="reference internal" href="scatter_graphs.html#metacellsgraphspy.scatter_graphs.gene_gene_graph" title="metacellsgraphspy.scatter_graphs.gene_gene_graph">
 <code class="xref py py-func docutils literal notranslate">
 <span class="pre">gene_gene_graph()
@@ -776,6 +799,23 @@ This is the
 <strong>gene_fraction_regularization
 </strong> (
 <em>float
+</em>
+<em> | 
+</em>
+<em>EllipsisType
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>log_base
+</strong> (
+<em>LogBase
+</em>
+<em> | 
+</em>
+<em>None
 </em>
 <em> | 
 </em>

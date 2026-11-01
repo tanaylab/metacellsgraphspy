@@ -48,6 +48,25 @@ def test_ad_gene_gene_graph() -> None:
     assert graph.fig is not None
 
 
+def test_ad_gene_gene_graph_log_base() -> None:
+    """
+    Both axes use the given log base.
+    """
+    graph = mg.ad_gene_gene_graph(_test_adata(), x_gene="A", y_gene="B", log_base=sg.LogBase.Log10Base)
+    assert graph.configuration.x_axis.scale.log_base == sg.LogBase.Log10Base
+    assert graph.configuration.y_axis.scale.log_base == sg.LogBase.Log10Base
+
+
+def test_ad_gene_gene_graph_linear() -> None:
+    """
+    A log base of ``None`` makes both axes linear.
+    """
+    graph = mg.ad_gene_gene_graph(_test_adata(), x_gene="A", y_gene="B", log_base=None)
+    assert graph.configuration.x_axis.scale.log_base is None
+    assert graph.configuration.y_axis.scale.log_base is None
+    assert graph.fig is not None
+
+
 def test_ad_gene_gene_graph_of_entries() -> None:
     """
     The entries pick the points.

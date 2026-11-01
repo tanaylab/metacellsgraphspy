@@ -521,11 +521,12 @@ def put_expression_level_configuration(
     gene_fraction_regularization: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Show an expression level (of a gene, or of a gene module) on a log scale of the ``log_base`` (2 by default),
-    regularized by ``gene_fraction_regularization``, named by the ``title``. See the Julia
+    regularized by ``gene_fraction_regularization``, named by the ``title``. A ``log_base`` of ``None`` gives a linear
+    scale. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_expression_level_configuration!>`__
     for details.
     """
@@ -550,7 +551,7 @@ def fill_gene_expression(
     gene_fraction_regularization: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -602,7 +603,7 @@ def fill_genes_expression_matrix(
     gene_fraction_regularization: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1234,11 +1235,11 @@ def put_size_configuration(
     *,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Show a size (a count) on a log scale of the ``log_base`` (10 by default), regularized by 1, in the ``YlOrRd`` color
-    scale, named by the ``title``. See the Julia
+    scale, named by the ``title``. A ``log_base`` of ``None`` gives a linear scale. See the Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_configuration!>`__
     for details.
     """
@@ -1282,7 +1283,7 @@ def fill_size(
     title: str | None | DefaultValue = DEFAULT,
     empty_value: float | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1315,7 +1316,7 @@ def put_size_values(
     *,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1342,7 +1343,7 @@ def fill_total_UMIs(  # pylint: disable=invalid-name
     empty_value: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1398,7 +1399,7 @@ def fill_n_cells(
     empty_value: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1454,7 +1455,7 @@ def fill_n_metacells(
     empty_value: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1510,7 +1511,7 @@ def fill_mean_cells_per_metacell(
     via: Via | None | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1563,7 +1564,7 @@ def fill_mean_total_UMIs_per_metacell(  # pylint: disable=invalid-name
     via: Via | None | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -1616,7 +1617,7 @@ def fill_mean_total_UMIs_per_cell(  # pylint: disable=invalid-name
     via: Via | None | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """

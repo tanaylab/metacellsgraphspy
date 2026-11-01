@@ -4,6 +4,7 @@ Scatter graphs of a metacells repository. See the Julia
 """
 
 from dafpy import DafReader
+from somegraphspy import LogBase
 from somegraphspy import PointsGraph
 from somegraphspy import PointsGraphConfiguration
 from somegraphspy.julia_import import _to_julia
@@ -31,10 +32,12 @@ def gene_gene_graph(
     y_gene: str,
     entries: Entries | None | DefaultValue = DEFAULT,
     gene_fraction_regularization: float | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
 ) -> PointsGraph:
     """
     The expression of ``x_gene`` against ``y_gene``, a point per each of the ``entries`` of the ``axis`` (by default,
-    the metacells), on log scale. See the Julia
+    the metacells), on log scale. Both axes use the same ``log_base`` (2 by default, or linear for ``None``). See the
+    Julia
     `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_gene_graph>`__
     for details.
     """
@@ -47,6 +50,7 @@ def gene_gene_graph(
                 axis=axis,
                 entries=_to_julia_array(entries),
                 gene_fraction_regularization=gene_fraction_regularization,
+                log_base=_to_julia(log_base),
             ),
         )
     )

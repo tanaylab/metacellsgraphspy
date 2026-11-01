@@ -638,11 +638,12 @@
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Show an expression level (of a gene, or of a gene module) on a log scale of the ``log_base`` (2 by default),</span>
-<span class="sd">    regularized by ``gene_fraction_regularization``, named by the ``title``. See the Julia</span>
+<span class="sd">    regularized by ``gene_fraction_regularization``, named by the ``title``. A ``log_base`` of ``None`` gives a linear</span>
+<span class="sd">    scale. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_expression_level_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -670,7 +671,7 @@
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -728,7 +729,7 @@
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1447,11 +1448,11 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Show a size (a count) on a log scale of the ``log_base`` (10 by default), regularized by 1, in the ``YlOrRd`` color</span>
-<span class="sd">    scale, named by the ``title``. See the Julia</span>
+<span class="sd">    scale, named by the ``title``. A ``log_base`` of ``None`` gives a linear scale. See the Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/data_sources.html#MetacellsGraphs.DataSources.put_size_configuration!&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -1501,7 +1502,7 @@
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">empty_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1537,7 +1538,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1567,7 +1568,7 @@
     <span class="n">empty_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1629,7 +1630,7 @@
     <span class="n">empty_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1691,7 +1692,7 @@
     <span class="n">empty_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1753,7 +1754,7 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Via</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1812,7 +1813,7 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Via</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
@@ -1871,7 +1872,7 @@
     <span class="n">via</span><span class="p">:</span> <span class="n">Via</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
-    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">hover_format</span><span class="p">:</span> <span class="n">HoverFormat</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>

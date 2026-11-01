@@ -8,6 +8,7 @@ These are the ``AnnData`` counterparts of some of the ``Daf`` graphs. They are i
 
 from anndata import AnnData  # type: ignore
 from somegraphspy import HeatmapGraph
+from somegraphspy import LogBase
 from somegraphspy import PointsGraph
 from somegraphspy import heatmap_graph
 from somegraphspy import points_graph
@@ -38,10 +39,12 @@ def ad_gene_gene_graph(
     y_gene: str,
     entries: Entries | None | DefaultValue = DEFAULT,
     gene_fraction_regularization: float | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
 ) -> PointsGraph:
     """
     The expression of ``x_gene`` against ``y_gene``, a point per each of the ``entries`` of the ``adata``, on log scale.
-    This is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.scatter_graphs.gene_gene_graph`.
+    Both axes use the same ``log_base`` (2 by default, or linear for ``None``). This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.scatter_graphs.gene_gene_graph`.
     """
     graph = points_graph()
     ad_fill_gene_expression(
@@ -50,6 +53,7 @@ def ad_gene_gene_graph(
         gene=x_gene,
         entries=entries,
         gene_fraction_regularization=gene_fraction_regularization,
+        log_base=log_base,
     )
     ad_fill_gene_expression(
         graph.y_axis_vector_fields(),
@@ -57,6 +61,7 @@ def ad_gene_gene_graph(
         gene=y_gene,
         entries=entries,
         gene_fraction_regularization=gene_fraction_regularization,
+        log_base=log_base,
     )
     return graph
 

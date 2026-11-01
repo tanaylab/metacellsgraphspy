@@ -610,6 +610,20 @@ for details.
 <span class="pre">Ellipsis
 </span>
 </span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">log_base
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">Ellipsis
+</span>
+</span>
 </em>
 <span class="sig-paren">)
 </span>
@@ -641,7 +655,16 @@ for details.
 <span class="pre">axis
 </span>
 </code> (by default,
-the metacells), on log scale. See the Julia
+the metacells), on log scale. Both axes use the same 
+<code class="docutils literal notranslate">
+<span class="pre">log_base
+</span>
+</code> (2 by default, or linear for 
+<code class="docutils literal notranslate">
+<span class="pre">None
+</span>
+</code>). See the
+Julia
 
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_gene_graph">documentation
 </a>
@@ -750,6 +773,23 @@ for details.
 <strong>gene_fraction_regularization
 </strong> (
 <em>float
+</em>
+<em> | 
+</em>
+<em>EllipsisType
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>log_base
+</strong> (
+<em>LogBase
+</em>
+<em> | 
+</em>
+<em>None
 </em>
 <em> | 
 </em>

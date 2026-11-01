@@ -77,6 +77,7 @@
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">dafpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DafReader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">PointsGraph</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy</span><span class="w"> </span><span class="kn">import</span> <span class="n">PointsGraphConfiguration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">somegraphspy.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">_to_julia</span>
@@ -106,10 +107,12 @@
     <span class="n">y_gene</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">entries</span><span class="p">:</span> <span class="n">Entries</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
     <span class="n">gene_fraction_regularization</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
+    <span class="n">log_base</span><span class="p">:</span> <span class="n">LogBase</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointsGraph</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The expression of ``x_gene`` against ``y_gene``, a point per each of the ``entries`` of the ``axis`` (by default,</span>
-<span class="sd">    the metacells), on log scale. See the Julia</span>
+<span class="sd">    the metacells), on log scale. Both axes use the same ``log_base`` (2 by default, or linear for ``None``). See the</span>
+<span class="sd">    Julia</span>
 <span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.gene_gene_graph&gt;`__</span>
 <span class="sd">    for details.</span>
 <span class="sd">    """</span>
@@ -122,6 +125,7 @@
                 <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
                 <span class="n">entries</span><span class="o">=</span><span class="n">_to_julia_array</span><span class="p">(</span><span class="n">entries</span><span class="p">),</span>
                 <span class="n">gene_fraction_regularization</span><span class="o">=</span><span class="n">gene_fraction_regularization</span><span class="p">,</span>
+                <span class="n">log_base</span><span class="o">=</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">log_base</span><span class="p">),</span>
             <span class="p">),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>

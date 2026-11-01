@@ -86,13 +86,13 @@ def ad_fill_gene_expression(
     gene_fraction_regularization: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
     Fill the ``sinks`` with the ``gene`` expression level (see :py:func:`ad_get_gene_expression_vector`) per each of the
-    ``entries`` of the ``adata``, shown on a log scale of the ``log_base`` (2 by default), and name the entities after
-    the ``entries``. The default ``title`` is ``<gene> fraction``. The default ``hover_format`` is
+    ``entries`` of the ``adata``, shown on a log scale of the ``log_base`` (2 by default, or linear for ``None``), and
+    name the entities after the ``entries``. The default ``title`` is ``<gene> fraction``. The default ``hover_format`` is
     :py:obj:`~metacellsgraphspy.data_sources.EXPRESSION_LEVEL_HOVER_FORMAT_FOR_GRAPHS`. This is the ``AnnData``
     counterpart of :py:func:`~metacellsgraphspy.data_sources.fill_gene_expression`.
     """
@@ -141,7 +141,7 @@ def ad_fill_genes_expression_matrix(
     gene_fraction_regularization: float | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
@@ -392,7 +392,7 @@ def ad_fill_total_UMIs(  # pylint: disable=invalid-name
     entries: Entries | None | DefaultValue = DEFAULT,
     title: str | None | DefaultValue = DEFAULT,
     show_legend: bool | DefaultValue = DEFAULT,
-    log_base: LogBase | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
     hover_format: HoverFormat | None | DefaultValue = DEFAULT,
 ) -> None:
     """
