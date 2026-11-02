@@ -17,6 +17,8 @@ from .julia_import import _to_julia_array
 from .julia_import import jl
 
 __all__ = [
+    "add_gene_gene_default_colors",
+    "add_gene_gene_default_sizes",
     "gene_base_delta_correlations_graph",
     "gene_gene_graph",
     "put_hidden_entries_configuration",
@@ -54,6 +56,26 @@ def gene_gene_graph(
             ),
         )
     )
+
+
+def add_gene_gene_default_colors(graph: PointsGraph, daf: DafReader, *, axis: str | DefaultValue = DEFAULT) -> None:
+    """
+    Add the default colors of the points (the entries of the ``axis``, by default the metacells) of a
+    :py:func:`gene_gene_graph` of the ``daf``, if the ``daf`` has their data. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.add_gene_gene_default_colors!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.add_gene_gene_default_colors_b(_to_julia(graph), daf, **_given(axis=axis))
+
+
+def add_gene_gene_default_sizes(graph: PointsGraph, daf: DafReader, *, axis: str | DefaultValue = DEFAULT) -> None:
+    """
+    Add the default sizes of the points (the entries of the ``axis``, by default the metacells) of a
+    :py:func:`gene_gene_graph` of the ``daf``, if the ``daf`` has their data. See the Julia
+    `documentation <https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.add_gene_gene_default_sizes!>`__
+    for details.
+    """
+    jl.MetacellsGraphs.add_gene_gene_default_sizes_b(_to_julia(graph), daf, **_given(axis=axis))
 
 
 def umap_graph(

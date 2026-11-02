@@ -27,7 +27,8 @@ def _list(values: Any) -> List[Any]:
 
 def _test_adata() -> AnnData:
     """
-    Metacells with fractions of two genes, a type for all but one of them, a UMAP and total UMIs, and the gene flags.
+    Metacells with fractions of two genes, a type for all but one of them, a UMAP, total UMIs and numbers of cells, and
+    the gene flags.
     """
     adata = AnnData(
         X=np.array([[0.1, 0.3], [0.2, 0.2], [0.3, 0.1]], dtype="float32"),
@@ -37,6 +38,7 @@ def _test_adata() -> AnnData:
                 "x": [0.0, 1.0, 2.0],
                 "y": [5.0, 4.0, 3.0],
                 "total_umis": [100.0, 200.0, 300.0],
+                "grouped": [10, 20, 30],
             },
             index=["M1", "M2", "M3"],
         ),
@@ -219,6 +221,18 @@ def test_ad_total_UMIs() -> None:  # pylint: disable=invalid-name
     assert _list(graph.data.points.colors.vector) == [100.0, 200.0, 300.0]
     assert graph.configuration.points.colors.title == "total UMIs"
     assert graph.configuration.points.colors.scale.log_base == sg.LogBase.Log2Base
+
+
+def test_ad_n_cells() -> None:
+    """
+    The numbers of cells are the ``grouped`` of the ``obs``, shown as a size.
+    """
+    adata = _test_adata()
+    assert _list(mg.ad_get_n_cells_vector(adata, entries=["M2"])) == [20]
+    graph = sg.points_graph()
+    mg.ad_fill_n_cells(graph.points_sizes_vector_fields(), adata)
+    assert _list(graph.data.points.sizes.vector) == [10, 20, 30]
+    assert graph.configuration.points.sizes.title == "cells"
 
 
 def test_ad_gene_flags() -> None:

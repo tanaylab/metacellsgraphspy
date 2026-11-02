@@ -93,6 +93,28 @@ def test_gene_gene_graph_of_blocks() -> None:
     assert _list(graph.data.points.entities.names) == ["B2"]
 
 
+def test_gene_gene_defaults() -> None:
+    """
+    The default colors and sizes of the points are added when the repository has their data, on the given axis.
+    """
+    daf = _test_daf()
+    graph = mg.gene_gene_graph(daf, x_gene="A", y_gene="B")
+    mg.add_gene_gene_default_colors(graph, daf)
+    mg.add_gene_gene_default_sizes(graph, daf)
+    assert graph.data.points.colors.vector is None
+    assert graph.data.points.sizes.vector is None
+
+    daf.add_axis("type", ["X", "Y"])
+    daf.set_vector("metacell", "type", np.array(["X", "Y", "X"]))
+    mg.add_gene_gene_default_colors(graph, daf)
+    assert _list(graph.data.points.colors.vector) == ["X", "Y", "X"]
+
+    daf.set_vector("block", "n_cells", np.array([30, 70], dtype="uint32"))
+    graph = mg.gene_gene_graph(daf, axis="block", x_gene="A", y_gene="B")
+    mg.add_gene_gene_default_sizes(graph, daf, axis="block")
+    assert _list(graph.data.points.sizes.vector) == [30, 70]
+
+
 def test_umap_graph() -> None:
     """
     The UMAP graph is a points graph with a point per metacell by default, and per block on request.

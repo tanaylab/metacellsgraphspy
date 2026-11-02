@@ -17,9 +17,10 @@ from .anndata_data_sources import ad_fill_gene_expression
 from .anndata_data_sources import ad_fill_is_excluded
 from .anndata_data_sources import ad_fill_is_marker
 from .anndata_data_sources import ad_fill_total_UMIs
-from .anndata_data_sources import ad_fill_type
 from .anndata_data_sources import ad_fill_umap
 from .anndata_data_sources import ad_get_top_marker_gene_indices
+from .anndata_graphs import ad_add_gene_gene_default_colors
+from .anndata_graphs import ad_add_gene_gene_default_sizes
 from .anndata_graphs import ad_add_genes_heatmap_default_columns_annotations
 from .anndata_graphs import ad_add_genes_heatmap_default_rows_annotations
 from .anndata_graphs import ad_gene_gene_graph
@@ -32,10 +33,8 @@ from .data_sources import fill_is_marker
 from .data_sources import fill_mean_cells_per_metacell
 from .data_sources import fill_mean_total_UMIs_per_cell
 from .data_sources import fill_mean_total_UMIs_per_metacell
-from .data_sources import fill_n_cells
 from .data_sources import fill_n_metacells
 from .data_sources import fill_total_UMIs
-from .data_sources import fill_type
 from .data_sources import fill_umap
 from .data_sources import get_is_in_categories_vector
 from .data_sources import get_is_in_environment_vector
@@ -46,6 +45,8 @@ from .heatmap_graphs import add_genes_heatmap_default_columns_annotations
 from .heatmap_graphs import add_genes_heatmap_default_rows_annotations
 from .heatmap_graphs import genes_heatmap_graph
 from .julia_import import jl
+from .scatter_graphs import add_gene_gene_default_colors
+from .scatter_graphs import add_gene_gene_default_sizes
 from .scatter_graphs import gene_gene_graph
 
 __all__ = ["run_workload"]
@@ -68,8 +69,8 @@ def _run_daf_workload(directory: str) -> None:
 
     for axis in ("metacell", "block"):
         points = gene_gene_graph(daf, axis=axis, x_gene="A", y_gene="B")
-        fill_type(points.points_colors_vector_fields(), daf, axis=axis)
-        fill_n_cells(points.points_sizes_vector_fields(), daf, axis=axis)
+        add_gene_gene_default_colors(points, daf, axis=axis)
+        add_gene_gene_default_sizes(points, daf, axis=axis)
         fill_total_UMIs(points.points_entities(), daf, axis=axis)
         fill_mean_total_UMIs_per_cell(points.points_entities(), daf, axis=axis)
         fill_gene_expression(points.points_entities(), daf, axis=axis, gene="C")
@@ -116,6 +117,7 @@ def _run_anndata_workload(directory: str) -> None:
             {
                 "cell_type": pd.Categorical(["T1", "T1", "T2", None]),
                 "total_umis": np.array([100, 200, 300, 400], dtype="float32"),
+                "grouped": np.array([10, 20, 30, 40], dtype="int32"),
                 "x": np.array([0, 1, 2, 3], dtype="float32"),
                 "y": np.array([3, 2, 1, 0], dtype="float32"),
             },
@@ -135,10 +137,9 @@ def _run_anndata_workload(directory: str) -> None:
         file.write("type,color\nT1,red\nT2,blue\n")
 
     points = ad_gene_gene_graph(adata, x_gene="A", y_gene="B")
-    ad_fill_type(
-        points.points_colors_vector_fields(), adata, type_property="cell_type", type_colors_csv=type_colors_csv
-    )
-    ad_fill_total_UMIs(points.points_sizes_vector_fields(), adata)
+    ad_add_gene_gene_default_colors(points, adata, type_property="cell_type", type_colors_csv=type_colors_csv)
+    ad_add_gene_gene_default_sizes(points, adata)
+    ad_fill_total_UMIs(points.points_entities(), adata)
     ad_fill_gene_expression(points.points_entities(), adata, gene="C")
     ad_fill_umap(points.points_entities(), adata, coordinate="x")
     _ = points.fig

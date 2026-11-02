@@ -16,6 +16,7 @@ from somegraphspy import points_graph
 from .anndata_data_sources import ad_fill_gene_expression
 from .anndata_data_sources import ad_fill_genes_fold_matrix
 from .anndata_data_sources import ad_fill_is_lateral
+from .anndata_data_sources import ad_fill_n_cells
 from .anndata_data_sources import ad_fill_type
 from .anndata_data_sources import ad_get_top_marker_gene_indices
 from .data_sources import TOP_MARKERS_COUNT_FOR_GRAPHS
@@ -25,6 +26,8 @@ from .julia_import import DEFAULT
 from .julia_import import DefaultValue
 
 __all__ = [
+    "ad_add_gene_gene_default_colors",
+    "ad_add_gene_gene_default_sizes",
     "ad_add_genes_heatmap_default_columns_annotations",
     "ad_add_genes_heatmap_default_rows_annotations",
     "ad_gene_gene_graph",
@@ -64,6 +67,30 @@ def ad_gene_gene_graph(
         log_base=log_base,
     )
     return graph
+
+
+def ad_add_gene_gene_default_colors(
+    graph: PointsGraph, adata: AnnData, *, type_property: str, type_colors_csv: str
+) -> None:
+    """
+    Add the default colors of the points (the metacells) of an :py:func:`ad_gene_gene_graph` of the ``adata``: the type
+    of each metacell, in the ``type_property`` of the ``obs`` (if it has one), colored by the ``type_colors_csv`` file.
+    This is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors`.
+    """
+    if type_property in adata.obs:
+        ad_fill_type(
+            graph.points_colors_vector_fields(), adata, type_property=type_property, type_colors_csv=type_colors_csv
+        )
+
+
+def ad_add_gene_gene_default_sizes(graph: PointsGraph, adata: AnnData) -> None:
+    """
+    Add the default sizes of the points (the metacells) of an :py:func:`ad_gene_gene_graph` of the ``adata``: the number
+    of cells of each metacell, if the ``obs`` has a ``grouped`` column. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes`.
+    """
+    if "grouped" in adata.obs:
+        ad_fill_n_cells(graph.points_sizes_vector_fields(), adata)
 
 
 def ad_genes_heatmap_graph(

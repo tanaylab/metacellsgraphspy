@@ -90,6 +90,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">jl</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"add_gene_gene_default_colors"</span><span class="p">,</span>
+    <span class="s2">"add_gene_gene_default_sizes"</span><span class="p">,</span>
     <span class="s2">"gene_base_delta_correlations_graph"</span><span class="p">,</span>
     <span class="s2">"gene_gene_graph"</span><span class="p">,</span>
     <span class="s2">"put_hidden_entries_configuration"</span><span class="p">,</span>
@@ -129,6 +131,32 @@
             <span class="p">),</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="add_gene_gene_default_colors">
+<a class="viewcode-back" href="../../scatter_graphs.html#metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_gene_gene_default_colors</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">PointsGraph</span><span class="p">,</span> <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add the default colors of the points (the entries of the ``axis``, by default the metacells) of a</span>
+<span class="sd">    :py:func:`gene_gene_graph` of the ``daf``, if the ``daf`` has their data. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.add_gene_gene_default_colors!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">add_gene_gene_default_colors_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">graph</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="add_gene_gene_default_sizes">
+<a class="viewcode-back" href="../../scatter_graphs.html#metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_gene_gene_default_sizes</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">PointsGraph</span><span class="p">,</span> <span class="n">daf</span><span class="p">:</span> <span class="n">DafReader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">DefaultValue</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add the default sizes of the points (the entries of the ``axis``, by default the metacells) of a</span>
+<span class="sd">    :py:func:`gene_gene_graph` of the ``daf``, if the ``daf`` has their data. See the Julia</span>
+<span class="sd">    `documentation &lt;https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.add_gene_gene_default_sizes!&gt;`__</span>
+<span class="sd">    for details.</span>
+<span class="sd">    """</span>
+    <span class="n">jl</span><span class="o">.</span><span class="n">MetacellsGraphs</span><span class="o">.</span><span class="n">add_gene_gene_default_sizes_b</span><span class="p">(</span><span class="n">_to_julia</span><span class="p">(</span><span class="n">graph</span><span class="p">),</span> <span class="n">daf</span><span class="p">,</span> <span class="o">**</span><span class="n">_given</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">))</span></div>
 
 
 

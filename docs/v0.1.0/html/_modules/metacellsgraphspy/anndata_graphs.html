@@ -89,6 +89,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.anndata_data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">ad_fill_gene_expression</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.anndata_data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">ad_fill_genes_fold_matrix</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.anndata_data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">ad_fill_is_lateral</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.anndata_data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">ad_fill_n_cells</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.anndata_data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">ad_fill_type</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.anndata_data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">ad_get_top_marker_gene_indices</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.data_sources</span><span class="w"> </span><span class="kn">import</span> <span class="n">TOP_MARKERS_COUNT_FOR_GRAPHS</span>
@@ -98,6 +99,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.julia_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultValue</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"ad_add_gene_gene_default_colors"</span><span class="p">,</span>
+    <span class="s2">"ad_add_gene_gene_default_sizes"</span><span class="p">,</span>
     <span class="s2">"ad_add_genes_heatmap_default_columns_annotations"</span><span class="p">,</span>
     <span class="s2">"ad_add_genes_heatmap_default_rows_annotations"</span><span class="p">,</span>
     <span class="s2">"ad_gene_gene_graph"</span><span class="p">,</span>
@@ -139,6 +142,36 @@
         <span class="n">log_base</span><span class="o">=</span><span class="n">log_base</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">graph</span></div>
+
+
+
+<div class="viewcode-block" id="ad_add_gene_gene_default_colors">
+<a class="viewcode-back" href="../../anndata_graphs.html#metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_colors">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_add_gene_gene_default_colors</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">PointsGraph</span><span class="p">,</span> <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">type_property</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">type_colors_csv</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add the default colors of the points (the metacells) of an :py:func:`ad_gene_gene_graph` of the ``adata``: the type</span>
+<span class="sd">    of each metacell, in the ``type_property`` of the ``obs`` (if it has one), colored by the ``type_colors_csv`` file.</span>
+<span class="sd">    This is the ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors`.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">type_property</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">:</span>
+        <span class="n">ad_fill_type</span><span class="p">(</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">points_colors_vector_fields</span><span class="p">(),</span> <span class="n">adata</span><span class="p">,</span> <span class="n">type_property</span><span class="o">=</span><span class="n">type_property</span><span class="p">,</span> <span class="n">type_colors_csv</span><span class="o">=</span><span class="n">type_colors_csv</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ad_add_gene_gene_default_sizes">
+<a class="viewcode-back" href="../../anndata_graphs.html#metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_sizes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ad_add_gene_gene_default_sizes</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">PointsGraph</span><span class="p">,</span> <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add the default sizes of the points (the metacells) of an :py:func:`ad_gene_gene_graph` of the ``adata``: the number</span>
+<span class="sd">    of cells of each metacell, if the ``obs`` has a ``grouped`` column. This is the ``AnnData`` counterpart of</span>
+<span class="sd">    :py:func:`~metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes`.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s2">"grouped"</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">:</span>
+        <span class="n">ad_fill_n_cells</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">points_sizes_vector_fields</span><span class="p">(),</span> <span class="n">adata</span><span class="p">)</span></div>
 
 
 

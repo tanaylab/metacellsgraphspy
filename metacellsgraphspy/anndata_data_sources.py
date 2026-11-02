@@ -7,8 +7,8 @@ metacell. In a metacells ``AnnData`` this is typically a geometric mean of the f
 linear fraction. It is used as it is stored. The data they write into the ``somegraphspy`` graph is the same as their
 ``Daf`` counterparts write.
 
-Each data source reads a fixed column of the Python metacells layout: ``x`` and ``y`` (the UMAP), and ``total_umis``
-of the ``obs``, and ``lateral_gene``, ``excluded_gene`` and ``marker_gene`` of the ``var``. The type is the exception,
+Each data source reads a fixed column of the Python metacells layout: ``x`` and ``y`` (the UMAP), ``total_umis`` and
+``grouped`` (the number of cells) of the ``obs``, and ``lateral_gene``, ``excluded_gene`` and ``marker_gene`` of the ``var``. The type is the exception,
 since its column is named differently in many data sets, so it is given as the ``type_property``.
 
 The ``entries`` are the names, the (1-based) indices, or a Boolean mask of the used metacells (or, for a property of
@@ -58,6 +58,7 @@ __all__ = [
     "ad_fill_is_excluded",
     "ad_fill_is_lateral",
     "ad_fill_is_marker",
+    "ad_fill_n_cells",
     "ad_fill_total_UMIs",
     "ad_fill_type",
     "ad_fill_umap",
@@ -69,6 +70,7 @@ __all__ = [
     "ad_get_is_lateral_vector",
     "ad_get_is_marker_vector",
     "ad_get_marker_rank_vector",
+    "ad_get_n_cells_vector",
     "ad_get_top_marker_gene_indices",
     "ad_get_total_UMIs_vector",
     "ad_get_type_colors",
@@ -422,6 +424,43 @@ def ad_get_total_UMIs_vector(  # pylint: disable=invalid-name
     ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_total_UMIs_vector`.
     """
     return np.asarray(adata.obs["total_umis"])[_entry_indices(adata.obs_names, entries)]
+
+
+def ad_fill_n_cells(
+    sinks: VectorDataSinks,
+    adata: AnnData,
+    *,
+    entries: Entries | None | DefaultValue = DEFAULT,
+    title: str | None | DefaultValue = DEFAULT,
+    show_legend: bool | DefaultValue = DEFAULT,
+    log_base: LogBase | None | DefaultValue = DEFAULT,
+    hover_format: HoverFormat | None | DefaultValue = DEFAULT,
+) -> None:
+    """
+    Fill the ``sinks`` with the number of cells of each of the ``entries`` of the ``adata``, shown as a size, and name
+    the entities after the ``entries``. The default ``title`` is ``cells``. This is the ``AnnData`` counterpart of
+    :py:func:`~metacellsgraphspy.data_sources.fill_n_cells`.
+    """
+    if isinstance(title, DefaultValue):
+        title = "cells"
+    entries = _sinks_entries(sinks, entries)
+    put_size_values(
+        sinks,
+        ad_get_n_cells_vector(adata, entries=entries),
+        _entry_names(adata.obs_names, entries),
+        title=title,
+        show_legend=show_legend,
+        log_base=log_base,
+        hover_format=hover_format,
+    )
+
+
+def ad_get_n_cells_vector(adata: AnnData, *, entries: Entries | None | DefaultValue = DEFAULT) -> np.ndarray:
+    """
+    Get the number of cells (the ``grouped`` of the ``obs``) of each of the ``entries`` of the ``adata``. This is the
+    ``AnnData`` counterpart of :py:func:`~metacellsgraphspy.data_sources.get_n_cells_vector`.
+    """
+    return np.asarray(adata.obs["grouped"])[_entry_indices(adata.obs_names, entries)]
 
 
 def ad_fill_is_lateral(

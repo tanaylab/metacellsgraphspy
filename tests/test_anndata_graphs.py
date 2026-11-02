@@ -91,6 +91,26 @@ def test_ad_gene_gene_graph_by_type(tmp_path: Path) -> None:
     assert graph.fig is not None
 
 
+def test_ad_gene_gene_defaults(tmp_path: Path) -> None:
+    """
+    The default colors and sizes of the points are added when the ``AnnData`` has their columns.
+    """
+    type_colors_csv = tmp_path / "type_colors.csv"
+    type_colors_csv.write_text("type,color\nT1,#ff0000\nT2,#00ff00\n")
+    adata = _test_adata()
+    graph = mg.ad_gene_gene_graph(adata, x_gene="A", y_gene="B")
+    mg.ad_add_gene_gene_default_colors(graph, adata, type_property="missing", type_colors_csv=str(type_colors_csv))
+    mg.ad_add_gene_gene_default_sizes(graph, adata)
+    assert graph.data.points.colors.vector is None
+    assert graph.data.points.sizes.vector is None
+
+    adata.obs["grouped"] = [10, 20, 30]
+    mg.ad_add_gene_gene_default_colors(graph, adata, type_property="cell_type", type_colors_csv=str(type_colors_csv))
+    mg.ad_add_gene_gene_default_sizes(graph, adata)
+    assert _list(graph.data.points.colors.vector) == ["T1", "", "T2"]
+    assert _list(graph.data.points.sizes.vector) == [10, 20, 30]
+
+
 def test_ad_genes_heatmap_graph() -> None:
     """
     The genes heatmap is a heatmap with a row per gene (by default, the strongest markers) and a column per metacell,

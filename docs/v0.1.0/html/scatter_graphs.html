@@ -118,6 +118,24 @@
 <ul>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors">
+<code class="docutils literal notranslate">
+<span class="pre">add_gene_gene_default_colors()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes">
+<code class="docutils literal notranslate">
+<span class="pre">add_gene_gene_default_sizes()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.scatter_graphs.gene_base_delta_correlations_graph">
 <code class="docutils literal notranslate">
 <span class="pre">gene_base_delta_correlations_graph()
@@ -256,6 +274,304 @@
 <a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html">documentation
 </a> for details.
 </p>
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.scatter_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">add_gene_gene_default_colors
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">graph
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">Ellipsis
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/scatter_graphs.html#add_gene_gene_default_colors">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Add the default colors of the points (the entries of the 
+<code class="docutils literal notranslate">
+<span class="pre">axis
+</span>
+</code>, by default the metacells) of a
+
+<a class="reference internal" href="#metacellsgraphspy.scatter_graphs.gene_gene_graph" title="metacellsgraphspy.scatter_graphs.gene_gene_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">gene_gene_graph()
+</span>
+</code>
+</a> of the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code>, if the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code> has their data. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.add_gene_gene_default_colors!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>graph
+</strong> (
+<em>PointsGraph
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>EllipsisType
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.scatter_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">add_gene_gene_default_sizes
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">graph
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">daf
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">axis
+</span>
+</span>
+<span class="o">
+<span class="pre">=
+</span>
+</span>
+<span class="default_value">
+<span class="pre">Ellipsis
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/scatter_graphs.html#add_gene_gene_default_sizes">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Add the default sizes of the points (the entries of the 
+<code class="docutils literal notranslate">
+<span class="pre">axis
+</span>
+</code>, by default the metacells) of a
+
+<a class="reference internal" href="#metacellsgraphspy.scatter_graphs.gene_gene_graph" title="metacellsgraphspy.scatter_graphs.gene_gene_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">gene_gene_graph()
+</span>
+</code>
+</a> of the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code>, if the 
+<code class="docutils literal notranslate">
+<span class="pre">daf
+</span>
+</code> has their data. See the Julia
+
+<a class="reference external" href="https://tanaylab.github.io/MetacellsGraphs.jl/v0.1.0/scatter_graphs.html#MetacellsGraphs.ScatterGraphs.add_gene_gene_default_sizes!">documentation
+</a>
+for details.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>graph
+</strong> (
+<em>PointsGraph
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>daf
+</strong> (
+<em>DafReader
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>axis
+</strong> (
+<em>str
+</em>
+<em> | 
+</em>
+<em>EllipsisType
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
 
 <dl class="py function">
 

@@ -136,6 +136,24 @@
 <ul>
 
 <li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_colors">
+<code class="docutils literal notranslate">
+<span class="pre">ad_add_gene_gene_default_colors()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_sizes">
+<code class="docutils literal notranslate">
+<span class="pre">ad_add_gene_gene_default_sizes()
+</span>
+</code>
+</a>
+</li>
+
+<li class="toctree-l3">
 <a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_add_genes_heatmap_default_columns_annotations">
 <code class="docutils literal notranslate">
 <span class="pre">ad_add_genes_heatmap_default_columns_annotations()
@@ -290,6 +308,290 @@
 </span>
 </code> holds the expression level of each gene in each metacell (typically a geometric mean, used as it is stored).
 </p>
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_colors">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_add_gene_gene_default_colors
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">graph
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="keyword-only-separator o">
+<abbr title="Keyword-only parameters separator (PEP 3102)">
+<span class="pre">*
+</span>
+</abbr>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">type_property
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">type_colors_csv
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_graphs.html#ad_add_gene_gene_default_colors">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_colors" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Add the default colors of the points (the metacells) of an 
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_gene_gene_graph" title="metacellsgraphspy.anndata_graphs.ad_gene_gene_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_gene_gene_graph()
+</span>
+</code>
+</a> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>: the type
+of each metacell, in the 
+<code class="docutils literal notranslate">
+<span class="pre">type_property
+</span>
+</code> of the 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code> (if it has one), colored by the 
+<code class="docutils literal notranslate">
+<span class="pre">type_colors_csv
+</span>
+</code> file.
+This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of 
+<a class="reference internal" href="scatter_graphs.html#metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors" title="metacellsgraphspy.scatter_graphs.add_gene_gene_default_colors">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">add_gene_gene_default_colors()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>graph
+</strong> (
+<em>PointsGraph
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>type_property
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>type_colors_csv
+</strong> (
+<em>str
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
+
+<dl class="py function">
+
+<dt class="sig sig-object py" id="metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_sizes">
+
+<span class="sig-prename descclassname">
+<span class="pre">metacellsgraphspy.anndata_graphs.
+</span>
+</span>
+<span class="sig-name descname">
+<span class="pre">ad_add_gene_gene_default_sizes
+</span>
+</span>
+<span class="sig-paren">(
+</span>
+<em class="sig-param">
+<span class="n">
+<span class="pre">graph
+</span>
+</span>
+</em>, 
+<em class="sig-param">
+<span class="n">
+<span class="pre">adata
+</span>
+</span>
+</em>
+<span class="sig-paren">)
+</span>
+<a class="reference internal" href="_modules/metacellsgraphspy/anndata_graphs.html#ad_add_gene_gene_default_sizes">
+<span class="viewcode-link">
+<span class="pre">[source]
+</span>
+</span>
+</a>
+<a class="headerlink" href="#metacellsgraphspy.anndata_graphs.ad_add_gene_gene_default_sizes" title="Link to this definition">
+</a>
+</dt>
+
+<dd>
+<p>Add the default sizes of the points (the metacells) of an 
+<a class="reference internal" href="#metacellsgraphspy.anndata_graphs.ad_gene_gene_graph" title="metacellsgraphspy.anndata_graphs.ad_gene_gene_graph">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">ad_gene_gene_graph()
+</span>
+</code>
+</a> of the 
+<code class="docutils literal notranslate">
+<span class="pre">adata
+</span>
+</code>: the number
+of cells of each metacell, if the 
+<code class="docutils literal notranslate">
+<span class="pre">obs
+</span>
+</code> has a 
+<code class="docutils literal notranslate">
+<span class="pre">grouped
+</span>
+</code> column. This is the 
+<code class="docutils literal notranslate">
+<span class="pre">AnnData
+</span>
+</code> counterpart of
+
+<a class="reference internal" href="scatter_graphs.html#metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes" title="metacellsgraphspy.scatter_graphs.add_gene_gene_default_sizes">
+<code class="xref py py-func docutils literal notranslate">
+<span class="pre">add_gene_gene_default_sizes()
+</span>
+</code>
+</a>.
+</p>
+
+<dl class="field-list simple">
+
+<dt class="field-odd">Parameters
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-odd">
+<ul class="simple">
+
+<li>
+<p>
+<strong>graph
+</strong> (
+<em>PointsGraph
+</em>)
+</p>
+</li>
+
+<li>
+<p>
+<strong>adata
+</strong> (
+<em>AnnData
+</em>)
+</p>
+</li>
+
+</ul>
+
+</dd>
+
+<dt class="field-even">Return type
+<span class="colon">:
+</span>
+</dt>
+
+<dd class="field-even">
+<p>None
+</p>
+
+</dd>
+
+</dl>
+
+</dd>
+</dl>
+
 
 <dl class="py function">
 
