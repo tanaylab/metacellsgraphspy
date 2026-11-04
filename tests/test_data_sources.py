@@ -346,7 +346,7 @@ def test_put_data_and_configuration() -> None:
     assert graph.configuration.x_axis.scale.log_regularization == 1
     assert graph.configuration.points.colors.palette == {"a": "red"}
     assert graph.configuration.points.colors.title == "kind"
-    assert not graph.configuration.points.colors.show_legend
+    assert not graph.configuration.points.colors.legend.show
 
     graph = sg.points_graph()
     mg.put_correlation_configuration(graph.points_colors_vector_fields(), np.array([0.2, 0.6]))

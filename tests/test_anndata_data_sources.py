@@ -173,7 +173,7 @@ def test_ad_fill_type(tmp_path: Path) -> None:
         "T3": "#0000ff",
         "": mg.EMPTY_CATEGORY_COLOR,
     }
-    assert graph.configuration.points.colors.show_legend
+    assert graph.configuration.points.colors.legend.show
     assert graph.configuration.points.colors.title == "type"
 
 
